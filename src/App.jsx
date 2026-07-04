@@ -19,7 +19,7 @@ const sparklerItems = [
     name: "ไฟเย็นเกลียวคลื่นฉลาม",
     type: "Normal",
     desc: "ประกายสีน้ำทะเลลึกลับ แฝงความซุกซนและร่าเริง เปล่งประกายราวกับหางปลาที่แหวกว่ายในยามค่ำคืน",
-    image: "/images/sparkler2.png",
+    image: `${baseUrl}images/sparkler2.png`,
     rate: 45,
   },
   {
@@ -27,7 +27,7 @@ const sparklerItems = [
     name: "ไฟเย็นบทบรรเลงอำลา",
     type: "Normal",
     desc: "แสงสีชมพูสลัวที่งดงาม สะท้อนความรู้สึกที่ซ่อนเร้น ความผูกพันที่ลึกซึ้งจนไม่อยากเอ่ยคำลา",
-    image: "/images/sparkler1.jpg",
+    image: `${baseUrl}images/sparkler1.jpg`,
     rate: 45,
   },
   {
@@ -35,7 +35,7 @@ const sparklerItems = [
     name: "ไฟเย็นแปดดาบแห่งโชคชะตา",
     type: "SSR",
     desc: "แสงสีแดงทองที่สาดส่อง ท่ามกลางความขัดแย้งในใจ แม้กลัวการสูญเสีย แต่แสงนี้จะช่วยปลดเปลื้องพันธนาการให้ก้าวเดิน",
-    image: "/images/sparkler3.jpg",
+    image: `${baseUrl}images/sparkler3.jpg`,
     rate: 7,
   },
   {
@@ -43,7 +43,7 @@ const sparklerItems = [
     name: "ไฟเย็นไออุ่นผู้พิทักษ์",
     type: "SSR",
     desc: "แสงสว่างที่อบอุ่นที่สุด คอยดูแลอุณหภูมิและจัดแจงชุดยูกาตะให้เข้าที่ ปกป้องคุณจากความเหน็บหนาวอย่างเงียบเชียบ",
-    image: "/images/sparkler4.jpg",
+    image: `${baseUrl}images/sparkler4.jpg`,
     rate: 3,
   },
 ];
