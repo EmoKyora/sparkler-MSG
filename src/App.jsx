@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -55,17 +56,8 @@ export default function MagicSparklerBooth() {
   const [result, setResult] = useState(null);
   const [showFlash, setShowFlash] = useState(false);
   const audioRef = useRef(null);
-
-  // สร้างตำแหน่งและตั้งค่าดีเลย์ของไฟเย็นพื้นหลังแบบสุ่ม (ใช้ useMemo เพื่อไม่ให้เปลี่ยนตำแหน่งตอนกดปุ่ม)
-  const bgSparklers = useMemo(() => {
-    return [...Array(15)].map((_, i) => ({
-      id: i,
-      x: Math.random() * 90 + 5, // 5vw ถึง 95vw
-      y: Math.random() * 90 + 5, // 5vh ถึง 95vh
-      delay: Math.random() * 4,
-      isGold: Math.random() > 0.5,
-    }));
-  }, []);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const canHover = useMediaQuery("(hover: hover)");
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
@@ -105,6 +97,7 @@ export default function MagicSparklerBooth() {
   };
 
   const handleRollGacha = () => {
+    setIsFlipped(false);
     setIsRolling(true);
     setOpenModal(true);
     setResult(null);
@@ -140,7 +133,7 @@ export default function MagicSparklerBooth() {
           console.error("Confetti Error:", err);
         }
       }
-    }, 3500);
+    }, 1500);
   };
 
   return (
@@ -162,79 +155,54 @@ export default function MagicSparklerBooth() {
         boxSizing: "border-box",
       }}
     >
-      {/* 🎇 อนิเมชั่นไฟเย็นพื้นหลังแบบสุ่มตำแหน่ง (แตกตัวออกรอบๆ) 🎇 */}
-      {bgSparklers.map((sparkler) => (
-        <Box
-          key={sparkler.id}
-          sx={{
-            position: "absolute",
-            left: `${sparkler.x}vw`,
-            top: `${sparkler.y}vh`,
-            zIndex: 0,
-            pointerEvents: "none",
-          }}
-        >
-          {/* แกนกลางไฟเย็น (Flickering Core) */}
+      {/* 
+        ✨ พื้นหลังไฟเย็น (Sparkler Particles) ✨
+        ปรับให้กระจายสุ่มตามจอ และกระพริบวิบวับแบบไม่ถี่จนเกินไป 
+      */}
+      {[...Array(35)].map((_, i) => {
+        const isGold = i % 2 === 0;
+        const color = isGold ? "#FFD700" : "#FF69B4";
+        const size = Math.random() * 3 + 2; // ขนาดแกนกลางไฟ 2px - 5px
+        const duration = Math.random() * 4 + 4; // ระยะเวลากระพริบ 4 - 8 วินาที
+        const delay = Math.random() * 8; // ดีเลย์การเกิด 0 - 8 วินาที
+        const top = `${Math.random() * 100}vh`; // ตำแหน่งสุ่มแนวดิ่ง
+        const left = `${Math.random() * 100}vw`; // ตำแหน่งสุ่มแนวนอน
+
+        return (
           <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
             animate={{
-              scale: [0, 1.2, 0.8, 1.5, 0],
-              opacity: [0, 1, 0.8, 1, 0],
+              // จังหวะกระพริบ: สว่างขึ้น หรี่ลง แล้ววาบขึ้นมาใหม่
+              opacity: [0, 1, 0.4, 1, 0.2, 0],
+              scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
             }}
             transition={{
-              duration: 2.5,
+              duration: duration,
               repeat: Infinity,
-              delay: sparkler.delay,
+              delay: delay,
               ease: "easeInOut",
+              times: [0, 0.1, 0.3, 0.6, 0.8, 1],
             }}
             style={{
               position: "absolute",
-              width: "6px",
-              height: "6px",
-              marginLeft: "-3px",
-              marginTop: "-3px",
+              top: top,
+              left: left,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: "#FFF",
               borderRadius: "50%",
-              backgroundColor: sparkler.isGold ? "#FFD700" : "#FF69B4",
-              boxShadow: `0 0 15px 4px ${
-                sparkler.isGold ? "#FFD700" : "#FF69B4"
-              }`,
+              // เอฟเฟกต์รัศมีแสงไฟ
+              boxShadow: `
+                0 0 ${size * 2}px ${color}, 
+                0 0 ${size * 4}px ${color}, 
+                0 0 ${size * 6}px ${color}
+              `,
+              zIndex: 0,
             }}
           />
-          {/* สะเก็ดไฟที่กระเด็นออก (Sparks) */}
-          {[...Array(5)].map((_, j) => {
-            const angle = j * 72 * (Math.PI / 180); // กระจายเป็นวงกลม 5 ทิศ
-            const distance = Math.random() * 20 + 15; // ระยะกระเด็น
-            return (
-              <motion.div
-                key={`spark-${sparkler.id}-${j}`}
-                animate={{
-                  x: [0, Math.cos(angle) * distance],
-                  y: [0, Math.sin(angle) * distance],
-                  opacity: [0, 1, 0],
-                  scale: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 0.8 + Math.random() * 0.4,
-                  repeat: Infinity,
-                  delay: sparkler.delay + Math.random() * 0.2,
-                  ease: "easeOut",
-                }}
-                style={{
-                  position: "absolute",
-                  width: "3px",
-                  height: "3px",
-                  marginLeft: "-1.5px",
-                  marginTop: "-1.5px",
-                  borderRadius: "50%",
-                  backgroundColor: sparkler.isGold ? "#FFA500" : "#FFC0CB",
-                  boxShadow: `0 0 8px 1px ${
-                    sparkler.isGold ? "#FFA500" : "#FFC0CB"
-                  }`,
-                }}
-              />
-            );
-          })}
-        </Box>
-      ))}
+        );
+      })}
 
       {/* Music Button */}
       <IconButton
@@ -417,103 +385,125 @@ export default function MagicSparklerBooth() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.2 }}
                   style={{
-                    textAlign: "center",
                     display: "flex",
-                    flexDirection: "column",
+                    justifyContent: "center",
                     alignItems: "center",
+                    height: "200px", // เพิ่มพื้นที่ความสูงให้พอดีกับอนิเมชั่น
                   }}
                 >
                   <Box
                     sx={{
                       position: "relative",
-                      width: 150,
-                      height: 150,
+                      width: 180,
+                      height: 180,
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
+                    {/* 3. แสงแฟลร์กากบาท (หมุนและยืดหดสร้างมิติแสง) */}
                     <motion.div
-                      animate={{ rotate: 360 }}
+                      animate={{ scale: [0.8, 1.5, 0.8], rotate: [0, 90, 180] }}
                       transition={{
                         duration: 3,
                         repeat: Infinity,
-                        ease: "linear",
+                        ease: "easeInOut",
                       }}
                       style={{
                         position: "absolute",
                         width: "100%",
                         height: "100%",
-                        border: "2px dashed rgba(255, 105, 180, 0.5)",
-                        borderRadius: "50%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
-                    />
-                    {[...Array(20)].map((_, i) => (
-                      <motion.div
-                        key={`spark-${i}`}
-                        initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
-                        animate={{
-                          opacity: [1, 0.8, 0],
-                          scale: [0, 1.5, 0],
-                          x:
-                            Math.cos((i * 18 * Math.PI) / 180) *
-                            (Math.random() * 60 + 40),
-                          y:
-                            Math.sin((i * 18 * Math.PI) / 180) *
-                            (Math.random() * 60 + 40),
-                        }}
-                        transition={{
-                          duration: 0.5 + Math.random() * 0.5,
-                          repeat: Infinity,
-                          ease: "easeOut",
-                          delay: Math.random() * 0.3,
-                        }}
+                    >
+                      <div
                         style={{
                           position: "absolute",
-                          width: 5,
-                          height: 5,
-                          borderRadius: "50%",
-                          backgroundColor:
-                            i % 3 === 0
-                              ? "#FF69B4"
-                              : i % 2 === 0
-                              ? "#FFD700"
-                              : "#FF4500",
-                          boxShadow: `0 0 15px 2px ${
-                            i % 3 === 0 ? "#FF69B4" : "#FFD700"
-                          }`,
+                          width: "120%",
+                          height: "2px",
+                          background:
+                            "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
                         }}
                       />
-                    ))}
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: "2px",
+                          height: "120%",
+                          background:
+                            "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                        }}
+                      />
+                    </motion.div>
+
+                    {/* 4. สะเก็ดไฟกระจายรอบทิศทาง (เพิ่มจำนวนเป็น 40 ดวง) */}
+                    {[...Array(40)].map((_, i) => {
+                      const angle = (i * 9 * Math.PI) / 180;
+                      const distance = Math.random() * 70 + 40; // ระยะการกระจาย
+                      const duration = Math.random() * 0.8 + 0.4; // ความเร็วสุ่ม
+                      const delay = Math.random() * 1;
+                      const size = Math.random() * 4 + 2;
+                      const color =
+                        i % 3 === 0
+                          ? "#FF69B4" // ชมพู
+                          : i % 2 === 0
+                            ? "#FFD700" // ทอง
+                            : "#FFF"; // ขาว
+
+                      return (
+                        <motion.div
+                          key={`spark-${i}`}
+                          initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
+                          animate={{
+                            opacity: [1, 1, 0],
+                            scale: [0, 1.5, 0],
+                            x: Math.cos(angle) * distance,
+                            y: Math.sin(angle) * distance,
+                          }}
+                          transition={{
+                            duration: duration,
+                            repeat: Infinity,
+                            ease: "easeOut",
+                            delay: delay,
+                          }}
+                          style={{
+                            position: "absolute",
+                            width: size,
+                            height: size,
+                            borderRadius: "50%",
+                            backgroundColor: color,
+                            boxShadow: `0 0 ${size * 2.5}px ${color}`,
+                          }}
+                        />
+                      );
+                    })}
+
+                    {/* 5. แกนกลางไฟสว่างวาบ (เต้นรัวๆ) */}
                     <motion.div
-                      animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
+                      animate={{ scale: [1, 1.8, 1], opacity: [0.9, 1, 0.9] }}
                       transition={{
-                        duration: 0.6,
+                        duration: 0.5, // เร่งจังหวะให้ดูเหมือนไฟกำลังไหม้
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
                       style={{
-                        width: 24,
-                        height: 24,
+                        position: "absolute",
+                        width: 18,
+                        height: 18,
                         borderRadius: "50%",
                         backgroundColor: "#FFF",
-                        boxShadow: "0 0 40px 20px rgba(255, 105, 180, 0.8)",
+                        boxShadow: `
+                          0 0 30px 10px rgba(255, 215, 0, 0.8), 
+                          0 0 60px 30px rgba(255, 105, 180, 0.5)
+                        `, // สร้างรัศมี 2 ชั้นให้แสงดูฟุ้งและมีพลัง
                       }}
                     />
                   </Box>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      mt: 4,
-                      color: "#FFD700",
-                      letterSpacing: 3,
-                      textShadow: "0 0 15px rgba(255, 105, 180, 0.8)",
-                    }}
-                  >
-                    กำลังจุดประกายไฟ...
-                  </Typography>
                 </motion.div>
               )}
+
               {!isRolling && result && (
                 <div
                   style={{
@@ -524,6 +514,9 @@ export default function MagicSparklerBooth() {
                   }}
                 >
                   {result.type === "SSR" ? (
+                    // ==========================================
+                    // แบบ SSR: ภาพปกติ, กล่องข้อความพลิกได้
+                    // ==========================================
                     <motion.div
                       key="result-ssr"
                       initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -542,6 +535,7 @@ export default function MagicSparklerBooth() {
                         alignItems: "center",
                       }}
                     >
+                      {/* ภาพ SSR ลอยปกติ (ไม่พลิก) */}
                       <motion.div
                         animate={{ y: [-5, 5, -5] }}
                         transition={{
@@ -575,115 +569,210 @@ export default function MagicSparklerBooth() {
                           }}
                         />
                       </motion.div>
+
+                      {/* กล่องข้อความ SSR พลิกได้ */}
                       <Box
                         sx={{
+                          perspective: 1000,
                           width: "100%",
                           mt: -2,
                           zIndex: 3,
-                          position: "relative",
-                          padding: "3px",
-                          borderRadius: "16px",
-                          background:
-                            "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
-                          backgroundSize: "300% 300%",
-                          boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
-                          animation: "gradient-shift 4s ease infinite",
                         }}
                       >
-                        <Box
-                          sx={{
-                            width: "100%",
-                            bgcolor: "rgba(10, 5, 20, 0.95)",
-                            borderRadius: "13px",
-                            p: { xs: 3, sm: 4 },
-                            textAlign: "center",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                        {/* เพิ่ม Wrapper นิ่งๆ มารับค่า Hover */}
+                        <motion.div
+                          initial="rest" // ถ้าเป็นมือถือ ให้ใช้การคลิกสลับ isFlipped, ถ้าคอมให้ดูที่ hover
+                          animate={!canHover && isFlipped ? "hover" : "rest"}
+                          // ถ้าเป็นคอมให้ใช้ Hover, ถ้ามือถือให้ปิด Hover ทิ้ง
+                          whileHover={canHover ? "hover" : "rest"}
+                          // เมื่อคลิก/แตะการ์ดในมือถือ ให้สลับหน้า-หลัง
+                          onClick={() => {
+                            if (!canHover) setIsFlipped(!isFlipped);
                           }}
+                          style={{ width: "100%", position: "relative" }}
                         >
-                          <Typography
-                            variant="overline"
-                            sx={{
-                              position: "absolute",
-                              top: "-18px",
-                              left: "50%",
-                              transform: "translateX(-50%)",
-                              display: "inline-block",
-                              color: "#FFF",
-                              bgcolor: "rgba(255, 215, 0, 0.2)",
-                              fontWeight: "900",
-                              letterSpacing: 5,
-                              fontSize: "0.85rem",
-                              px: 3,
-                              py: 0.5,
-                              border: "1px solid rgba(255,215,0,0.8)",
-                              borderRadius: "30px",
-                              backdropFilter: "blur(6px)",
-                              textShadow: "0 0 10px #FFD700",
-                              boxShadow: "0 0 15px rgba(255,215,0,0.5)",
+                          {/* ตัวการ์ดข้างในรับคำสั่งหมุนผ่าน Variants แทน */}
+                          <motion.div
+                            variants={{
+                              rest: { rotateY: 0 },
+                              hover: { rotateY: 180 },
+                            }}
+                            transition={{ duration: 0.6 }}
+                            style={{
+                              width: "100%",
+                              transformStyle: "preserve-3d",
+                              position: "relative",
                             }}
                           >
-                            ✦ SSR ✦
-                          </Typography>
-                          <Typography
-                            variant="h4"
-                            sx={{
-                              mt: 1,
-                              mb: 1.5,
-                              fontWeight: "bold",
-                              fontFamily: "serif",
-                              fontSize: { xs: "1.6rem", sm: "2.2rem" },
-                              background:
-                                "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
-                              WebkitBackgroundClip: "text",
-                              WebkitTextFillColor: "transparent",
-                              textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
-                            }}
-                          >
-                            {result.name}
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{
-                              color: "#e0e0e0",
-                              fontStyle: "italic",
-                              lineHeight: 1.6,
-                              fontSize: { xs: "0.95rem", sm: "1.05rem" },
-                              textShadow: "0px 1px 5px rgba(0,0,0,1)",
-                              mb: 3,
-                            }}
-                          >
-                            "{result.desc}"
-                          </Typography>
-                          <Button
-                            onClick={() => setOpenModal(false)}
-                            variant="outlined"
-                            fullWidth
-                            sx={{
-                              color: "#FFD700",
-                              borderColor: "rgba(255,215,0,0.6)",
-                              borderRadius: "30px",
-                              py: 1.2,
-                              fontSize: "1rem",
-                              fontWeight: "bold",
-                              backdropFilter: "blur(5px)",
-                              background: "rgba(0, 0, 0, 0.3)",
-                              transition: "all 0.3s",
-                              "&:hover": {
-                                bgcolor: "rgba(255,215,0,0.2)",
-                                borderColor: "#FFD700",
-                                boxShadow: "0 0 20px rgba(255,215,0,0.6)",
-                                transform: "translateY(-2px)",
-                              },
-                            }}
-                          >
-                            เก็บรักษาแสงสว่างนี้ไว้
-                          </Button>
-                        </Box>
+                            {/* === ด้านหน้า: แสดงคำพูดตัวละคร === */}
+                            <Box
+                              sx={{
+                                backfaceVisibility: "hidden",
+                                position: "relative", // ใช้ relative เพื่อกำหนดความสูงให้ container หลัก
+                                width: "100%",
+                                padding: "3px",
+                                borderRadius: "16px",
+                                background:
+                                  "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
+                                backgroundSize: "300% 300%",
+                                boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
+                                animation: "gradient-shift 4s ease infinite",
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  height: "100%",
+                                  bgcolor: "rgba(10, 5, 20, 0.95)",
+                                  borderRadius: "13px",
+                                  p: { xs: 3, sm: 4 },
+                                  textAlign: "center",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  minHeight: "220px", // กำหนดขั้นต่ำกันกล่องแฟบ
+                                }}
+                              >
+                                <Typography
+                                  variant="overline"
+                                  sx={{
+                                    position: "absolute",
+                                    top: "-18px",
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    display: "inline-block",
+                                    color: "#FFF",
+                                    bgcolor: "rgba(255, 215, 0, 0.2)",
+                                    fontWeight: "900",
+                                    letterSpacing: 5,
+                                    fontSize: "0.85rem",
+                                    px: 3,
+                                    py: 0.5,
+                                    border: "1px solid rgba(255,215,0,0.8)",
+                                    borderRadius: "30px",
+                                    backdropFilter: "blur(6px)",
+                                    textShadow: "0 0 10px #FFD700",
+                                    boxShadow: "0 0 15px rgba(255,215,0,0.5)",
+                                  }}
+                                >
+                                  ✦ SSR ✦
+                                </Typography>
+                                <Typography
+                                  variant="h4"
+                                  sx={{
+                                    mt: 1,
+                                    mb: 1.5,
+                                    fontWeight: "bold",
+                                    fontFamily: "serif",
+                                    fontSize: { xs: "1.6rem", sm: "2.2rem" },
+                                    background:
+                                      "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
+                                  }}
+                                >
+                                  {result.name}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#e0e0e0",
+                                    fontStyle: "italic",
+                                    lineHeight: 1.6,
+                                    fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                                  }}
+                                >
+                                  {/* สมมติว่ามี key quote หรือถ้าไม่มีสามารถใส่ placeholder ได้ */}
+                                  "
+                                  {result.quote ||
+                                    "พลังแห่งแสงสว่างสถิตอยู่กับข้า..."}
+                                  "
+                                </Typography>
+                              </Box>
+                            </Box>
+
+                            {/* === ด้านหลัง: แสดงคำอธิบายและปุ่มกด === */}
+                            <Box
+                              sx={{
+                                backfaceVisibility: "hidden",
+                                transform: "rotateY(180deg)",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                padding: "3px",
+                                borderRadius: "16px",
+                                background:
+                                  "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
+                                backgroundSize: "300% 300%",
+                                boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  height: "100%",
+                                  bgcolor: "rgba(10, 5, 20, 0.95)",
+                                  borderRadius: "13px",
+                                  p: { xs: 3, sm: 4 },
+                                  textAlign: "center",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#e0e0e0",
+                                    lineHeight: 1.6,
+                                    fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                                    mb: 3,
+                                  }}
+                                >
+                                  {result.desc}
+                                </Typography>
+                                <Button
+                                  onClick={(e) => {
+                                    e.stopPropagation();  
+                                    setOpenModal(false);
+                                  }}
+                                  variant="outlined"
+                                  fullWidth
+                                  sx={{
+                                    color: "#FFD700",
+                                    borderColor: "rgba(255,215,0,0.6)",
+                                    borderRadius: "30px",
+                                    py: 1.2,
+                                    fontSize: "1rem",
+                                    fontWeight: "bold",
+                                    backdropFilter: "blur(5px)",
+                                    background: "rgba(0, 0, 0, 0.3)",
+                                    transition: "all 0.3s",
+                                    "&:hover": {
+                                      bgcolor: "rgba(255,215,0,0.2)",
+                                      borderColor: "#FFD700",
+                                      boxShadow: "0 0 20px rgba(255,215,0,0.6)",
+                                      transform: "translateY(-2px)",
+                                    },
+                                  }}
+                                >
+                                  เก็บรักษาแสงสว่างนี้ไว้
+                                </Button>
+                              </Box>
+                            </Box>
+                          </motion.div>
+                        </motion.div>
                       </Box>
                     </motion.div>
                   ) : (
+                    // ==========================================
+                    // แบบปกติ (Normal): พลิกการ์ดทั้งใบ
+                    // ==========================================
                     <motion.div
                       key="result-other"
                       initial={{ rotateY: 90, scale: 0.8, opacity: 0, y: 50 }}
@@ -697,7 +786,7 @@ export default function MagicSparklerBooth() {
                       style={{
                         width: "100%",
                         maxWidth: "450px",
-                        transformStyle: "preserve-3d",
+                        perspective: 1000,
                       }}
                     >
                       <motion.div
@@ -708,156 +797,217 @@ export default function MagicSparklerBooth() {
                           ease: "easeInOut",
                         }}
                       >
-                        <Box
-                          sx={{
-                            padding: "3px",
-                            borderRadius: "24px",
-                            background:
-                              "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
-                            backgroundSize: "300% 300%",
-                            boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
-                            animation: "gradient-shift 4s ease infinite",
-                          }}
+                        {/* เพิ่ม Wrapper นิ่งๆ มารับค่า Hover */}
+                        <motion.div
+                          initial="rest"
+                          animate={!canHover && isFlipped ? "hover" : "rest"} 
+  // ถ้าเป็นคอมให้ใช้ Hover, ถ้ามือถือให้ปิด Hover ทิ้ง
+  whileHover={canHover ? "hover" : "rest"}
+  // เมื่อคลิก/แตะการ์ดในมือถือ ให้สลับหน้า-หลัง
+  onClick={() => {
+    if (!canHover) setIsFlipped(!isFlipped);
+  }}
+                          style={{ width: "100%", position: "relative" }}
                         >
-                          <Card
-                            sx={{
-                              position: "relative",
+                          {/* ตัวการ์ดข้างในรับคำสั่งหมุนผ่าน Variants แทน */}
+                          <motion.div
+                            variants={{
+                              rest: { rotateY: 0 },
+                              hover: { rotateY: 180 },
+                            }}
+                            transition={{ duration: 0.6 }}
+                            style={{
                               width: "100%",
-                              height: { xs: "500px", sm: "600px" },
-                              bgcolor: "#0a0510",
-                              color: "white",
-                              borderRadius: "21px",
-                              display: "flex",
-                              flexDirection: "column",
-                              overflow: "hidden",
-                              boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
+                              transformStyle: "preserve-3d",
+                              position: "relative",
                             }}
                           >
-                            <Box
-                              component="img"
-                              src={result.image}
-                              alt={result.name}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                  "https://via.placeholder.com/450x650/1a1025/FFD700?text=Sparkler+Image";
-                              }}
-                              sx={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                                transition: "transform 3s ease-out",
-                                "&:hover": { transform: "scale(1.05)" },
-                              }}
-                            />
+                            {/* === หน้าการ์ด: แสดงรูปและชื่อ === */}
                             <Box
                               sx={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
+                                backfaceVisibility: "hidden",
+                                position: "relative",
+                                padding: "3px",
+                                borderRadius: "24px",
                                 background:
-                                  "linear-gradient(to bottom, rgba(10, 5, 20, 0) 30%, rgba(10, 5, 20, 0.8) 65%, rgba(10, 5, 20, 1) 100%)",
-                                pointerEvents: "none",
-                              }}
-                            />
-                            <CardContent
-                              sx={{
-                                position: "absolute",
-                                bottom: 0,
-                                left: 0,
-                                width: "100%",
-                                textAlign: "center",
-                                p: { xs: 3, sm: 4 },
-                                zIndex: 2,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                boxSizing: "border-box",
+                                  "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
+                                backgroundSize: "300% 300%",
+                                boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
+                                animation: "gradient-shift 4s ease infinite",
                               }}
                             >
-                              <Typography
-                                variant="overline"
+                              <Card
                                 sx={{
-                                  display: "inline-block",
-                                  color: "#FFF",
-                                  bgcolor: "rgba(255, 105, 180, 0.2)",
-                                  fontWeight: "900",
-                                  letterSpacing: 5,
-                                  fontSize: "0.85rem",
-                                  px: 3,
-                                  py: 0.5,
-                                  border: "1px solid rgba(255,105,180,0.8)",
-                                  borderRadius: "30px",
-                                  mb: 2,
-                                  backdropFilter: "blur(6px)",
-                                  textShadow: "0 0 10px #FF69B4",
-                                  boxShadow: "0 0 15px rgba(255,105,180,0.5)",
+                                  position: "relative",
+                                  width: "100%",
+                                  height: { xs: "500px", sm: "600px" },
+                                  bgcolor: "#0a0510",
+                                  color: "white",
+                                  borderRadius: "21px",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  overflow: "hidden",
+                                  boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
                                 }}
                               >
-                                ✦ {result.type} ✦
-                              </Typography>
-                              <Typography
-                                variant="h4"
+                                <Box
+                                  component="img"
+                                  src={result.image}
+                                  alt={result.name}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src =
+                                      "https://via.placeholder.com/450x650/1a1025/FFD700?text=Sparkler+Image";
+                                  }}
+                                  sx={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                                <Box
+                                  sx={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    background:
+                                      "linear-gradient(to bottom, rgba(10, 5, 20, 0) 40%, rgba(10, 5, 20, 0.9) 100%)",
+                                    pointerEvents: "none",
+                                  }}
+                                />
+                                <CardContent
+                                  sx={{
+                                    position: "absolute",
+                                    bottom: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    textAlign: "center",
+                                    p: { xs: 3, sm: 4 },
+                                    zIndex: 2,
+                                  }}
+                                >
+                                  <Typography
+                                    variant="overline"
+                                    sx={{
+                                      display: "inline-block",
+                                      color: "#FFF",
+                                      bgcolor: "rgba(255, 105, 180, 0.2)",
+                                      fontWeight: "900",
+                                      letterSpacing: 5,
+                                      fontSize: "0.85rem",
+                                      px: 3,
+                                      py: 0.5,
+                                      border: "1px solid rgba(255,105,180,0.8)",
+                                      borderRadius: "30px",
+                                      mb: 2,
+                                      backdropFilter: "blur(6px)",
+                                      textShadow: "0 0 10px #FF69B4",
+                                    }}
+                                  >
+                                    ✦ {result.type} ✦
+                                  </Typography>
+                                  <Typography
+                                    variant="h4"
+                                    sx={{
+                                      fontWeight: "bold",
+                                      fontFamily: "serif",
+                                      fontSize: { xs: "1.6rem", sm: "2.2rem" },
+                                      background:
+                                        "-webkit-linear-gradient(0deg, #FFF, #FFB6C1, #FF69B4)",
+                                      WebkitBackgroundClip: "text",
+                                      WebkitTextFillColor: "transparent",
+                                      textShadow:
+                                        "0px 2px 10px rgba(0,0,0,0.8)",
+                                    }}
+                                  >
+                                    {result.name}
+                                  </Typography>
+                                </CardContent>
+                              </Card>
+                            </Box>
+
+                            {/* === หลังการ์ด: แสดงคำอธิบายและปุ่มกด === */}
+                            <Box
+                              sx={{
+                                backfaceVisibility: "hidden",
+                                transform: "rotateY(180deg)",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                padding: "3px",
+                                borderRadius: "24px",
+                                background:
+                                  "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
+                                backgroundSize: "300% 300%",
+                                boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
+                              }}
+                            >
+                              <Card
                                 sx={{
-                                  mb: 1.5,
-                                  fontWeight: "bold",
-                                  fontFamily: "serif",
-                                  fontSize: { xs: "1.6rem", sm: "2.2rem" },
-                                  background:
-                                    "-webkit-linear-gradient(0deg, #FFF, #FFB6C1, #FF69B4)",
-                                  WebkitBackgroundClip: "text",
-                                  WebkitTextFillColor: "transparent",
-                                  textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
+                                  width: "100%",
+                                  height: "100%",
+                                  bgcolor: "rgba(10, 5, 20, 0.95)",
+                                  color: "white",
+                                  borderRadius: "21px",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  p: { xs: 3, sm: 4 },
                                 }}
                               >
-                                {result.name}
-                              </Typography>
-                              <Typography
-                                variant="body1"
-                                sx={{
-                                  color: "#e0e0e0",
-                                  fontStyle: "italic",
-                                  lineHeight: 1.6,
-                                  fontSize: { xs: "0.95rem", sm: "1.05rem" },
-                                  textShadow: "0px 1px 5px rgba(0,0,0,1)",
-                                  mb: 3,
-                                }}
-                              >
-                                "{result.desc}"
-                              </Typography>
-                              <Button
-                                onClick={() => setOpenModal(false)}
-                                variant="outlined"
-                                fullWidth
-                                sx={{
-                                  color: "#FFB6C1",
-                                  borderColor: "rgba(255,105,180,0.6)",
-                                  borderRadius: "30px",
-                                  py: 1.2,
-                                  fontSize: "1rem",
-                                  fontWeight: "bold",
-                                  backdropFilter: "blur(5px)",
-                                  background: "rgba(0, 0, 0, 0.3)",
-                                  transition: "all 0.3s",
-                                  "&:hover": {
-                                    bgcolor: "rgba(255,105,180,0.2)",
-                                    borderColor: "#FF69B4",
-                                    boxShadow:
-                                      "0 0 20px rgba(255,105,180,0.6)",
-                                    transform: "translateY(-2px)",
-                                  },
-                                }}
-                              >
-                                เก็บรักษาแสงสว่างนี้ไว้
-                              </Button>
-                            </CardContent>
-                          </Card>
-                        </Box>
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    color: "#e0e0e0",
+                                    fontStyle: "italic",
+                                    lineHeight: 1.6,
+                                    fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                                    textAlign: "center",
+                                    mb: 4,
+                                  }}
+                                >
+                                  "{result.desc}"
+                                </Typography>
+                                <Button
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // <--- ป้องกันไม่ให้คำสั่งคลิกทะลุไปถึงตัวการ์ด
+                                    setOpenModal(false);
+                                  }}
+                                  variant="outlined"
+                                  fullWidth
+                                  sx={{
+                                    color: "#FFB6C1",
+                                    borderColor: "rgba(255,105,180,0.6)",
+                                    borderRadius: "30px",
+                                    py: 1.2,
+                                    fontSize: "1rem",
+                                    fontWeight: "bold",
+                                    backdropFilter: "blur(5px)",
+                                    background: "rgba(0, 0, 0, 0.3)",
+                                    transition: "all 0.3s",
+                                    "&:hover": {
+                                      bgcolor: "rgba(255,105,180,0.2)",
+                                      borderColor: "#FF69B4",
+                                      boxShadow:
+                                        "0 0 20px rgba(255,105,180,0.6)",
+                                      transform: "translateY(-2px)",
+                                    },
+                                  }}
+                                >
+                                  เก็บรักษาแสงสว่างนี้ไว้
+                                </Button>
+                              </Card>
+                            </Box>
+                          </motion.div>
+                        </motion.div>
                       </motion.div>
                     </motion.div>
                   )}
