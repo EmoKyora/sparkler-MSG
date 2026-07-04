@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import confetti from "canvas-confetti";
+const baseUrl = import.meta.env.BASE_URL;
 
 const sparklerItems = [
   {
@@ -56,7 +57,7 @@ export default function MagicSparklerBooth() {
   const audioRef = useRef(null);
 
  useEffect(() => {
-  audioRef.current = new Audio("/song/music.mp3");
+  audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
   
   // ฟังก์ชันสำหรับเล่นเพลงเมื่อมีการคลิกครั้งแรก
   const playAudioOnFirstInteraction = () => {
