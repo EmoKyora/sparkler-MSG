@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import {
   Box,
   Typography,
@@ -56,10 +56,20 @@ export default function MagicSparklerBooth() {
   const [showFlash, setShowFlash] = useState(false);
   const audioRef = useRef(null);
 
+  // สร้างตำแหน่งและตั้งค่าดีเลย์ของไฟเย็นพื้นหลังแบบสุ่ม (ใช้ useMemo เพื่อไม่ให้เปลี่ยนตำแหน่งตอนกดปุ่ม)
+  const bgSparklers = useMemo(() => {
+    return [...Array(15)].map((_, i) => ({
+      id: i,
+      x: Math.random() * 90 + 5, // 5vw ถึง 95vw
+      y: Math.random() * 90 + 5, // 5vh ถึง 95vh
+      delay: Math.random() * 4,
+      isGold: Math.random() > 0.5,
+    }));
+  }, []);
+
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
 
-    // ฟังก์ชันสำหรับเล่นเพลงเมื่อมีการคลิกครั้งแรก
     const playAudioOnFirstInteraction = () => {
       if (audioRef.current && !isPlaying) {
         audioRef.current.loop = true;
@@ -67,14 +77,12 @@ export default function MagicSparklerBooth() {
           .play()
           .then(() => {
             setIsPlaying(true);
-            // เมื่อเล่นสำเร็จแล้วให้ลบ Listener ออก เพื่อไม่ให้รบกวนการควบคุมปุ่ม
             document.removeEventListener("click", playAudioOnFirstInteraction);
           })
           .catch((err) => console.log("Autoplay prevented:", err));
       }
     };
 
-    // เพิ่ม Listener การคลิกทั่วหน้าจอ
     document.addEventListener("click", playAudioOnFirstInteraction);
 
     return () => {
@@ -142,7 +150,6 @@ export default function MagicSparklerBooth() {
         width: "100vw",
         bgcolor: "#050510",
         color: "#fff",
-        // กลับมาใช้สีพื้นหลังโทนม่วงออริจินัล
         backgroundImage:
           "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
         display: "flex",
@@ -155,44 +162,79 @@ export default function MagicSparklerBooth() {
         boxSizing: "border-box",
       }}
     >
-      {/* Animated Sparkler Background Particles (โทนสีชมพู-ทอง แบบดั้งเดิม) */}
-      {[...Array(40)].map((_, i) => {
-        const size = Math.random() * 3 + 1;
-        const isGold = i % 2 === 0;
-        return (
+      {/* 🎇 อนิเมชั่นไฟเย็นพื้นหลังแบบสุ่มตำแหน่ง (แตกตัวออกรอบๆ) 🎇 */}
+      {bgSparklers.map((sparkler) => (
+        <Box
+          key={sparkler.id}
+          sx={{
+            position: "absolute",
+            left: `${sparkler.x}vw`,
+            top: `${sparkler.y}vh`,
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        >
+          {/* แกนกลางไฟเย็น (Flickering Core) */}
           <motion.div
-            key={i}
-            initial={{
-              y: "-10vh",
-              x:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1000),
-              opacity: 0,
-            }}
             animate={{
-              y: "110vh",
-              x: `calc(${Math.random() * 100 - 50}px + ${Math.random() * 100}vw)`,
-              opacity: [0, 1, 0.8, 0],
+              scale: [0, 1.2, 0.8, 1.5, 0],
+              opacity: [0, 1, 0.8, 1, 0],
             }}
             transition={{
-              duration: Math.random() * 5 + 3,
+              duration: 2.5,
               repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
+              delay: sparkler.delay,
+              ease: "easeInOut",
             }}
             style={{
               position: "absolute",
-              width: `${size}px`,
-              height: `${size * 3}px`,
-              backgroundColor: isGold ? "#FFD700" : "#FF69B4", // ทองสลับชมพู
+              width: "6px",
+              height: "6px",
+              marginLeft: "-3px",
+              marginTop: "-3px",
               borderRadius: "50%",
-              boxShadow: `0 0 ${size * 4}px ${isGold ? "#FFD700" : "#FF69B4"}`,
-              filter: "blur(0.5px)",
-              zIndex: 0,
+              backgroundColor: sparkler.isGold ? "#FFD700" : "#FF69B4",
+              boxShadow: `0 0 15px 4px ${
+                sparkler.isGold ? "#FFD700" : "#FF69B4"
+              }`,
             }}
           />
-        );
-      })}
+          {/* สะเก็ดไฟที่กระเด็นออก (Sparks) */}
+          {[...Array(5)].map((_, j) => {
+            const angle = j * 72 * (Math.PI / 180); // กระจายเป็นวงกลม 5 ทิศ
+            const distance = Math.random() * 20 + 15; // ระยะกระเด็น
+            return (
+              <motion.div
+                key={`spark-${sparkler.id}-${j}`}
+                animate={{
+                  x: [0, Math.cos(angle) * distance],
+                  y: [0, Math.sin(angle) * distance],
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 0.8 + Math.random() * 0.4,
+                  repeat: Infinity,
+                  delay: sparkler.delay + Math.random() * 0.2,
+                  ease: "easeOut",
+                }}
+                style={{
+                  position: "absolute",
+                  width: "3px",
+                  height: "3px",
+                  marginLeft: "-1.5px",
+                  marginTop: "-1.5px",
+                  borderRadius: "50%",
+                  backgroundColor: sparkler.isGold ? "#FFA500" : "#FFC0CB",
+                  boxShadow: `0 0 8px 1px ${
+                    sparkler.isGold ? "#FFA500" : "#FFC0CB"
+                  }`,
+                }}
+              />
+            );
+          })}
+        </Box>
+      ))}
 
       {/* Music Button */}
       <IconButton
@@ -234,7 +276,6 @@ export default function MagicSparklerBooth() {
             sx={{
               fontFamily: "serif",
               fontWeight: "900",
-              // กลับมาใช้แสงเงาสีส้ม-ชมพู แบบออริจินัล
               textShadow: "0 0 20px #FF4500, 0 0 40px #FF69B4",
               mb: 1,
               textAlign: "center",
@@ -355,7 +396,7 @@ export default function MagicSparklerBooth() {
               left: 0,
               width: "100vw",
               height: "100vh",
-              backgroundColor: "rgba(5, 5, 16, 0.9)", // สีพื้นหลัง Overlay ออริจินัล
+              backgroundColor: "rgba(5, 5, 16, 0.9)",
               backdropFilter: "blur(10px)",
               zIndex: 9999,
               display: "flex",
@@ -369,7 +410,6 @@ export default function MagicSparklerBooth() {
               onClick={(e) => e.stopPropagation()}
               style={{ width: "100%", maxWidth: "450px" }}
             >
-              {/* อนิเมชั่นกำลังสุ่ม (Rolling) */}
               {isRolling && (
                 <motion.div
                   key="rolling"
@@ -393,7 +433,6 @@ export default function MagicSparklerBooth() {
                       alignItems: "center",
                     }}
                   >
-                    {/* วงแหวนเวทมนตร์หมุน */}
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{
@@ -405,11 +444,10 @@ export default function MagicSparklerBooth() {
                         position: "absolute",
                         width: "100%",
                         height: "100%",
-                        border: "2px dashed rgba(255, 105, 180, 0.5)", // เปลี่ยนสีวงแหวนให้เข้ากับธีมชมพู
+                        border: "2px dashed rgba(255, 105, 180, 0.5)",
                         borderRadius: "50%",
                       }}
                     />
-                    {/* สะเก็ดไฟกระจาย (สีทอง/ชมพู/ส้ม) */}
                     {[...Array(20)].map((_, i) => (
                       <motion.div
                         key={`spark-${i}`}
@@ -439,13 +477,14 @@ export default function MagicSparklerBooth() {
                             i % 3 === 0
                               ? "#FF69B4"
                               : i % 2 === 0
-                                ? "#FFD700"
-                                : "#FF4500",
-                          boxShadow: `0 0 15px 2px ${i % 3 === 0 ? "#FF69B4" : "#FFD700"}`,
+                              ? "#FFD700"
+                              : "#FF4500",
+                          boxShadow: `0 0 15px 2px ${
+                            i % 3 === 0 ? "#FF69B4" : "#FFD700"
+                          }`,
                         }}
                       />
                     ))}
-                    {/* แกนกลางไฟสว่างวาบ */}
                     <motion.div
                       animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
                       transition={{
@@ -503,7 +542,6 @@ export default function MagicSparklerBooth() {
                         alignItems: "center",
                       }}
                     >
-                      {/* 1. ภาพด้านบน (โชว์เต็มๆ ลอยอยู่เหนือกล่อง) */}
                       <motion.div
                         animate={{ y: [-5, 5, -5] }}
                         transition={{
@@ -537,15 +575,13 @@ export default function MagicSparklerBooth() {
                           }}
                         />
                       </motion.div>
-
-                      {/* 2. กรอบไล่สี (Gradient Border Wrapper) สำหรับกล่องข้อความ SSR */}
                       <Box
                         sx={{
                           width: "100%",
                           mt: -2,
                           zIndex: 3,
                           position: "relative",
-                          padding: "3px", // ความหนาของขอบ
+                          padding: "3px",
                           borderRadius: "16px",
                           background:
                             "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
@@ -557,8 +593,8 @@ export default function MagicSparklerBooth() {
                         <Box
                           sx={{
                             width: "100%",
-                            bgcolor: "rgba(10, 5, 20, 0.95)", // สีพื้นหลังกล่องทึบๆ
-                            borderRadius: "13px", // น้อยกว่า wrapper นิดนึง
+                            bgcolor: "rgba(10, 5, 20, 0.95)",
+                            borderRadius: "13px",
                             p: { xs: 3, sm: 4 },
                             textAlign: "center",
                             display: "flex",
@@ -566,7 +602,6 @@ export default function MagicSparklerBooth() {
                             alignItems: "center",
                           }}
                         >
-                          {/* ป้าย Rarity แปะไว้ขอบบนของกล่อง */}
                           <Typography
                             variant="overline"
                             sx={{
@@ -591,7 +626,6 @@ export default function MagicSparklerBooth() {
                           >
                             ✦ SSR ✦
                           </Typography>
-
                           <Typography
                             variant="h4"
                             sx={{
@@ -609,7 +643,6 @@ export default function MagicSparklerBooth() {
                           >
                             {result.name}
                           </Typography>
-
                           <Typography
                             variant="body1"
                             sx={{
@@ -623,7 +656,6 @@ export default function MagicSparklerBooth() {
                           >
                             "{result.desc}"
                           </Typography>
-
                           <Button
                             onClick={() => setOpenModal(false)}
                             variant="outlined"
@@ -652,9 +684,6 @@ export default function MagicSparklerBooth() {
                       </Box>
                     </motion.div>
                   ) : (
-                    /* =========================================
-         ✨ รูปแบบที่ 2: สำหรับ Rarity อื่นๆ (การ์ดเต็มใบ)
-         ========================================= */
                     <motion.div
                       key="result-other"
                       initial={{ rotateY: 90, scale: 0.8, opacity: 0, y: 50 }}
@@ -679,10 +708,9 @@ export default function MagicSparklerBooth() {
                           ease: "easeInOut",
                         }}
                       >
-                        {/* กรอบไล่สีชมพูม่วง (Gradient Border Wrapper) */}
                         <Box
                           sx={{
-                            padding: "3px", // ปรับความหนาให้เท่ากับตัว SSR ด้านบน
+                            padding: "3px",
                             borderRadius: "24px",
                             background:
                               "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
@@ -698,14 +726,13 @@ export default function MagicSparklerBooth() {
                               height: { xs: "500px", sm: "600px" },
                               bgcolor: "#0a0510",
                               color: "white",
-                              borderRadius: "21px", // ซ้อนพอดีกับ wrapper
+                              borderRadius: "21px",
                               display: "flex",
                               flexDirection: "column",
                               overflow: "hidden",
                               boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
                             }}
                           >
-                            {/* ภาพพื้นหลังเต็มใบ */}
                             <Box
                               component="img"
                               src={result.image}
@@ -726,8 +753,6 @@ export default function MagicSparklerBooth() {
                                 "&:hover": { transform: "scale(1.05)" },
                               }}
                             />
-
-                            {/* Gradient Overlay */}
                             <Box
                               sx={{
                                 position: "absolute",
@@ -740,8 +765,6 @@ export default function MagicSparklerBooth() {
                                 pointerEvents: "none",
                               }}
                             />
-
-                            {/* เนื้อหาข้อความ */}
                             <CardContent
                               sx={{
                                 position: "absolute",
@@ -778,7 +801,6 @@ export default function MagicSparklerBooth() {
                               >
                                 ✦ {result.type} ✦
                               </Typography>
-
                               <Typography
                                 variant="h4"
                                 sx={{
@@ -795,7 +817,6 @@ export default function MagicSparklerBooth() {
                               >
                                 {result.name}
                               </Typography>
-
                               <Typography
                                 variant="body1"
                                 sx={{
@@ -809,7 +830,6 @@ export default function MagicSparklerBooth() {
                               >
                                 "{result.desc}"
                               </Typography>
-
                               <Button
                                 onClick={() => setOpenModal(false)}
                                 variant="outlined"
@@ -827,7 +847,8 @@ export default function MagicSparklerBooth() {
                                   "&:hover": {
                                     bgcolor: "rgba(255,105,180,0.2)",
                                     borderColor: "#FF69B4",
-                                    boxShadow: "0 0 20px rgba(255,105,180,0.6)",
+                                    boxShadow:
+                                      "0 0 20px rgba(255,105,180,0.6)",
                                     transform: "translateY(-2px)",
                                   },
                                 }}
