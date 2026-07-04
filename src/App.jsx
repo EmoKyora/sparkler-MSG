@@ -53,24 +53,28 @@ export default function MagicSparklerBooth() {
   const [openModal, setOpenModal] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
   const [result, setResult] = useState(null);
-
+  const [showFlash, setShowFlash] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
 
+    // ฟังก์ชันสำหรับเล่นเพลงเมื่อมีการคลิกครั้งแรก
     const playAudioOnFirstInteraction = () => {
       if (audioRef.current && !isPlaying) {
         audioRef.current.loop = true;
-        audioRef.current.play()
+        audioRef.current
+          .play()
           .then(() => {
             setIsPlaying(true);
+            // เมื่อเล่นสำเร็จแล้วให้ลบ Listener ออก เพื่อไม่ให้รบกวนการควบคุมปุ่ม
             document.removeEventListener("click", playAudioOnFirstInteraction);
           })
           .catch((err) => console.log("Autoplay prevented:", err));
       }
     };
 
+    // เพิ่ม Listener การคลิกทั่วหน้าจอ
     document.addEventListener("click", playAudioOnFirstInteraction);
 
     return () => {
@@ -80,12 +84,14 @@ export default function MagicSparklerBooth() {
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
-    
+
     if (isPlaying) {
       audioRef.current.pause();
     } else {
       audioRef.current.loop = true;
-      audioRef.current.play().catch((err) => console.error("Audio error:", err));
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Audio error:", err));
     }
     setIsPlaying(!isPlaying);
   };
@@ -112,6 +118,8 @@ export default function MagicSparklerBooth() {
       setIsRolling(false);
 
       if (pulledItem.type === "SSR") {
+        setShowFlash(true);
+        setTimeout(() => setShowFlash(false), 500);
         try {
           confetti({
             particleCount: 250,
@@ -124,7 +132,7 @@ export default function MagicSparklerBooth() {
           console.error("Confetti Error:", err);
         }
       }
-    }, 3500); 
+    }, 3500);
   };
 
   return (
@@ -134,7 +142,9 @@ export default function MagicSparklerBooth() {
         width: "100vw",
         bgcolor: "#050510",
         color: "#fff",
-        backgroundImage: "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
+        // กลับมาใช้สีพื้นหลังโทนม่วงออริจินัล
+        backgroundImage:
+          "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -145,7 +155,7 @@ export default function MagicSparklerBooth() {
         boxSizing: "border-box",
       }}
     >
-      {/* Animated Sparkler Background Particles */}
+      {/* Animated Sparkler Background Particles (โทนสีชมพู-ทอง แบบดั้งเดิม) */}
       {[...Array(40)].map((_, i) => {
         const size = Math.random() * 3 + 1;
         const isGold = i % 2 === 0;
@@ -154,7 +164,9 @@ export default function MagicSparklerBooth() {
             key={i}
             initial={{
               y: "-10vh",
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+              x:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1000),
               opacity: 0,
             }}
             animate={{
@@ -171,8 +183,8 @@ export default function MagicSparklerBooth() {
             style={{
               position: "absolute",
               width: `${size}px`,
-              height: `${size * 3}px`, 
-              backgroundColor: isGold ? "#FFD700" : "#FF69B4",
+              height: `${size * 3}px`,
+              backgroundColor: isGold ? "#FFD700" : "#FF69B4", // ทองสลับชมพู
               borderRadius: "50%",
               boxShadow: `0 0 ${size * 4}px ${isGold ? "#FFD700" : "#FF69B4"}`,
               filter: "blur(0.5px)",
@@ -194,13 +206,24 @@ export default function MagicSparklerBooth() {
           border: "1px solid rgba(255,215,0,0.3)",
           backdropFilter: "blur(5px)",
           zIndex: 10,
-          "&:hover": { bgcolor: "rgba(255,215,0,0.2)" }
+          "&:hover": { bgcolor: "rgba(255,215,0,0.2)" },
         }}
       >
-        {isPlaying ? <MusicNoteIcon fontSize="large" /> : <MusicOffIcon fontSize="large" />}
+        {isPlaying ? (
+          <MusicNoteIcon fontSize="large" />
+        ) : (
+          <MusicOffIcon fontSize="large" />
+        )}
       </IconButton>
-      
-      <Box sx={{ zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+
+      <Box
+        sx={{
+          zIndex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -211,6 +234,7 @@ export default function MagicSparklerBooth() {
             sx={{
               fontFamily: "serif",
               fontWeight: "900",
+              // กลับมาใช้แสงเงาสีส้ม-ชมพู แบบออริจินัล
               textShadow: "0 0 20px #FF4500, 0 0 40px #FF69B4",
               mb: 1,
               textAlign: "center",
@@ -259,12 +283,35 @@ export default function MagicSparklerBooth() {
         </motion.div>
 
         <motion.div
-          whileHover={{ scale: 1.05, textShadow: "0px 0px 8px rgb(255,255,255)" }}
+          whileHover={{
+            scale: 1.05,
+            textShadow: "0px 0px 8px rgb(255,255,255)",
+          }}
           whileTap={{ scale: 0.95 }}
-          animate={{ boxShadow: ["0 0 20px #FF4500", "0 0 40px #FFD700", "0 0 20px #FF4500"] }}
+          animate={{
+            boxShadow: [
+              "0 0 20px #FF4500",
+              "0 0 40px #FFD700",
+              "0 0 20px #FF4500",
+            ],
+          }}
           transition={{ repeat: Infinity, duration: 2 }}
           style={{ borderRadius: "50px" }}
         >
+          <motion.div
+            animate={{ scale: [1, 1.3], opacity: [0.5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              borderRadius: "50px",
+              border: "2px solid #FFD700",
+              zIndex: 0,
+            }}
+          />
           <Button
             variant="contained"
             onClick={handleRollGacha}
@@ -277,7 +324,8 @@ export default function MagicSparklerBooth() {
               px: { xs: 5, md: 8 },
               py: { xs: 1.5, md: 2 },
               borderRadius: "50px",
-              background: "linear-gradient(45deg, rgba(255,69,0,0.3) 0%, rgba(255,215,0,0.3) 100%)",
+              background:
+                "linear-gradient(45deg, rgba(255,69,0,0.3) 0%, rgba(255,215,0,0.3) 100%)",
               backdropFilter: "blur(10px)",
               transition: "all 0.3s ease",
               "&:hover": {
@@ -307,18 +355,20 @@ export default function MagicSparklerBooth() {
               left: 0,
               width: "100vw",
               height: "100vh",
-              backgroundColor: "rgba(5, 5, 16, 0.9)",
+              backgroundColor: "rgba(5, 5, 16, 0.9)", // สีพื้นหลัง Overlay ออริจินัล
               backdropFilter: "blur(10px)",
               zIndex: 9999,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               padding: "20px",
-              boxSizing: "border-box"
+              boxSizing: "border-box",
             }}
           >
-            <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", maxWidth: "450px" }}>
-              
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{ width: "100%", maxWidth: "450px" }}
+            >
               {/* อนิเมชั่นกำลังสุ่ม (Rolling) */}
               {isRolling && (
                 <motion.div
@@ -326,20 +376,40 @@ export default function MagicSparklerBooth() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.2 }}
-                  style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                 >
-                  <Box sx={{ position: 'relative', width: 150, height: 150, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      width: 150,
+                      height: 150,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* วงแหวนเวทมนตร์หมุน */}
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        border: '2px dashed rgba(255, 105, 180, 0.5)',
-                        borderRadius: '50%',
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        border: "2px dashed rgba(255, 105, 180, 0.5)", // เปลี่ยนสีวงแหวนให้เข้ากับธีมชมพู
+                        borderRadius: "50%",
                       }}
                     />
+                    {/* สะเก็ดไฟกระจาย (สีทอง/ชมพู/ส้ม) */}
                     {[...Array(20)].map((_, i) => (
                       <motion.div
                         key={`spark-${i}`}
@@ -347,8 +417,12 @@ export default function MagicSparklerBooth() {
                         animate={{
                           opacity: [1, 0.8, 0],
                           scale: [0, 1.5, 0],
-                          x: Math.cos((i * 18 * Math.PI) / 180) * (Math.random() * 60 + 40),
-                          y: Math.sin((i * 18 * Math.PI) / 180) * (Math.random() * 60 + 40),
+                          x:
+                            Math.cos((i * 18 * Math.PI) / 180) *
+                            (Math.random() * 60 + 40),
+                          y:
+                            Math.sin((i * 18 * Math.PI) / 180) *
+                            (Math.random() * 60 + 40),
                         }}
                         transition={{
                           duration: 0.5 + Math.random() * 0.5,
@@ -357,212 +431,439 @@ export default function MagicSparklerBooth() {
                           delay: Math.random() * 0.3,
                         }}
                         style={{
-                          position: 'absolute',
-                          width: 5, height: 5,
-                          borderRadius: '50%',
-                          backgroundColor: i % 3 === 0 ? '#FF69B4' : (i % 2 === 0 ? '#FFD700' : '#FF4500'),
-                          boxShadow: `0 0 15px 2px ${i % 3 === 0 ? '#FF69B4' : '#FFD700'}`
+                          position: "absolute",
+                          width: 5,
+                          height: 5,
+                          borderRadius: "50%",
+                          backgroundColor:
+                            i % 3 === 0
+                              ? "#FF69B4"
+                              : i % 2 === 0
+                                ? "#FFD700"
+                                : "#FF4500",
+                          boxShadow: `0 0 15px 2px ${i % 3 === 0 ? "#FF69B4" : "#FFD700"}`,
                         }}
                       />
                     ))}
+                    {/* แกนกลางไฟสว่างวาบ */}
                     <motion.div
                       animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
-                      transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       style={{
-                        width: 24, height: 24,
-                        borderRadius: '50%',
-                        backgroundColor: '#FFF',
-                        boxShadow: '0 0 40px 20px rgba(255, 105, 180, 0.8)'
+                        width: 24,
+                        height: 24,
+                        borderRadius: "50%",
+                        backgroundColor: "#FFF",
+                        boxShadow: "0 0 40px 20px rgba(255, 105, 180, 0.8)",
                       }}
                     />
                   </Box>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ mt: 4, color: "#FFD700", letterSpacing: 3, textShadow: "0 0 15px rgba(255, 105, 180, 0.8)" }}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      mt: 4,
+                      color: "#FFD700",
+                      letterSpacing: 3,
+                      textShadow: "0 0 15px rgba(255, 105, 180, 0.8)",
+                    }}
                   >
                     กำลังจุดประกายไฟ...
                   </Typography>
                 </motion.div>
               )}
-
-              {/* แสดงผลลัพธ์การ์ดแบบใหม่ (Hover เพื่อดูรายละเอียด) */}
               {!isRolling && result && (
-                <motion.div
-                  key="result"
-                  initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  transition={{ type: "spring", damping: 15, stiffness: 100 }}
-                  style={{ width: "100%" }}
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    perspective: 1000,
+                  }}
                 >
-                  <Box
-                    sx={{
-                      padding: "3px",
-                      borderRadius: "20px",
-                      background: result.type === "SSR"
-                        ? "linear-gradient(135deg, #FFD700, #FF4500, #FFD700)"
-                        : "linear-gradient(135deg, #8A2BE2, #FF69B4, #8A2BE2)",
-                      boxShadow: result.type === "SSR"
-                        ? "0 0 40px rgba(255, 215, 0, 0.5)"
-                        : "0 0 25px rgba(255, 105, 180, 0.4)",
-                      animation: "gradient-shift 3s ease infinite",
-                    }}
-                  >
-                    <Card
-                      sx={{
+                  {result.type === "SSR" ? (
+                    <motion.div
+                      key="result-ssr"
+                      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        damping: 15,
+                        stiffness: 80,
+                        duration: 0.8,
+                      }}
+                      style={{
                         width: "100%",
-                        height: { xs: 450, sm: 550 }, // กำหนดความสูงการ์ดให้ใหญ่ขึ้น
-                        position: "relative",
-                        bgcolor: "#1a1025",
-                        borderRadius: "17px", 
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        // เมื่อ Hover หรือ Tap ให้เกิด Effect
-                        "&:hover .info-overlay": {
-                          opacity: 1,
-                        },
-                        "&:hover .bg-image": {
-                          transform: "scale(1.05)",
-                          filter: "brightness(0.35) blur(3px)", // หรี่แสงและเบลอภาพพื้นหลัง
-                        }
+                        maxWidth: "550px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
                       }}
                     >
-                      {/* รูปภาพเต็มการ์ด */}
-                      <Box
-                        className="bg-image"
-                        component="img"
-                        src={result.image}
-                        alt={result.name}
-                        onError={(e) => {
-                          e.target.onerror = null; 
-                          e.target.src = "https://via.placeholder.com/450x550/1a1025/FFD700?text=Sparkler+Image";
+                      {/* 1. ภาพด้านบน (โชว์เต็มๆ ลอยอยู่เหนือกล่อง) */}
+                      <motion.div
+                        animate={{ y: [-5, 5, -5] }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
                         }}
-                        sx={{
+                        style={{
                           width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          display: "block",
-                          transition: "all 0.4s ease-in-out", // อนิเมชันเวลา Hover
-                        }}
-                      />
-
-                      {/* ข้อความบอกให้ Hover/Tap สำหรับหน้าแรกของมือถือ */}
-                      <Typography
-                        className="hint-text"
-                        sx={{
-                          position: "absolute",
-                          bottom: 20,
-                          left: 0,
-                          width: "100%",
-                          textAlign: "center",
-                          color: "rgba(255,255,255,0.7)",
-                          fontSize: "0.85rem",
-                          letterSpacing: 2,
-                          textShadow: "0px 2px 4px rgba(0,0,0,0.8)",
-                          transition: "opacity 0.3s",
-                          ".info-overlay:hover ~ &": { opacity: 0 } // ซ่อนเมื่อ Hover ข้อมูล
-                        }}
-                      >
-                        👆 แตะหรือชี้เพื่อดูรายละเอียด
-                      </Typography>
-
-                      {/* ส่วน Overlay ที่จะโชว์เมื่อ Hover */}
-                      <Box
-                        className="info-overlay"
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          opacity: 0, // ซ่อนไว้ก่อน
-                          transition: "all 0.4s ease-in-out",
                           display: "flex",
-                          flexDirection: "column",
                           justifyContent: "center",
-                          alignItems: "center",
-                          textAlign: "center",
-                          p: { xs: 3, sm: 4 },
-                          background: "rgba(20, 15, 35, 0.6)", // ฉากหลังโปร่งแสงนิดๆ
                           zIndex: 2,
                         }}
                       >
-                        <Typography
-                          variant="overline"
-                          sx={{
-                            display: "inline-block",
-                            color: result.type === "SSR" ? "#FFD700" : "#FF69B4",
-                            fontWeight: "bold",
-                            letterSpacing: 4,
-                            fontSize: "0.9rem",
-                            px: 2,
-                            py: 0.5,
-                            border: `1px solid ${result.type === "SSR" ? "rgba(255,215,0,0.5)" : "rgba(255,105,180,0.5)"}`,
-                            borderRadius: "20px",
-                            mb: 2,
-                            textShadow: result.type === "SSR" ? "0 0 10px #FFD700" : "0 0 10px #FF69B4",
-                            boxShadow: result.type === "SSR" ? "inset 0 0 10px rgba(255,215,0,0.2)" : "inset 0 0 10px rgba(255,105,180,0.2)",
+                        <Box
+                          component="img"
+                          src={result.image}
+                          alt={result.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://via.placeholder.com/400x500/transparent/FFD700?text=Image";
                           }}
-                        >
-                          ✦ {result.type} ✦
-                        </Typography>
-                        <Typography
-                          variant="h4"
                           sx={{
-                            mb: 2,
-                            fontWeight: "bold",
-                            fontFamily: "serif",
-                            fontSize: { xs: "1.5rem", sm: "2rem" },
-                            background: result.type === "SSR" ? "-webkit-linear-gradient(0deg, #FFF, #FFD700)" : "-webkit-linear-gradient(0deg, #FFF, #FFB6C1)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
+                            width: "100%",
+                            maxWidth: "400px",
+                            height: { xs: "40vh", md: "50vh" },
+                            objectFit: "contain",
+                            filter:
+                              "drop-shadow(0px 0px 20px rgba(255, 215, 0, 0.6))",
                           }}
-                        >
-                          {result.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: "#fff", // ทำให้ข้อความอ่านง่ายขึ้นเมื่ออยู่บนฉากหลังดำ
-                            fontStyle: "italic",
-                            lineHeight: 1.7,
-                            fontSize: { xs: "0.95rem", sm: "1.1rem" },
-                            textShadow: "0px 2px 4px rgba(0,0,0,0.8)", // เพิ่มเงาให้อ่านง่าย
-                          }}
-                        >
-                          "{result.desc}"
-                        </Typography>
+                        />
+                      </motion.div>
 
-                        <Button
-                          onClick={() => setOpenModal(false)}
-                          variant="outlined"
+                      {/* 2. กรอบไล่สี (Gradient Border Wrapper) สำหรับกล่องข้อความ SSR */}
+                      <Box
+                        sx={{
+                          width: "100%",
+                          mt: -2,
+                          zIndex: 3,
+                          position: "relative",
+                          padding: "3px", // ความหนาของขอบ
+                          borderRadius: "16px",
+                          background:
+                            "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
+                          backgroundSize: "300% 300%",
+                          boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
+                          animation: "gradient-shift 4s ease infinite",
+                        }}
+                      >
+                        <Box
                           sx={{
-                            mt: 5,
-                            color: result.type === "SSR" ? "#FFD700" : "#FF69B4",
-                            borderColor: result.type === "SSR" ? "rgba(255,215,0,0.5)" : "rgba(255,105,180,0.5)",
-                            borderRadius: "30px",
-                            py: 1,
-                            px: 4,
-                            fontSize: "1rem",
-                            fontWeight: "bold",
-                            backdropFilter: "blur(5px)",
-                            transition: "all 0.3s",
-                            "&:hover": {
-                              bgcolor: result.type === "SSR" ? "rgba(255,215,0,0.15)" : "rgba(255,105,180,0.15)",
-                              borderColor: result.type === "SSR" ? "#FFD700" : "#FF69B4",
-                              boxShadow: result.type === "SSR" ? "0 0 15px rgba(255,215,0,0.4)" : "0 0 15px rgba(255,105,180,0.4)",
-                            },
+                            width: "100%",
+                            bgcolor: "rgba(10, 5, 20, 0.95)", // สีพื้นหลังกล่องทึบๆ
+                            borderRadius: "13px", // น้อยกว่า wrapper นิดนึง
+                            p: { xs: 3, sm: 4 },
+                            textAlign: "center",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                           }}
                         >
-                          เก็บรักษาแสงสว่างนี้ไว้
-                        </Button>
+                          {/* ป้าย Rarity แปะไว้ขอบบนของกล่อง */}
+                          <Typography
+                            variant="overline"
+                            sx={{
+                              position: "absolute",
+                              top: "-18px",
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                              display: "inline-block",
+                              color: "#FFF",
+                              bgcolor: "rgba(255, 215, 0, 0.2)",
+                              fontWeight: "900",
+                              letterSpacing: 5,
+                              fontSize: "0.85rem",
+                              px: 3,
+                              py: 0.5,
+                              border: "1px solid rgba(255,215,0,0.8)",
+                              borderRadius: "30px",
+                              backdropFilter: "blur(6px)",
+                              textShadow: "0 0 10px #FFD700",
+                              boxShadow: "0 0 15px rgba(255,215,0,0.5)",
+                            }}
+                          >
+                            ✦ SSR ✦
+                          </Typography>
+
+                          <Typography
+                            variant="h4"
+                            sx={{
+                              mt: 1,
+                              mb: 1.5,
+                              fontWeight: "bold",
+                              fontFamily: "serif",
+                              fontSize: { xs: "1.6rem", sm: "2.2rem" },
+                              background:
+                                "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
+                            }}
+                          >
+                            {result.name}
+                          </Typography>
+
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "#e0e0e0",
+                              fontStyle: "italic",
+                              lineHeight: 1.6,
+                              fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                              textShadow: "0px 1px 5px rgba(0,0,0,1)",
+                              mb: 3,
+                            }}
+                          >
+                            "{result.desc}"
+                          </Typography>
+
+                          <Button
+                            onClick={() => setOpenModal(false)}
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                              color: "#FFD700",
+                              borderColor: "rgba(255,215,0,0.6)",
+                              borderRadius: "30px",
+                              py: 1.2,
+                              fontSize: "1rem",
+                              fontWeight: "bold",
+                              backdropFilter: "blur(5px)",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              transition: "all 0.3s",
+                              "&:hover": {
+                                bgcolor: "rgba(255,215,0,0.2)",
+                                borderColor: "#FFD700",
+                                boxShadow: "0 0 20px rgba(255,215,0,0.6)",
+                                transform: "translateY(-2px)",
+                              },
+                            }}
+                          >
+                            เก็บรักษาแสงสว่างนี้ไว้
+                          </Button>
+                        </Box>
                       </Box>
-                    </Card>
-                  </Box>
-                </motion.div>
-              )}
+                    </motion.div>
+                  ) : (
+                    /* =========================================
+         ✨ รูปแบบที่ 2: สำหรับ Rarity อื่นๆ (การ์ดเต็มใบ)
+         ========================================= */
+                    <motion.div
+                      key="result-other"
+                      initial={{ rotateY: 90, scale: 0.8, opacity: 0, y: 50 }}
+                      animate={{ rotateY: 0, scale: 1, opacity: 1, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        damping: 15,
+                        stiffness: 80,
+                        duration: 0.8,
+                      }}
+                      style={{
+                        width: "100%",
+                        maxWidth: "450px",
+                        transformStyle: "preserve-3d",
+                      }}
+                    >
+                      <motion.div
+                        animate={{ y: [-5, 5, -5] }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        {/* กรอบไล่สีชมพูม่วง (Gradient Border Wrapper) */}
+                        <Box
+                          sx={{
+                            padding: "3px", // ปรับความหนาให้เท่ากับตัว SSR ด้านบน
+                            borderRadius: "24px",
+                            background:
+                              "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
+                            backgroundSize: "300% 300%",
+                            boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
+                            animation: "gradient-shift 4s ease infinite",
+                          }}
+                        >
+                          <Card
+                            sx={{
+                              position: "relative",
+                              width: "100%",
+                              height: { xs: "500px", sm: "600px" },
+                              bgcolor: "#0a0510",
+                              color: "white",
+                              borderRadius: "21px", // ซ้อนพอดีกับ wrapper
+                              display: "flex",
+                              flexDirection: "column",
+                              overflow: "hidden",
+                              boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
+                            }}
+                          >
+                            {/* ภาพพื้นหลังเต็มใบ */}
+                            <Box
+                              component="img"
+                              src={result.image}
+                              alt={result.name}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                  "https://via.placeholder.com/450x650/1a1025/FFD700?text=Sparkler+Image";
+                              }}
+                              sx={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                transition: "transform 3s ease-out",
+                                "&:hover": { transform: "scale(1.05)" },
+                              }}
+                            />
 
+                            {/* Gradient Overlay */}
+                            <Box
+                              sx={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                background:
+                                  "linear-gradient(to bottom, rgba(10, 5, 20, 0) 30%, rgba(10, 5, 20, 0.8) 65%, rgba(10, 5, 20, 1) 100%)",
+                                pointerEvents: "none",
+                              }}
+                            />
+
+                            {/* เนื้อหาข้อความ */}
+                            <CardContent
+                              sx={{
+                                position: "absolute",
+                                bottom: 0,
+                                left: 0,
+                                width: "100%",
+                                textAlign: "center",
+                                p: { xs: 3, sm: 4 },
+                                zIndex: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                boxSizing: "border-box",
+                              }}
+                            >
+                              <Typography
+                                variant="overline"
+                                sx={{
+                                  display: "inline-block",
+                                  color: "#FFF",
+                                  bgcolor: "rgba(255, 105, 180, 0.2)",
+                                  fontWeight: "900",
+                                  letterSpacing: 5,
+                                  fontSize: "0.85rem",
+                                  px: 3,
+                                  py: 0.5,
+                                  border: "1px solid rgba(255,105,180,0.8)",
+                                  borderRadius: "30px",
+                                  mb: 2,
+                                  backdropFilter: "blur(6px)",
+                                  textShadow: "0 0 10px #FF69B4",
+                                  boxShadow: "0 0 15px rgba(255,105,180,0.5)",
+                                }}
+                              >
+                                ✦ {result.type} ✦
+                              </Typography>
+
+                              <Typography
+                                variant="h4"
+                                sx={{
+                                  mb: 1.5,
+                                  fontWeight: "bold",
+                                  fontFamily: "serif",
+                                  fontSize: { xs: "1.6rem", sm: "2.2rem" },
+                                  background:
+                                    "-webkit-linear-gradient(0deg, #FFF, #FFB6C1, #FF69B4)",
+                                  WebkitBackgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
+                                }}
+                              >
+                                {result.name}
+                              </Typography>
+
+                              <Typography
+                                variant="body1"
+                                sx={{
+                                  color: "#e0e0e0",
+                                  fontStyle: "italic",
+                                  lineHeight: 1.6,
+                                  fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                                  textShadow: "0px 1px 5px rgba(0,0,0,1)",
+                                  mb: 3,
+                                }}
+                              >
+                                "{result.desc}"
+                              </Typography>
+
+                              <Button
+                                onClick={() => setOpenModal(false)}
+                                variant="outlined"
+                                fullWidth
+                                sx={{
+                                  color: "#FFB6C1",
+                                  borderColor: "rgba(255,105,180,0.6)",
+                                  borderRadius: "30px",
+                                  py: 1.2,
+                                  fontSize: "1rem",
+                                  fontWeight: "bold",
+                                  backdropFilter: "blur(5px)",
+                                  background: "rgba(0, 0, 0, 0.3)",
+                                  transition: "all 0.3s",
+                                  "&:hover": {
+                                    bgcolor: "rgba(255,105,180,0.2)",
+                                    borderColor: "#FF69B4",
+                                    boxShadow: "0 0 20px rgba(255,105,180,0.6)",
+                                    transform: "translateY(-2px)",
+                                  },
+                                }}
+                              >
+                                เก็บรักษาแสงสว่างนี้ไว้
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        </Box>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </div>
+              )}
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showFlash && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "white",
+              zIndex: 999999,
+            }}
+          />
         )}
       </AnimatePresence>
     </Box>
