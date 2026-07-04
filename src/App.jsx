@@ -55,9 +55,30 @@ export default function MagicSparklerBooth() {
 
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    audioRef.current = new Audio("https://youtu.be/yjDHgRgVLuw?si=sMmYxYFaJYd9UeYx");
-  }, []);
+ useEffect(() => {
+  audioRef.current = new Audio("/song/music.mp3");
+  
+  // ฟังก์ชันสำหรับเล่นเพลงเมื่อมีการคลิกครั้งแรก
+  const playAudioOnFirstInteraction = () => {
+    if (audioRef.current && !isPlaying) {
+      audioRef.current.loop = true;
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+          // เมื่อเล่นสำเร็จแล้วให้ลบ Listener ออก เพื่อไม่ให้รบกวนการควบคุมปุ่ม
+          document.removeEventListener("click", playAudioOnFirstInteraction);
+        })
+        .catch((err) => console.log("Autoplay prevented:", err));
+    }
+  };
+
+  // เพิ่ม Listener การคลิกทั่วหน้าจอ
+  document.addEventListener("click", playAudioOnFirstInteraction);
+
+  return () => {
+    document.removeEventListener("click", playAudioOnFirstInteraction);
+  };
+}, []);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
