@@ -36,7 +36,7 @@ const sparklerItems = [
     name: "ไฟเย็นแปดดาบแห่งโชคชะตา",
     type: "SSR",
     desc: "แสงสีแดงทองที่สาดส่อง ท่ามกลางความขัดแย้งในใจ แม้กลัวการสูญเสีย แต่แสงนี้จะช่วยปลดเปลื้องพันธนาการให้ก้าวเดิน",
-    image: `${baseUrl}images/sparkler3.jpg`,
+    image: `${baseUrl}images/kyora.png`,
     rate: 7,
   },
   {
@@ -44,7 +44,7 @@ const sparklerItems = [
     name: "ไฟเย็นไออุ่นผู้พิทักษ์",
     type: "SSR",
     desc: "แสงสว่างที่อบอุ่นที่สุด คอยดูแลอุณหภูมิและจัดแจงชุดยูกาตะให้เข้าที่ ปกป้องคุณจากความเหน็บหนาวอย่างเงียบเชียบ",
-    image: `${baseUrl}images/sparkler4.jpg`,
+    image: `${baseUrl}images/kyora.png`,
     rate: 3,
   },
 ];
@@ -157,23 +157,21 @@ export default function MagicSparklerBooth() {
     >
       {/* 
         ✨ พื้นหลังไฟเย็น (Sparkler Particles) ✨
-        ปรับให้กระจายสุ่มตามจอ และกระพริบวิบวับแบบไม่ถี่จนเกินไป 
       */}
       {[...Array(35)].map((_, i) => {
         const isGold = i % 2 === 0;
         const color = isGold ? "#FFD700" : "#FF69B4";
-        const size = Math.random() * 3 + 2; // ขนาดแกนกลางไฟ 2px - 5px
-        const duration = Math.random() * 4 + 4; // ระยะเวลากระพริบ 4 - 8 วินาที
-        const delay = Math.random() * 8; // ดีเลย์การเกิด 0 - 8 วินาที
-        const top = `${Math.random() * 100}vh`; // ตำแหน่งสุ่มแนวดิ่ง
-        const left = `${Math.random() * 100}vw`; // ตำแหน่งสุ่มแนวนอน
+        const size = Math.random() * 3 + 2;
+        const duration = Math.random() * 4 + 4;
+        const delay = Math.random() * 8;
+        const top = `${Math.random() * 100}vh`;
+        const left = `${Math.random() * 100}vw`;
 
         return (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             animate={{
-              // จังหวะกระพริบ: สว่างขึ้น หรี่ลง แล้ววาบขึ้นมาใหม่
               opacity: [0, 1, 0.4, 1, 0.2, 0],
               scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
             }}
@@ -192,7 +190,6 @@ export default function MagicSparklerBooth() {
               height: `${size}px`,
               backgroundColor: "#FFF",
               borderRadius: "50%",
-              // เอฟเฟกต์รัศมีแสงไฟ
               boxShadow: `
                 0 0 ${size * 2}px ${color}, 
                 0 0 ${size * 4}px ${color}, 
@@ -388,7 +385,7 @@ export default function MagicSparklerBooth() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "200px", // เพิ่มพื้นที่ความสูงให้พอดีกับอนิเมชั่น
+                    height: "200px",
                   }}
                 >
                   <Box
@@ -401,7 +398,6 @@ export default function MagicSparklerBooth() {
                       alignItems: "center",
                     }}
                   >
-                    {/* 3. แสงแฟลร์กากบาท (หมุนและยืดหดสร้างมิติแสง) */}
                     <motion.div
                       animate={{ scale: [0.8, 1.5, 0.8], rotate: [0, 90, 180] }}
                       transition={{
@@ -438,19 +434,18 @@ export default function MagicSparklerBooth() {
                       />
                     </motion.div>
 
-                    {/* 4. สะเก็ดไฟกระจายรอบทิศทาง (เพิ่มจำนวนเป็น 40 ดวง) */}
                     {[...Array(40)].map((_, i) => {
                       const angle = (i * 9 * Math.PI) / 180;
-                      const distance = Math.random() * 70 + 40; // ระยะการกระจาย
-                      const duration = Math.random() * 0.8 + 0.4; // ความเร็วสุ่ม
+                      const distance = Math.random() * 70 + 40;
+                      const duration = Math.random() * 0.8 + 0.4;
                       const delay = Math.random() * 1;
                       const size = Math.random() * 4 + 2;
                       const color =
                         i % 3 === 0
-                          ? "#FF69B4" // ชมพู
+                          ? "#FF69B4"
                           : i % 2 === 0
-                            ? "#FFD700" // ทอง
-                            : "#FFF"; // ขาว
+                            ? "#FFD700"
+                            : "#FFF";
 
                       return (
                         <motion.div
@@ -480,11 +475,10 @@ export default function MagicSparklerBooth() {
                       );
                     })}
 
-                    {/* 5. แกนกลางไฟสว่างวาบ (เต้นรัวๆ) */}
                     <motion.div
                       animate={{ scale: [1, 1.8, 1], opacity: [0.9, 1, 0.9] }}
                       transition={{
-                        duration: 0.5, // เร่งจังหวะให้ดูเหมือนไฟกำลังไหม้
+                        duration: 0.5,
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
@@ -497,7 +491,7 @@ export default function MagicSparklerBooth() {
                         boxShadow: `
                           0 0 30px 10px rgba(255, 215, 0, 0.8), 
                           0 0 60px 30px rgba(255, 105, 180, 0.5)
-                        `, // สร้างรัศมี 2 ชั้นให้แสงดูฟุ้งและมีพลัง
+                        `,
                       }}
                     />
                   </Box>
@@ -529,20 +523,14 @@ export default function MagicSparklerBooth() {
                       }}
                       style={{
                         width: "100%",
-                        maxWidth: "550px",
+                        maxWidth: "550px", // ขยายจาก 450px หรือ 500px ให้กว้างขึ้นได้อีกนิดสำหรับ SSR
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
                       }}
                     >
-                      {/* ภาพ SSR ลอยปกติ (ไม่พลิก) */}
-                      <motion.div
-                        animate={{ y: [-5, 5, -5] }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
+                      {/* ภาพ SSR (ไม่ขยับ ไม่มีแสง และขยายให้ใหญ่ขึ้น) */}
+                      <div
                         style={{
                           width: "100%",
                           display: "flex",
@@ -557,18 +545,17 @@ export default function MagicSparklerBooth() {
                           onError={(e) => {
                             e.target.onerror = null;
                             e.target.src =
-                              "https://via.placeholder.com/400x500/transparent/FFD700?text=Image";
+                              "https://via.placeholder.com/500x650/transparent/FFD700?text=Image";
                           }}
                           sx={{
                             width: "100%",
-                            maxWidth: "400px",
-                            height: { xs: "40vh", md: "50vh" },
+                            maxWidth: "500px", // ปรับขยายขนาดให้ใหญ่ขึ้น
+                            height: { xs: "50vh", md: "65vh" }, // เพิ่มความสูงให้ภาพดูเต็มตาขึ้น
                             objectFit: "contain",
-                            filter:
-                              "drop-shadow(0px 0px 20px rgba(255, 215, 0, 0.6))",
+                            // ลบส่วน filter: drop-shadow ออก
                           }}
                         />
-                      </motion.div>
+                      </div>
 
                       {/* กล่องข้อความ SSR พลิกได้ */}
                       <Box
@@ -579,19 +566,15 @@ export default function MagicSparklerBooth() {
                           zIndex: 3,
                         }}
                       >
-                        {/* เพิ่ม Wrapper นิ่งๆ มารับค่า Hover */}
                         <motion.div
-                          initial="rest" // ถ้าเป็นมือถือ ให้ใช้การคลิกสลับ isFlipped, ถ้าคอมให้ดูที่ hover
+                          initial="rest"
                           animate={!canHover && isFlipped ? "hover" : "rest"}
-                          // ถ้าเป็นคอมให้ใช้ Hover, ถ้ามือถือให้ปิด Hover ทิ้ง
                           whileHover={canHover ? "hover" : "rest"}
-                          // เมื่อคลิก/แตะการ์ดในมือถือ ให้สลับหน้า-หลัง
                           onClick={() => {
                             if (!canHover) setIsFlipped(!isFlipped);
                           }}
                           style={{ width: "100%", position: "relative" }}
                         >
-                          {/* ตัวการ์ดข้างในรับคำสั่งหมุนผ่าน Variants แทน */}
                           <motion.div
                             variants={{
                               rest: { rotateY: 0 },
@@ -608,7 +591,7 @@ export default function MagicSparklerBooth() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                position: "relative", // ใช้ relative เพื่อกำหนดความสูงให้ container หลัก
+                                position: "relative",
                                 width: "100%",
                                 padding: "3px",
                                 borderRadius: "16px",
@@ -631,7 +614,7 @@ export default function MagicSparklerBooth() {
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: "220px", // กำหนดขั้นต่ำกันกล่องแฟบ
+                                  minHeight: "220px", 
                                 }}
                               >
                                 <Typography
@@ -659,23 +642,6 @@ export default function MagicSparklerBooth() {
                                   ✦ SSR ✦
                                 </Typography>
                                 <Typography
-                                  variant="h4"
-                                  sx={{
-                                    mt: 1,
-                                    mb: 1.5,
-                                    fontWeight: "bold",
-                                    fontFamily: "serif",
-                                    fontSize: { xs: "1.6rem", sm: "2.2rem" },
-                                    background:
-                                      "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
-                                  }}
-                                >
-                                  {result.name}
-                                </Typography>
-                                <Typography
                                   variant="body1"
                                   sx={{
                                     color: "#e0e0e0",
@@ -684,11 +650,7 @@ export default function MagicSparklerBooth() {
                                     fontSize: { xs: "0.95rem", sm: "1.05rem" },
                                   }}
                                 >
-                                  {/* สมมติว่ามี key quote หรือถ้าไม่มีสามารถใส่ placeholder ได้ */}
-                                  "
-                                  {result.quote ||
-                                    "พลังแห่งแสงสว่างสถิตอยู่กับข้า..."}
-                                  "
+                                  "{result.quote || "รับไปสิ ยืนบื้ออะไรอยู่"}"
                                 </Typography>
                               </Box>
                             </Box>
@@ -726,6 +688,23 @@ export default function MagicSparklerBooth() {
                                 }}
                               >
                                 <Typography
+                                  variant="h4"
+                                  sx={{
+                                    mt: 1,
+                                    mb: 1.5,
+                                    fontWeight: "bold",
+                                    fontFamily: "serif",
+                                    fontSize: { xs: "1.6rem", sm: "2.2rem" },
+                                    background:
+                                      "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
+                                  }}
+                                >
+                                  {result.name}
+                                </Typography>
+                                <Typography
                                   variant="body1"
                                   sx={{
                                     color: "#e0e0e0",
@@ -738,7 +717,7 @@ export default function MagicSparklerBooth() {
                                 </Typography>
                                 <Button
                                   onClick={(e) => {
-                                    e.stopPropagation();  
+                                    e.stopPropagation();
                                     setOpenModal(false);
                                   }}
                                   variant="outlined"
@@ -797,19 +776,15 @@ export default function MagicSparklerBooth() {
                           ease: "easeInOut",
                         }}
                       >
-                        {/* เพิ่ม Wrapper นิ่งๆ มารับค่า Hover */}
                         <motion.div
                           initial="rest"
-                          animate={!canHover && isFlipped ? "hover" : "rest"} 
-  // ถ้าเป็นคอมให้ใช้ Hover, ถ้ามือถือให้ปิด Hover ทิ้ง
-  whileHover={canHover ? "hover" : "rest"}
-  // เมื่อคลิก/แตะการ์ดในมือถือ ให้สลับหน้า-หลัง
-  onClick={() => {
-    if (!canHover) setIsFlipped(!isFlipped);
-  }}
+                          animate={!canHover && isFlipped ? "hover" : "rest"}
+                          whileHover={canHover ? "hover" : "rest"}
+                          onClick={() => {
+                            if (!canHover) setIsFlipped(!isFlipped);
+                          }}
                           style={{ width: "100%", position: "relative" }}
                         >
-                          {/* ตัวการ์ดข้างในรับคำสั่งหมุนผ่าน Variants แทน */}
                           <motion.div
                             variants={{
                               rest: { rotateY: 0 },
@@ -978,7 +953,7 @@ export default function MagicSparklerBooth() {
                                 </Typography>
                                 <Button
                                   onClick={(e) => {
-                                    e.stopPropagation(); // <--- ป้องกันไม่ให้คำสั่งคลิกทะลุไปถึงตัวการ์ด
+                                    e.stopPropagation();
                                     setOpenModal(false);
                                   }}
                                   variant="outlined"
