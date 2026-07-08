@@ -44,6 +44,8 @@ const sparklerItems = [
     quote: `[ อันนี้ของคุณครับ ]​\n[ ขอให้สนุกกับงานนะครับ ]​`,
     image: `${baseUrl}images/ssr/Shoji.png`,
     rate: 20,
+    themeColor: "#096CFF", 
+    themeGrad: "#87CEFA",
   },
 ];
 
@@ -135,6 +137,24 @@ export default function MagicSparklerBooth() {
     }, 1500);
   };
 
+  const isSR = result?.type === "SR";
+  const cardBorderGradient = isSR
+    ? "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)"  
+    : "linear-gradient(135deg, #707070, #999999, #BCBCBC, #E0E0E0)";  
+
+  const cardGlow = isSR
+    ? "0 0 35px rgba(255, 105, 180, 0.6)" // ออร่า SR สว่างกว่า
+    : "0 0 10px rgba(128, 128, 128, 0.2)"; // ออร่า Normal จางๆ เบาๆ ไม่ฟุ้งมาก
+
+  const tagBg = isSR ? "rgba(255, 105, 180, 0.2)" : "rgba(128, 128, 128, 0.15)";
+  const tagBorder = isSR ? "rgba(255,105,180,0.8)" : "rgba(128,128,128,0.5)";
+  const tagGlow = isSR ? "0 0 10px #FF69B4" : "0 0 5px #999999";
+
+  const nameGradient = isSR
+    ? "-webkit-linear-gradient(0deg, #FFF, #FFB6C1, #FF69B4)"
+    : "-webkit-linear-gradient(0deg, #FFF, #E0E0E0, #A9A9A9)";  
+
+  const btnColor = isSR ? "#FFB6C1" : "#A9A9A9";  
   return (
     <Box
       sx={{
@@ -362,7 +382,7 @@ export default function MagicSparklerBooth() {
               width: "100vw",
               height: "100vh",
               backgroundColor: "rgba(5, 5, 16, 0.8)", // พื้นหลังสีดำอมม่วง
-              backdropFilter: "blur(5px)", // เบลอฉากหลังของเว็บ
+              backdropFilter: "blur(12px)", // เบลอฉากหลังของเว็บ
               zIndex: 9999,
               display: "flex",
               justifyContent: "center",
@@ -585,7 +605,7 @@ export default function MagicSparklerBooth() {
                   {result.type === "SSR" ? (
                     // ==========================================
                     // แบบ SSR
-                    // ==========================================
+                    // ========================================== 
                     <motion.div
                       key="result-ssr"
                       initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -627,8 +647,7 @@ export default function MagicSparklerBooth() {
                             maxWidth: "500px",
                             height: { xs: "50vh", md: "65vh" },
                             objectFit: "contain",
-                            filter:
-                              "drop-shadow(0px 0px 5px rgba(255, 182, 193, 0.6))",
+                            filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FFD700"}99)`, // 💡 เงาภาพตามสีธีม
                           }}
                         />
                       </div>
@@ -671,10 +690,10 @@ export default function MagicSparklerBooth() {
                                 width: "100%",
                                 padding: "3px",
                                 borderRadius: "16px",
-                                background:
-                                  "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
+                                // 💡 เปลี่ยนสีกรอบเป็นสีธีม
+                                background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
+                                boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66`, // 66 = Opacity 40%
                                 animation: "gradient-shift 4s ease infinite",
                               }}
                             >
@@ -702,17 +721,17 @@ export default function MagicSparklerBooth() {
                                     transform: "translateX(-50%)",
                                     display: "inline-block",
                                     color: "#FFF",
-                                    bgcolor: "rgba(255, 215, 0, 0.2)",
+                                    bgcolor: `${result.themeColor || "#FFD700"}33`, // 33 = Opacity 20%
                                     fontWeight: "900",
                                     letterSpacing: 5,
                                     fontSize: "0.85rem",
                                     px: 3,
                                     py: 0.5,
-                                    border: "1px solid rgba(255,215,0,0.8)",
+                                    border: `1px solid ${result.themeColor || "#FFD700"}CC`, // CC = Opacity 80%
                                     borderRadius: "30px",
                                     backdropFilter: "blur(6px)",
-                                    textShadow: "0 0 10px #FFD700",
-                                    boxShadow: "0 0 15px rgba(255,215,0,0.5)",
+                                    textShadow: `0 0 10px ${result.themeColor || "#FFD700"}`,
+                                    boxShadow: `0 0 15px ${result.themeColor || "#FFD700"}80`, // 80 = Opacity 50%
                                   }}
                                 >
                                   ✦ SSR ✦
@@ -723,11 +742,11 @@ export default function MagicSparklerBooth() {
                                     color: "#e0e0e0",
                                     fontStyle: "italic",
                                     lineHeight: 1.6,
-                                    fontSize: { xs: "1.1rem", sm: "2.2rem" },
+                                    fontSize: { xs: "1rem", sm: "1.5rem" },
                                     whiteSpace: "pre-line",
                                   }}
                                 >
-                                  {result.quote || "รับไปสิ ยืนบื้ออะไรอยู่"}
+                                  {result.quote }
                                 </Typography>
                               </Box>
                             </Box>
@@ -744,10 +763,10 @@ export default function MagicSparklerBooth() {
                                 height: "100%",
                                 padding: "3px",
                                 borderRadius: "16px",
-                                background:
-                                  "linear-gradient(135deg, #FFD700, #FF4500, #FFD700, #FF8C00)",
+                                // 💡 เปลี่ยนสีกรอบเป็นสีธีม
+                                background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                boxShadow: "0 10px 40px rgba(255, 215, 0, 0.4)",
+                                boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66`,
                               }}
                             >
                               <Box
@@ -772,8 +791,7 @@ export default function MagicSparklerBooth() {
                                     fontWeight: "bold",
                                     fontFamily: "serif",
                                     fontSize: { xs: "1.6rem", sm: "2.2rem" },
-                                    background:
-                                      "-webkit-linear-gradient(0deg, #FFF, #FFD700, #FFA500)",
+                                    background: `-webkit-linear-gradient(0deg, #FFF, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FFA500"})`,
                                     WebkitBackgroundClip: "text",
                                     WebkitTextFillColor: "transparent",
                                     textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
@@ -800,8 +818,8 @@ export default function MagicSparklerBooth() {
                                   variant="outlined"
                                   fullWidth
                                   sx={{
-                                    color: "#FFD700",
-                                    borderColor: "rgba(255,215,0,0.6)",
+                                    color: result.themeColor || "#FFD700",
+                                    borderColor: `${result.themeColor || "#FFD700"}99`, // 99 = Opacity 60%
                                     borderRadius: "30px",
                                     py: 1.2,
                                     fontSize: "1rem",
@@ -810,9 +828,9 @@ export default function MagicSparklerBooth() {
                                     background: "rgba(0, 0, 0, 0.3)",
                                     transition: "all 0.3s",
                                     "&:hover": {
-                                      bgcolor: "rgba(255,215,0,0.2)",
-                                      borderColor: "#FFD700",
-                                      boxShadow: "0 0 20px rgba(255,215,0,0.6)",
+                                      bgcolor: `${result.themeColor || "#FFD700"}33`,
+                                      borderColor: result.themeColor || "#FFD700",
+                                      boxShadow: `0 0 20px ${result.themeColor || "#FFD700"}99`,
                                       transform: "translateY(-2px)",
                                     },
                                   }}
@@ -843,8 +861,62 @@ export default function MagicSparklerBooth() {
                         width: "100%",
                         maxWidth: "450px",
                         perspective: 1000,
+                        position: "relative",
                       }}
                     >
+                      {/* 🌟 เพิ่มเอฟเฟกต์ Sparkle รอบการ์ดเฉพาะ SR 🌟 */}
+                      {isSR && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "-15%",
+                            left: "-15%",
+                            width: "130%",
+                            height: "130%",
+                            pointerEvents: "none",
+                            zIndex: 0,
+                          }}
+                        >
+                          {[...Array(15)].map((_, i) => {
+                            const size = Math.random() * 15 + 10; // ขนาดของประกายแสง
+                            const top = `${Math.random() * 100}%`;
+                            const left = `${Math.random() * 100}%`;
+                            const delay = Math.random() * 2;
+                            const duration = Math.random() * 1.5 + 1.5;
+
+                            return (
+                              <motion.div
+                                key={`sr-sparkle-${i}`}
+                                initial={{ opacity: 0, scale: 0, rotate: 0 }}
+                                animate={{
+                                  opacity: [0, 1, 1, 0],
+                                  scale: [0, 1, 0.8, 0],
+                                  rotate: [0, 90, 180],
+                                }}
+                                transition={{
+                                  duration: duration,
+                                  repeat: Infinity,
+                                  delay: delay,
+                                  ease: "easeInOut",
+                                }}
+                                style={{
+                                  position: "absolute",
+                                  top: top,
+                                  left: left,
+                                  width: `${size}px`,
+                                  height: `${size}px`,
+                                  backgroundColor: "#FFF",
+                                  // สร้างรูปทรงประกายแสง 4 แฉก
+                                  clipPath:
+                                    "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
+                                  boxShadow: "0 0 15px #FF69B4, 0 0 30px #FF1493",
+                                }}
+                              />
+                            );
+                          })}
+                        </Box>
+                      )}
+
                       <motion.div
                         animate={{ y: [-5, 5, -5] }}
                         transition={{
@@ -852,6 +924,7 @@ export default function MagicSparklerBooth() {
                           repeat: Infinity,
                           ease: "easeInOut",
                         }}
+                        style={{ zIndex: 1, position: "relative" }}
                       >
                         <motion.div
                           initial="rest"
@@ -881,10 +954,8 @@ export default function MagicSparklerBooth() {
                                 position: "relative",
                                 padding: "3px",
                                 borderRadius: "24px",
-                                background:
-                                  "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
-                                backgroundSize: "300% 300%",
-                                boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
+                                background: cardBorderGradient,
+                                boxShadow: cardGlow,
                                 animation: "gradient-shift 4s ease infinite",
                               }}
                             >
@@ -916,8 +987,9 @@ export default function MagicSparklerBooth() {
                                     top: 0,
                                     left: 0,
                                     width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
+                                    height: "calc(100% - 120px)",
+                                    objectFit: "contain",
+                                    mt: 2,
                                   }}
                                 />
                                 <Box
@@ -928,7 +1000,7 @@ export default function MagicSparklerBooth() {
                                     width: "100%",
                                     height: "100%",
                                     background:
-                                      "linear-gradient(to bottom, rgba(10, 5, 20, 0) 40%, rgba(10, 5, 20, 0.9) 100%)",
+                                      "linear-gradient(to bottom, rgba(10, 5, 20, 0) 60%, rgba(10, 5, 20, 0.95) 100%)",
                                     pointerEvents: "none",
                                   }}
                                 />
@@ -948,17 +1020,17 @@ export default function MagicSparklerBooth() {
                                     sx={{
                                       display: "inline-block",
                                       color: "#FFF",
-                                      bgcolor: "rgba(255, 105, 180, 0.2)",
+                                      bgcolor: tagBg,
                                       fontWeight: "900",
                                       letterSpacing: 5,
                                       fontSize: "0.85rem",
                                       px: 3,
                                       py: 0.5,
-                                      border: "1px solid rgba(255,105,180,0.8)",
+                                      border: `1px solid ${tagBorder}`,
                                       borderRadius: "30px",
                                       mb: 2,
                                       backdropFilter: "blur(6px)",
-                                      textShadow: "0 0 10px #FF69B4",
+                                      textShadow: tagGlow,
                                     }}
                                   >
                                     ✦ {result.type} ✦
@@ -969,12 +1041,10 @@ export default function MagicSparklerBooth() {
                                       fontWeight: "bold",
                                       fontFamily: "serif",
                                       fontSize: { xs: "1.6rem", sm: "2.2rem" },
-                                      background:
-                                        "-webkit-linear-gradient(0deg, #FFF, #FFB6C1, #FF69B4)",
+                                      background: nameGradient,
                                       WebkitBackgroundClip: "text",
                                       WebkitTextFillColor: "transparent",
-                                      textShadow:
-                                        "0px 2px 10px rgba(0,0,0,0.8)",
+                                      textShadow: "0px 2px 10px rgba(0,0,0,0.8)",
                                     }}
                                   >
                                     {result.name}
@@ -995,10 +1065,8 @@ export default function MagicSparklerBooth() {
                                 height: "100%",
                                 padding: "3px",
                                 borderRadius: "24px",
-                                background:
-                                  "linear-gradient(135deg, #8A2BE2, #FF69B4, #4B0082, #FF1493)",
-                                backgroundSize: "300% 300%",
-                                boxShadow: "0 0 35px rgba(255, 105, 180, 0.5)",
+                                background: cardBorderGradient,
+                                boxShadow: cardGlow,
                               }}
                             >
                               <Card
@@ -1036,8 +1104,8 @@ export default function MagicSparklerBooth() {
                                   variant="outlined"
                                   fullWidth
                                   sx={{
-                                    color: "#FFB6C1",
-                                    borderColor: "rgba(255,105,180,0.6)",
+                                    color: btnColor,
+                                    borderColor: tagBorder,
                                     borderRadius: "30px",
                                     py: 1.2,
                                     fontSize: "1rem",
@@ -1046,10 +1114,9 @@ export default function MagicSparklerBooth() {
                                     background: "rgba(0, 0, 0, 0.3)",
                                     transition: "all 0.3s",
                                     "&:hover": {
-                                      bgcolor: "rgba(255,105,180,0.2)",
-                                      borderColor: "#FF69B4",
-                                      boxShadow:
-                                        "0 0 20px rgba(255,105,180,0.6)",
+                                      bgcolor: tagBg,
+                                      borderColor: btnColor,
+                                      boxShadow: `0 0 20px ${tagBorder}`,
                                       transform: "translateY(-2px)",
                                     },
                                   }}
