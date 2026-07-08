@@ -17,35 +17,33 @@ const baseUrl = import.meta.env.BASE_URL;
 const sparklerItems = [
   {
     id: 1,
-    name: "ไฟเย็นเกลียวคลื่นฉลาม",
+    name: "ไฟเย็นกล่องไม้ไขลาน",
     type: "Normal",
-    desc: "ประกายสีน้ำทะเลลึกลับ แฝงความซุกซนและร่าเริง เปล่งประกายราวกับหางปลาที่แหวกว่ายในยามค่ำคืน",
-    image: `${baseUrl}images/sparkler2.png`,
-    rate: 45,
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
+    โอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? ลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: "",
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+    rate: 50,
   },
   {
     id: 2,
-    name: "ไฟเย็นบทบรรเลงอำลา",
-    type: "Normal",
-    desc: "แสงสีชมพูสลัวที่งดงาม สะท้อนความรู้สึกที่ซ่อนเร้น ความผูกพันที่ลึกซึ้งจนไม่อยากเอ่ยคำลา",
-    image: `${baseUrl}images/sparkler1.jpg`,
-    rate: 45,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    type: "SR",
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
+    โอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? ลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: "",
+    image: `${baseUrl}images/chibi/Shoji.png`,
+    rate: 30,
   },
   {
     id: 3,
-    name: "ไฟเย็นแปดดาบแห่งโชคชะตา",
-    type: "SSR",
-    desc: "แสงสีแดงทองที่สาดส่อง ท่ามกลางความขัดแย้งในใจ แม้กลัวการสูญเสีย แต่แสงนี้จะช่วยปลดเปลื้องพันธนาการให้ก้าวเดิน",
-    image: `${baseUrl}images/kyora.png`,
-    rate: 7,
-  },
-  {
-    id: 4,
-    name: "ไฟเย็นไออุ่นผู้พิทักษ์",
-    type: "SSR",
-    desc: "แสงสว่างที่อบอุ่นที่สุด คอยดูแลอุณหภูมิและจัดแจงชุดยูกาตะให้เข้าที่ ปกป้องคุณจากความเหน็บหนาวอย่างเงียบเชียบ",
-    image: `${baseUrl}images/kyora.png`,
-    rate: 3,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    type: "SSR", // 💡 ปรับแก้ไขจาก "SR" เป็น "SSR" เพื่อให้เงื่อนไขดรอปการ์ดระดับสูงสุดทำงาน
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
+    โอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? ลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: `[ อันนี้ของคุณครับ ]​\n[ ขอให้สนุกกับงานนะครับ ]​`,
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 20,
   },
 ];
 
@@ -121,17 +119,49 @@ export default function MagicSparklerBooth() {
       if (pulledItem.type === "SSR") {
         setShowFlash(true);
         setTimeout(() => setShowFlash(false), 500);
+        
+        // --- เอฟเฟกต์พลุแตก (Fireworks) ---
         try {
-          confetti({
-            particleCount: 250,
-            spread: 120,
-            origin: { y: 0.6 },
-            colors: ["#FFD700", "#FF69B4", "#FF4500", "#8A2BE2"],
-            zIndex: 99999,
-          });
+          const duration = 3000; // ระยะเวลาที่พลุจะยิงต่อเนื่อง (3 วินาที)
+          const animationEnd = Date.now() + duration;
+          const defaults = { 
+            startVelocity: 30, 
+            spread: 360, // กระจาย 360 องศาให้เหมือนพลุ
+            ticks: 60, 
+            zIndex: 99999 
+          };
+
+          const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+          const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            
+            // สุ่มจุดพลุฝั่งซ้ายของจอ
+            confetti({
+              ...defaults,
+              particleCount,
+              origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+              colors: ["#FFD700", "#FF69B4", "#FF4500", "#8A2BE2"] // สีเดียวกับธีมของคุณ
+            });
+            
+            // สุ่มจุดพลุฝั่งขวาของจอ
+            confetti({
+              ...defaults,
+              particleCount,
+              origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+              colors: ["#FFD700", "#FF69B4", "#FF4500", "#8A2BE2"]
+            });
+          }, 250); // ยิงพลุลูกใหม่ทุกๆ 250 มิลลิวินาที
         } catch (err) {
           console.error("Confetti Error:", err);
         }
+        // ---------------------------------
       }
     }, 1500);
   };
@@ -158,11 +188,11 @@ export default function MagicSparklerBooth() {
       {[...Array(35)].map((_, i) => {
         const isGold = i % 2 === 0;
         const color = isGold ? "#FFD700" : "#FF69B4";
-        const size = Math.random() * 3 + 2; 
-        const duration = Math.random() * 4 + 4; 
-        const delay = Math.random() * 8; 
-        const top = `${Math.random() * 100}vh`; 
-        const left = `${Math.random() * 100}vw`; 
+        const size = Math.random() * 3 + 2;
+        const duration = Math.random() * 4 + 4;
+        const delay = Math.random() * 8;
+        const top = `${Math.random() * 100}vh`;
+        const left = `${Math.random() * 100}vw`;
 
         return (
           <motion.div
@@ -367,13 +397,12 @@ export default function MagicSparklerBooth() {
               boxSizing: "border-box",
             }}
           >
-            {/* 💡 จุดที่ปรับแก้ 💡 : ให้ Wrapper หลักปรับขนาดความกว้างตามประเภทของผลลัพธ์ */}
             <div
               onClick={(e) => e.stopPropagation()}
-              style={{ 
-                width: "100%", 
-                maxWidth: result?.type === "SSR" ? "700px" : "450px", 
-                transition: "max-width 0.3s ease-in-out" 
+              style={{
+                width: "100%",
+                maxWidth: result?.type === "SSR" ? "700px" : "450px",
+                transition: "max-width 0.3s ease-in-out",
               }}
             >
               {isRolling && (
@@ -437,16 +466,16 @@ export default function MagicSparklerBooth() {
 
                     {[...Array(40)].map((_, i) => {
                       const angle = (i * 9 * Math.PI) / 180;
-                      const distance = Math.random() * 70 + 40; 
-                      const duration = Math.random() * 0.8 + 0.4; 
+                      const distance = Math.random() * 70 + 40;
+                      const duration = Math.random() * 0.8 + 0.4;
                       const delay = Math.random() * 1;
                       const size = Math.random() * 4 + 2;
                       const color =
                         i % 3 === 0
-                          ? "#FF69B4" 
+                          ? "#FF69B4"
                           : i % 2 === 0
-                            ? "#FFD700" 
-                            : "#FFF"; 
+                            ? "#FFD700"
+                            : "#FFF";
 
                       return (
                         <motion.div
@@ -479,7 +508,7 @@ export default function MagicSparklerBooth() {
                     <motion.div
                       animate={{ scale: [1, 1.8, 1], opacity: [0.9, 1, 0.9] }}
                       transition={{
-                        duration: 0.5, 
+                        duration: 0.5,
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
@@ -492,7 +521,7 @@ export default function MagicSparklerBooth() {
                         boxShadow: `
                           0 0 30px 10px rgba(255, 215, 0, 0.8), 
                           0 0 60px 30px rgba(255, 105, 180, 0.5)
-                        `, 
+                        `,
                       }}
                     />
                   </Box>
@@ -524,7 +553,7 @@ export default function MagicSparklerBooth() {
                       }}
                       style={{
                         width: "100%",
-                        maxWidth: "700px", // 💡 ปรับความกว้างสูงสุดของ SSR เป็น 700px 💡
+                        maxWidth: "700px",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -550,10 +579,11 @@ export default function MagicSparklerBooth() {
                           }}
                           sx={{
                             width: "100%",
-                            maxWidth: "500px", // จำกัดขนาดรูปภาพไม่ให้ใหญ่เทอะทะเกินไป
-                            height: { xs: "50vh", md: "65vh" }, 
+                            maxWidth: "500px",
+                            height: { xs: "50vh", md: "65vh" },
                             objectFit: "contain",
-                            filter: "drop-shadow(0px 0px 5px rgba(255, 182, 193, 0.6))",
+                            filter:
+                              "drop-shadow(0px 0px 5px rgba(255, 182, 193, 0.6))",
                           }}
                         />
                       </div>
@@ -562,7 +592,7 @@ export default function MagicSparklerBooth() {
                       <Box
                         sx={{
                           perspective: 1000,
-                          width: "100%", // จะขยายเต็ม 700px ตามตัว Wrapper แม่ 
+                          width: "100%",
                           mt: -2,
                           zIndex: 3,
                         }}
@@ -592,7 +622,7 @@ export default function MagicSparklerBooth() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                position: "relative", 
+                                position: "relative",
                                 width: "100%",
                                 padding: "3px",
                                 borderRadius: "16px",
@@ -615,7 +645,7 @@ export default function MagicSparklerBooth() {
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: "220px", 
+                                  minHeight: "220px",
                                 }}
                               >
                                 <Typography
@@ -649,9 +679,10 @@ export default function MagicSparklerBooth() {
                                     fontStyle: "italic",
                                     lineHeight: 1.6,
                                     fontSize: { xs: "1.1rem", sm: "2.2rem" },
+                                    whiteSpace: "pre-line",
                                   }}
                                 >
-                                  "{result.quote || "รับไปสิ ยืนบื้ออะไรอยู่"}"
+                                  {result.quote || "รับไปสิ ยืนบื้ออะไรอยู่"}
                                 </Typography>
                               </Box>
                             </Box>
@@ -718,7 +749,7 @@ export default function MagicSparklerBooth() {
                                 </Typography>
                                 <Button
                                   onClick={(e) => {
-                                    e.stopPropagation();  
+                                    e.stopPropagation();
                                     setOpenModal(false);
                                   }}
                                   variant="outlined"
@@ -751,7 +782,7 @@ export default function MagicSparklerBooth() {
                     </motion.div>
                   ) : (
                     // ==========================================
-                    // แบบปกติ (Normal)
+                    // แบบปกติ (Normal / SR)
                     // ==========================================
                     <motion.div
                       key="result-other"
@@ -765,7 +796,7 @@ export default function MagicSparklerBooth() {
                       }}
                       style={{
                         width: "100%",
-                        maxWidth: "450px", // ระดับปกติคงความกว้างที่ 450px ไว้เหมือนเดิม
+                        maxWidth: "450px",
                         perspective: 1000,
                       }}
                     >
@@ -779,7 +810,7 @@ export default function MagicSparklerBooth() {
                       >
                         <motion.div
                           initial="rest"
-                          animate={!canHover && isFlipped ? "hover" : "rest"} 
+                          animate={!canHover && isFlipped ? "hover" : "rest"}
                           whileHover={canHover ? "hover" : "rest"}
                           onClick={() => {
                             if (!canHover) setIsFlipped(!isFlipped);
@@ -954,7 +985,7 @@ export default function MagicSparklerBooth() {
                                 </Typography>
                                 <Button
                                   onClick={(e) => {
-                                    e.stopPropagation(); 
+                                    e.stopPropagation();
                                     setOpenModal(false);
                                   }}
                                   variant="outlined"
