@@ -11,7 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
-import confetti from "canvas-confetti";
+import { Fireworks } from "@fireworks-js/react";
 const baseUrl = import.meta.env.BASE_URL;
 
 const sparklerItems = [
@@ -53,6 +53,10 @@ export default function MagicSparklerBooth() {
   const [isRolling, setIsRolling] = useState(false);
   const [result, setResult] = useState(null);
   const [showFlash, setShowFlash] = useState(false);
+
+  // เพิ่ม State สำหรับควบคุมพลุ
+  const [showFireworks, setShowFireworks] = useState(false);
+
   const audioRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const canHover = useMediaQuery("(hover: hover)");
@@ -93,12 +97,12 @@ export default function MagicSparklerBooth() {
     }
     setIsPlaying(!isPlaying);
   };
-
   const handleRollGacha = () => {
     setIsFlipped(false);
     setIsRolling(true);
     setOpenModal(true);
     setResult(null);
+    setShowFireworks(false); // รีเซ็ตพลุก่อนเปิดใหม่
 
     setTimeout(() => {
       const rand = Math.random() * 100;
@@ -119,49 +123,14 @@ export default function MagicSparklerBooth() {
       if (pulledItem.type === "SSR") {
         setShowFlash(true);
         setTimeout(() => setShowFlash(false), 500);
-        
-        // --- เอฟเฟกต์พลุแตก (Fireworks) ---
-        try {
-          const duration = 3000; // ระยะเวลาที่พลุจะยิงต่อเนื่อง (3 วินาที)
-          const animationEnd = Date.now() + duration;
-          const defaults = { 
-            startVelocity: 30, 
-            spread: 360, // กระจาย 360 องศาให้เหมือนพลุ
-            ticks: 60, 
-            zIndex: 99999 
-          };
 
-          const randomInRange = (min, max) => Math.random() * (max - min) + min;
+        // สั่งเปิดพลุ
+        setShowFireworks(true);
 
-          const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-
-            const particleCount = 50 * (timeLeft / duration);
-            
-            // สุ่มจุดพลุฝั่งซ้ายของจอ
-            confetti({
-              ...defaults,
-              particleCount,
-              origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-              colors: ["#FFD700", "#FF69B4", "#FF4500", "#8A2BE2"] // สีเดียวกับธีมของคุณ
-            });
-            
-            // สุ่มจุดพลุฝั่งขวาของจอ
-            confetti({
-              ...defaults,
-              particleCount,
-              origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-              colors: ["#FFD700", "#FF69B4", "#FF4500", "#8A2BE2"]
-            });
-          }, 250); // ยิงพลุลูกใหม่ทุกๆ 250 มิลลิวินาที
-        } catch (err) {
-          console.error("Confetti Error:", err);
-        }
-        // ---------------------------------
+        // ตั้งเวลาปิดพลุ (เช่น 3 วินาที)
+        setTimeout(() => {
+          setShowFireworks(false);
+        }, 5000);
       }
     }, 1500);
   };
@@ -375,34 +344,110 @@ export default function MagicSparklerBooth() {
       {/* Overlay Modal */}
       <AnimatePresence>
         {openModal && (
-          <motion.div
+         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            onClick={() => !isRolling && setOpenModal(false)}
+            onClick={() => {
+              if (!isRolling) {
+                setOpenModal(false);
+                setShowFireworks(false);
+              }
+            }}
             style={{
               position: "fixed",
               top: 0,
               left: 0,
               width: "100vw",
               height: "100vh",
-              backgroundColor: "rgba(5, 5, 16, 0.9)",
-              backdropFilter: "blur(10px)",
+              backgroundColor: "rgba(5, 5, 16, 0.8)", // พื้นหลังสีดำอมม่วง
+              backdropFilter: "blur(5px)", // เบลอฉากหลังของเว็บ
               zIndex: 9999,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               padding: "20px",
               boxSizing: "border-box",
+              overflow: "hidden", // ป้องกันภาพซูมทะลุขอบ
             }}
           >
+            <AnimatePresence>
+              {!isRolling && result?.type === "SSR" && (
+                <motion.div
+                  key="ssr-bg"
+                  initial={{ opacity: 0, scale: 1.3, x: "5%", y: "-5%" }}
+                  animate={{ opacity: 0.3, scale: 1.4, x: "15%", y: "-5%" }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 4, ease: "easeOut" }} // ขยับช้าๆ ให้ดูลึกลับและละมุน
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundImage: `url(${result.image})`,
+                    backgroundSize: "cover",  
+                    backgroundPosition: "right 20%", 
+                    mixBlendMode: "screen", 
+                    zIndex: 0,
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {showFireworks && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }} // 👈 สั่งให้ opacity ค่อยๆ เป็น 0 ตอนหายไป
+                  transition={{ duration: 1.5, ease: "easeInOut" }} // 👈 ใช้เวลาเฟดออก 1.5 วินาที
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    zIndex: 0,
+                    pointerEvents: "none", // ป้องกันการคลิกโดนพลุ
+                  }}
+                >
+                  <Fireworks
+                    options={{
+                      rocketsPoint: { min: 0, max: 100 },
+                      hue: { min: 0, max: 360 },
+                      delay: { min: 30, max: 60 },
+                      speed: 2,
+                      acceleration: 1.05,
+                      friction: 0.95,
+                      gravity: 1.5,
+                      particles: 90,
+                      traceLength: 3,
+                      traceSpeed: 10,
+                      explosion: 5,
+                      intensity: 30,
+                      flickering: 50,
+                      lineStyle: "round",
+                    }}
+                    style={{
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      position: "absolute",
+                    }}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div
               onClick={(e) => e.stopPropagation()}
               style={{
                 width: "100%",
                 maxWidth: result?.type === "SSR" ? "700px" : "450px",
                 transition: "max-width 0.3s ease-in-out",
+                zIndex: 10, // ให้อยู่เหนือพลุ
               }}
             >
               {isRolling && (
