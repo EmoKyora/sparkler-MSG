@@ -11,6 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // เพิ่มไอคอนลูกศร
 import { Fireworks } from "@fireworks-js/react";
 const baseUrl = import.meta.env.BASE_URL;
 
@@ -126,8 +127,6 @@ export default function App() {
       setIsRolling(false);
 
       if (pulledItem.type === "SSR") {
-        /* setShowFlash(true);
-        setTimeout(() => setShowFlash(false), 500); */
         setShowFireworks(true);
         setTimeout(() => {
           setShowFireworks(false);
@@ -170,69 +169,78 @@ export default function App() {
   return (
     <Box
       sx={{
-        height: "100dvh",
+        height: "100dvh", // 🟢 บังคับความสูงตายตัว
         width: "100vw",
         bgcolor: "#050510",
         color: "#fff",
-        backgroundImage:
-          "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         position: "relative",
-        overflow: "hidden",
-        px: 2,
+        overflowX: "hidden",
+        overflowY: "auto", // 🟢 บังคับให้ Scroll ข้างในกล่องนี้แทน
         boxSizing: "border-box",
       }}
     >
-      {[...Array(35)].map((_, i) => {
-        const isGold = i % 2 === 0;
-        const color = isGold ? "#FFD700" : "#FF69B4";
-        const size = Math.random() * 3 + 2;
-        const duration = Math.random() * 4 + 4;
-        const delay = Math.random() * 8;
-        const top = `${Math.random() * 100}vh`;
-        const left = `${Math.random() * 100}vw`;
+      {/* ส่วนสำหรับพื้นหลังและดวงดาวที่ Fixed ไว้ไม่ให้ขยับตอนสกอร์ */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundImage: "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        {[...Array(35)].map((_, i) => {
+          const isGold = i % 2 === 0;
+          const color = isGold ? "#FFD700" : "#FF69B4";
+          const size = Math.random() * 3 + 2;
+          const duration = Math.random() * 4 + 4;
+          const delay = Math.random() * 8;
+          const top = `${Math.random() * 100}vh`;
+          const left = `${Math.random() * 100}vw`;
 
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: [0, 1, 0.4, 1, 0.2, 0],
-              scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
-            }}
-            transition={{
-              duration: duration,
-              repeat: Infinity,
-              delay: delay,
-              ease: "easeInOut",
-              times: [0, 0.1, 0.3, 0.6, 0.8, 1],
-            }}
-            style={{
-              position: "absolute",
-              top: top,
-              left: left,
-              width: `${size}px`,
-              height: `${size}px`,
-              backgroundColor: "#FFF",
-              borderRadius: "50%",
-              boxShadow: `
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 1, 0.4, 1, 0.2, 0],
+                scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
+              }}
+              transition={{
+                duration: duration,
+                repeat: Infinity,
+                delay: delay,
+                ease: "easeInOut",
+                times: [0, 0.1, 0.3, 0.6, 0.8, 1],
+              }}
+              style={{
+                position: "absolute",
+                top: top,
+                left: left,
+                width: `${size}px`,
+                height: `${size}px`,
+                backgroundColor: "#FFF",
+                borderRadius: "50%",
+                boxShadow: `
                 0 0 ${size * 2}px ${color}, 
                 0 0 ${size * 4}px ${color}, 
                 0 0 ${size * 6}px ${color}
               `,
-              zIndex: 0,
-            }}
-          />
-        );
-      })}
+              }}
+            />
+          );
+        })}
+      </Box>
 
       <IconButton
         onClick={toggleMusic}
         sx={{
-          position: "absolute",
+          position: "fixed", // เปลี่ยนเป็น fixed เพื่อให้ปุ่มเสียงตามติดไปตลอด
           top: { xs: 15, md: 30 },
           right: { xs: 15, md: 30 },
           color: "#FFD700",
@@ -250,12 +258,18 @@ export default function App() {
         )}
       </IconButton>
 
+      {/* Hero Section (ส่วนแรกขนาดเต็มจอ) */}
       <Box
         sx={{
+          minHeight: "100dvh",
+          flexShrink: 0,
           zIndex: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          px: 2,
         }}
       >
         <motion.div
@@ -267,7 +281,6 @@ export default function App() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            zIndex: 1,
           }}
         >
           <Typography
@@ -303,7 +316,6 @@ export default function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.5 }}
-          style={{ zIndex: 1 }}
         >
           <Typography
             variant="body1"
@@ -341,7 +353,7 @@ export default function App() {
             ],
           }}
           transition={{ repeat: Infinity, duration: 2 }}
-          style={{ borderRadius: "50px" }}
+          style={{ borderRadius: "50px", position: "relative" }}
         >
           <motion.div
             animate={{ scale: [1, 1.3], opacity: [0.5, 0] }}
@@ -373,6 +385,8 @@ export default function App() {
                 "linear-gradient(45deg, rgba(255,69,0,0.3) 0%, rgba(255,215,0,0.3) 100%)",
               backdropFilter: "blur(10px)",
               transition: "all 0.3s ease",
+              position: "relative",
+              zIndex: 1,
               "&:hover": {
                 bgcolor: "rgba(255,215,0,0.2)",
                 border: "2px solid #FFF",
@@ -383,9 +397,61 @@ export default function App() {
             ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
           </Button>
         </motion.div>
+
+        {/* Scroll Indicator (บอกผู้ใช้ให้เลื่อนลง) */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          style={{
+            position: "absolute",
+            bottom: "30px",
+            opacity: 0.6,
+          }}
+        >
+          <KeyboardArrowDownIcon sx={{ fontSize: 40, color: "#FFD700" }} />
+        </motion.div>
       </Box>
 
-      {/* Overlay Modal */}
+      {/* Content Section (ส่วนคำโปรยที่จะเฟดลอยขึ้นมาเมื่อเลื่อนเจอ) */}
+      <Box
+        sx={{
+          minHeight: "100dvh",
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          zIndex: 1,
+          px: 2,
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 60, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.4 }} // ให้เล่นซ้ำได้เวลาเลื่อนขึ้นลง
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          style={{ textAlign: "center" }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontFamily: "'Shippori Mincho', serif",
+              color: "#FFD700",
+              lineHeight: 2.2,
+              letterSpacing: "2px",
+              textShadow: "0 0 20px rgba(255,215,0,0.6), 0 0 5px rgba(255,105,180,0.4)",
+              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
+            }}
+          >
+            ไฟเย็นแบบไหน<br />
+            ที่จะแต่งแต้ม เติมสีสัน<br />
+            ให้ผืนฟ้าอันมืดมิดในค่ำคืนสุดพิเศษของคุณกัน
+          </Typography>
+        </motion.div>
+      </Box>
+
+      {/* Overlay Modal (เหมือนเดิม) */}
       <AnimatePresence>
         {openModal && (
           <motion.div
@@ -440,13 +506,12 @@ export default function App() {
                 />
               )}
             </AnimatePresence>
-          <AnimatePresence>
+            <AnimatePresence>
               {showFireworks && (
                 <motion.div
-                  // หน่วงเวลาให้ระเบิดโชว์สัก 1 วิ แล้วค่อยๆ เฟดหายไปทั้งแผง
                   initial={{ opacity: 1 }}
-                  animate={{ opacity: 0 }} 
-                  transition={{ duration: 2, delay: 1 }} 
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 2, delay: 1 }}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -458,7 +523,6 @@ export default function App() {
                     overflow: "hidden",
                   }}
                 >
-                  {/* 1. แสงแฟลชสว่างวาบจุดศูนย์กลาง */}
                   <motion.div
                     initial={{ opacity: 0.8, scale: 0.5 }}
                     animate={{ opacity: 0, scale: 2 }}
@@ -471,8 +535,6 @@ export default function App() {
                       mixBlendMode: "screen",
                     }}
                   />
-
-                  {/* 2. คลื่นกระแทก (Shockwave Rings) */}
                   {[...Array(2)].map((_, i) => (
                     <motion.div
                       key={`shockwave-${i}`}
@@ -491,27 +553,33 @@ export default function App() {
                       }}
                     />
                   ))}
-
-                  {/* 3. สะเก็ดระเบิดพุ่งกระจายอย่างรุนแรง (Explosive Particles) */}
                   {[...Array(80)].map((_, i) => {
-                    const size = Math.random() * 8 + 3; // ขนาดเม็ดแสง
-                    const angle = Math.random() * Math.PI * 2; // ทิศทางรอบทิศ
-                    const distance = Math.random() * 70 + 30; // ระยะทางที่พุ่งออกไป (vw)
+                    const size = Math.random() * 8 + 3;
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 70 + 30;
                     const tx = Math.cos(angle) * distance;
                     const ty = Math.sin(angle) * distance;
-                    
+
                     const colors = [
                       result?.themeColor || "#FFD700",
                       result?.themeGrad || "#FFA500",
                       "#FFFFFF",
-                      "#FFFACD"
+                      "#FFFACD",
                     ];
-                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const color =
+                      colors[Math.floor(Math.random() * colors.length)];
 
                     return (
                       <motion.div
                         key={`explosion-part-${i}`}
-                        initial={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", left: "50%", top: "50%" }}
+                        initial={{
+                          opacity: 1,
+                          scale: 1,
+                          x: "-50%",
+                          y: "-50%",
+                          left: "50%",
+                          top: "50%",
+                        }}
                         animate={{
                           opacity: [1, 1, 0],
                           scale: [1, 0.5, 0],
@@ -519,8 +587,8 @@ export default function App() {
                           y: `calc(-50% + ${ty}vh)`,
                         }}
                         transition={{
-                          duration: Math.random() * 1.5 + 0.5, // ความเร็วของการพุ่ง
-                          ease: "easeOut", // พุ่งแรงตอนแรก แล้วชะลอตอนปลาย (เหมือนระเบิดจริง)
+                          duration: Math.random() * 1.5 + 0.5,
+                          ease: "easeOut",
                         }}
                         style={{
                           position: "absolute",
@@ -678,9 +746,6 @@ export default function App() {
                   }}
                 >
                   {result.type === "SSR" ? (
-                    // ==========================================
-                    // แบบ SSR
-                    // ==========================================
                     <motion.div
                       key="result-ssr"
                       initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -700,7 +765,6 @@ export default function App() {
                         position: "relative",
                       }}
                     >
-                      {/* === 🌟 Floating Particles (ละอองแสงลอยรอบๆ SSR) 🌟 === */}
                       <Box
                         sx={{
                           position: "absolute",
@@ -753,7 +817,6 @@ export default function App() {
                         })}
                       </Box>
 
-                      {/* ภาพ SSR */}
                       <div
                         style={{
                           width: "100%",
@@ -774,19 +837,18 @@ export default function App() {
                           sx={{
                             width: "100%",
                             maxWidth: "500px",
-                            height: { xs: "40vh", md: "65vh" }, // ลดส่วนสูงรูปลงบนมือถือไม่ให้กินที่
+                            height: { xs: "40vh", md: "65vh" },
                             objectFit: "contain",
                             filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FFD700"}99)`,
                           }}
                         />
                       </div>
 
-                      {/* กล่องข้อความ SSR พลิกได้ */}
                       <Box
                         sx={{
                           perspective: 1000,
                           width: "100%",
-                          mt: { xs: -1, sm: -2 }, // ดึงกล่องข้อความขึ้นนิดหน่อย
+                          mt: { xs: -1, sm: -2 },
                           zIndex: 3,
                         }}
                       >
@@ -808,15 +870,14 @@ export default function App() {
                             style={{
                               width: "100%",
                               transformStyle: "preserve-3d",
-                              WebkitTransformStyle: "preserve-3d", // แก้บั๊ก iOS
+                              WebkitTransformStyle: "preserve-3d",
                               position: "relative",
                             }}
                           >
-                            {/* === ด้านหน้า: แสดงคำพูดตัวละคร === */}
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
+                                WebkitBackfaceVisibility: "hidden",
                                 position: "relative",
                                 width: "100%",
                                 padding: "3px",
@@ -848,15 +909,15 @@ export default function App() {
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
                                   p: { xs: 2.5, sm: 4 },
-                                  pb: { xs: 4, sm: 5 }, // 1️⃣ เพิ่มระยะเว้นด้านล่างกันตัวอักษรทับกัน
+                                  pb: { xs: 4, sm: 5 },
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "180px", sm: "280px" },
+                                  minHeight: { xs: "120px", sm: "280px" },
                                   transform: "translateZ(1px)",
-                                  position: "relative", // 2️⃣ ต้องใส่เพื่อให้ absolute ด้านล่างทำงานตามกรอบนี้
+                                  position: "relative",
                                 }}
                               >
                                 <Typography
@@ -913,11 +974,10 @@ export default function App() {
                               </Box>
                             </Box>
 
-                            {/* === ด้านหลัง: แสดงคำอธิบายและไม่มีปุ่มกด === */}
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
+                                WebkitBackfaceVisibility: "hidden",
                                 transform: "rotateY(180deg)",
                                 position: "absolute",
                                 top: 0,
@@ -952,13 +1012,13 @@ export default function App() {
                                   height: "100%",
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
-                                  p: { xs: 2.5, sm: 4 }, // 🟢 ปรับ padding กลับมาให้สมดุลบนล่างเท่ากัน
+                                  p: { xs: 2.5, sm: 4 },
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "180px", sm: "280px" },
+                                  minHeight: { xs: "120px", sm: "280px" },
                                   transform: "translateZ(1px)",
                                 }}
                               >
@@ -999,7 +1059,7 @@ export default function App() {
                                     textAlign: "center",
                                     whiteSpace: "pre-line",
                                     textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                                    mb: 2.5, // 🟢 เพิ่ม margin-bottom ตรงนี้เพื่อดันให้ห่างจากเส้นเรืองแสงนิดหน่อย
+                                    mb: 2.5,
                                   }}
                                 >
                                   {result.desc}
@@ -1036,9 +1096,6 @@ export default function App() {
                       </Box>
                     </motion.div>
                   ) : (
-                    // ==========================================
-                    // แบบปกติ (Normal / SR)
-                    // ==========================================
                     <motion.div
                       key="result-other"
                       initial={{ rotateY: 90, scale: 0.8, opacity: 0, y: 50 }}
@@ -1135,14 +1192,14 @@ export default function App() {
                             style={{
                               width: "100%",
                               transformStyle: "preserve-3d",
-                              WebkitTransformStyle: "preserve-3d", // แก้บั๊ก iOS
+                              WebkitTransformStyle: "preserve-3d",
                               position: "relative",
                             }}
                           >
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
+                                WebkitBackfaceVisibility: "hidden",
                                 position: "relative",
                                 padding: "3px",
                                 borderRadius: "24px",
@@ -1155,7 +1212,7 @@ export default function App() {
                                 sx={{
                                   position: "relative",
                                   width: "100%",
-                                  height: { xs: "70vh", sm: "600px" }, // ลดขนาดไม่ให้ล้นมือถือ
+                                  height: { xs: "70vh", sm: "600px" },
                                   maxHeight: { xs: "500px", sm: "none" },
                                   bgcolor: "#0a0510",
                                   color: "white",
@@ -1164,7 +1221,7 @@ export default function App() {
                                   flexDirection: "column",
                                   overflow: "hidden",
                                   boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
-                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
+                                  transform: "translateZ(1px)",
                                 }}
                               >
                                 <Box
@@ -1205,7 +1262,7 @@ export default function App() {
                                     left: 0,
                                     width: "100%",
                                     textAlign: "center",
-                                    p: { xs: 2.5, sm: 4 }, // ลด padding
+                                    p: { xs: 2.5, sm: 4 },
                                     pb: { xs: 2, sm: 2 },
                                     zIndex: 2,
                                   }}
@@ -1235,7 +1292,7 @@ export default function App() {
                                     sx={{
                                       fontWeight: "bold",
                                       fontFamily: "serif",
-                                      fontSize: { xs: "1rem", sm: "1.8rem" }, // ลดขนาดฟอนต์บนมือถือ
+                                      fontSize: { xs: "1rem", sm: "1.8rem" },
                                       color: "#FFFFFF",
                                       textShadow: nameShadow,
                                       mb: 0.5,
@@ -1263,7 +1320,7 @@ export default function App() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
-                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
+                                WebkitBackfaceVisibility: "hidden",
                                 transform: "rotateY(180deg)",
                                 position: "absolute",
                                 top: 0,
@@ -1287,10 +1344,10 @@ export default function App() {
                                   flexDirection: "column",
                                   justifyContent: "center",
                                   alignItems: "center",
-                                  p: { xs: 2.5, sm: 4 }, // ลด padding
+                                  p: { xs: 2.5, sm: 4 },
                                   position: "relative",
                                   overflow: "hidden",
-                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
+                                  transform: "translateZ(1px)",
                                 }}
                               >
                                 <Box
@@ -1320,7 +1377,7 @@ export default function App() {
                                       fontSize: {
                                         xs: "0.75rem",
                                         sm: "0.95rem",
-                                      }, // ลดขนาดฟอนต์บนมือถือ
+                                      },
                                       textAlign: "center",
                                       mb: 3,
                                       whiteSpace: "pre-line",
