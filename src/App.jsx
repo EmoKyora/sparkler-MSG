@@ -20,7 +20,7 @@ const sparklerItems = [
     name: "ไฟเย็นกล่องไม้ไขลาน",
     type: "Normal",
     desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
-    ​\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? ​\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    \nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? \nลองเล่นเป็นวาทยากรสักครั้งไหม`,
     quote: "",
     image: `${baseUrl}images/sparkler/Shoji.png`,
     rate: 50,
@@ -30,7 +30,7 @@ const sparklerItems = [
     name: "ไฟเย็นกล่องไม้ไขลาน",
     type: "SR",
     desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
-    ​\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? ​\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    \nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? \nลองเล่นเป็นวาทยากรสักครั้งไหม`,
     quote: "",
     image: `${baseUrl}images/chibi/Shoji.png`,
     rate: 30,
@@ -38,10 +38,10 @@ const sparklerItems = [
   {
     id: 3,
     name: "ไฟเย็นกล่องไม้ไขลาน",
-    type: "SSR", // 💡 ปรับแก้ไขจาก "SR" เป็น "SSR" เพื่อให้เงื่อนไขดรอปการ์ดระดับสูงสุดทำงาน
+    type: "SSR", 
     desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
-    ​\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?​\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
-    quote: `กระดาษในมือเขาเขียนว่า​\n​\n[ อันนี้ของคุณครับ ]​\n[ ขอให้สนุกกับงานนะครับ ]​`,
+    \nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
     image: `${baseUrl}images/ssr/Shoji.png`,
     rate: 20,
     themeColor: "#096CFF",
@@ -55,8 +55,6 @@ export default function App() {
   const [isRolling, setIsRolling] = useState(false);
   const [result, setResult] = useState(null);
   const [showFlash, setShowFlash] = useState(false);
-
-  // เพิ่ม State สำหรับควบคุมพลุ
   const [showFireworks, setShowFireworks] = useState(false);
 
   const audioRef = useRef(null);
@@ -103,12 +101,13 @@ export default function App() {
     }
     setIsPlaying(!isPlaying);
   };
+
   const handleRollGacha = () => {
     setIsFlipped(false);
     setIsRolling(true);
     setOpenModal(true);
     setResult(null);
-    setShowFireworks(false); // รีเซ็ตพลุก่อนเปิดใหม่
+    setShowFireworks(false);
 
     setTimeout(() => {
       const rand = Math.random() * 100;
@@ -129,11 +128,7 @@ export default function App() {
       if (pulledItem.type === "SSR") {
         setShowFlash(true);
         setTimeout(() => setShowFlash(false), 500);
-
-        // สั่งเปิดพลุ
         setShowFireworks(true);
-
-        // ตั้งเวลาปิดพลุ (เช่น 3 วินาที)
         setTimeout(() => {
           setShowFireworks(false);
         }, 5000);
@@ -150,12 +145,10 @@ export default function App() {
 
   const isSR = result?.type === "SR";
 
-  // SR เป็นเทาเงินเมทัลลิกแวววาว / Normal เป็นเทาเข้มด้านๆ
   const cardBorderGradient = isSR
     ? "linear-gradient(135deg, #A3A3A3, #FFFFFF, #E0E0E0, #6B6B6B)"
     : "linear-gradient(135deg, #555555, #888888, #777777, #444444)";
 
-  // SR ออร่าขาวเงินละมุน / Normal เป็นแค่เงามืดจางๆ ไม่ฟุ้ง
   const cardGlow = isSR
     ? "0 0 25px rgba(255, 255, 255, 0.35)"
     : "0 0 10px rgba(0, 0, 0, 0.3)";
@@ -168,12 +161,12 @@ export default function App() {
     ? "0 0 8px rgba(255, 255, 255, 0.5)"
     : "0 0 0px transparent";
 
-  // SR เงาคม + ออร่าขาวเงินช่วยขับตัวอักษร / Normal เงาคม + ออร่าเทาจางๆ
   const nameShadow = isSR
     ? "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px #FFFFFF"
     : "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 5px #888888";
 
   const btnColor = isSR ? "#E0E0E0" : "#888888";
+
   return (
     <Box
       sx={{
@@ -277,7 +270,6 @@ export default function App() {
             zIndex: 1,
           }}
         >
-          {/* === ชื่อบูธหลัก === */}
           <Typography
             variant="h2"
             sx={{
@@ -314,14 +306,13 @@ export default function App() {
           transition={{ duration: 1.5, delay: 0.5 }}
           style={{ zIndex: 1 }}
         >
-          {/* === บทกวี / คำโปรยบูธ === */}
           <Typography
             variant="body1"
             sx={{
               color: "#e0e0e0",
               textAlign: "center",
               maxWidth: { xs: "90vw", sm: "600px", md: "700px" },
-              mb: { xs: 4, md: 6 }, // 💡 ลด Margin ลงนิดหน่อยเพื่อให้ปุ่มไม่ตกขอบจอมือถือ
+              mb: { xs: 4, md: 6 },
               px: 2,
               fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
               lineHeight: 2,
@@ -338,8 +329,6 @@ export default function App() {
             กลางฤทัยในคิมหันตฤดู
           </Typography>
         </motion.div>
-
-        {/* ❌ ลบ <motion.div> ที่ครอบ Typography "บูธไฟเย็นเวทมนตร์..." ออกไปแล้ว ❌ */}
 
         <motion.div
           whileHover={{
@@ -419,15 +408,15 @@ export default function App() {
               left: 0,
               width: "100vw",
               height: "100vh",
-              backgroundColor: "rgba(5, 5, 16, 0.8)", // พื้นหลังสีดำอมม่วง
-              backdropFilter: "blur(12px)", // เบลอฉากหลังของเว็บ
+              backgroundColor: "rgba(5, 5, 16, 0.8)",
+              backdropFilter: "blur(12px)",
               zIndex: 9999,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               padding: "20px",
               boxSizing: "border-box",
-              overflow: "hidden", // ป้องกันภาพซูมทะลุขอบ
+              overflow: "hidden",
             }}
           >
             <AnimatePresence>
@@ -437,7 +426,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 1.3, x: "5%", y: "-5%" }}
                   animate={{ opacity: 0.3, scale: 1.4, x: "15%", y: "-5%" }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 4, ease: "easeOut" }} // ขยับช้าๆ ให้ดูลึกลับและละมุน
+                  transition={{ duration: 4, ease: "easeOut" }}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -459,8 +448,8 @@ export default function App() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }} // 👈 สั่งให้ opacity ค่อยๆ เป็น 0 ตอนหายไป
-                  transition={{ duration: 1.5, ease: "easeInOut" }} // 👈 ใช้เวลาเฟดออก 1.5 วินาที
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -468,7 +457,7 @@ export default function App() {
                     width: "100%",
                     height: "100%",
                     zIndex: 0,
-                    pointerEvents: "none", // ป้องกันการคลิกโดนพลุ
+                    pointerEvents: "none",
                   }}
                 >
                   <Fireworks
@@ -505,7 +494,7 @@ export default function App() {
                 width: "100%",
                 maxWidth: result?.type === "SSR" ? "700px" : "450px",
                 transition: "max-width 0.3s ease-in-out",
-                zIndex: 10, // ให้อยู่เหนือพลุ
+                zIndex: 10,
               }}
             >
               {isRolling && (
@@ -685,7 +674,7 @@ export default function App() {
                             maxWidth: "500px",
                             height: { xs: "50vh", md: "65vh" },
                             objectFit: "contain",
-                            filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FFD700"}99)`, // 💡 เงาภาพตามสีธีม
+                            filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FFD700"}99)`,
                           }}
                         />
                       </div>
@@ -730,8 +719,22 @@ export default function App() {
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66`,
-                                animation: "gradient-shift 4s ease infinite",
+                                // 🌟 1. Pulsing Glow สำหรับกรอบการ์ด 🌟
+                                '@keyframes pulseFrameFront': {
+                                  '0%': {
+                                    backgroundPosition: '0% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                  },
+                                  '50%': {
+                                    backgroundPosition: '100% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`
+                                  },
+                                  '100%': {
+                                    backgroundPosition: '0% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                  }
+                                },
+                                animation: "pulseFrameFront 4s ease-in-out infinite",
                               }}
                             >
                               <Box
@@ -803,7 +806,22 @@ export default function App() {
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66`,
+                                // 🌟 เพิ่ม Pulsing Glow ให้ด้านหลังการ์ดด้วย 🌟
+                                '@keyframes pulseFrameBack': {
+                                  '0%': {
+                                    backgroundPosition: '0% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                  },
+                                  '50%': {
+                                    backgroundPosition: '100% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`
+                                  },
+                                  '100%': {
+                                    backgroundPosition: '0% 50%',
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                  }
+                                },
+                                animation: "pulseFrameBack 4s ease-in-out infinite",
                               }}
                             >
                               <Box
@@ -881,7 +899,6 @@ export default function App() {
                         position: "relative",
                       }}
                     >
-                      {/* 🌟 เพิ่มเอฟเฟกต์ Sparkle รอบการ์ดเฉพาะ SR 🌟 */}
                       {isSR && (
                         <Box
                           sx={{
@@ -895,7 +912,7 @@ export default function App() {
                           }}
                         >
                           {[...Array(15)].map((_, i) => {
-                            const size = Math.random() * 15 + 10; // ขนาดของประกายแสง
+                            const size = Math.random() * 15 + 10;
                             const top = `${Math.random() * 100}%`;
                             const left = `${Math.random() * 100}%`;
                             const delay = Math.random() * 2;
@@ -923,7 +940,6 @@ export default function App() {
                                   width: `${size}px`,
                                   height: `${size}px`,
                                   backgroundColor: "#FFF",
-                                  // สร้างรูปทรงประกายแสง 4 แฉก
                                   clipPath:
                                     "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
                                   boxShadow:
@@ -965,7 +981,6 @@ export default function App() {
                               position: "relative",
                             }}
                           >
-                            {/* === หน้าการ์ด: แสดงรูปและชื่อ === */}
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
@@ -1005,7 +1020,7 @@ export default function App() {
                                     top: 0,
                                     left: 0,
                                     width: "100%",
-                                    height: "calc(100% - 130px)", // 💡 ปรับพื้นที่รูปนิดหน่อยเผื่อที่ให้ข้อความ Hint
+                                    height: "calc(100% - 130px)",
                                     objectFit: "contain",
                                     mt: 2,
                                   }}
@@ -1030,7 +1045,7 @@ export default function App() {
                                     width: "100%",
                                     textAlign: "center",
                                     p: { xs: 3, sm: 4 },
-                                    pb: { xs: 2, sm: 2 }, // 💡 ลด padding ด้านล่าง
+                                    pb: { xs: 2, sm: 2 },
                                     zIndex: 2,
                                   }}
                                 >
@@ -1060,15 +1075,14 @@ export default function App() {
                                       fontWeight: "bold",
                                       fontFamily: "serif",
                                       fontSize: { xs: "1.2rem", sm: "1.8rem" },
-                                      color: "#FFFFFF", // เปลี่ยนเป็นสีขาวล้วน
-                                      textShadow: nameShadow, // ใส่เงาแยกตามระดับที่คำนวณไว้ด้านบน
+                                      color: "#FFFFFF",
+                                      textShadow: nameShadow,
                                       mb: 0.5,
                                     }}
                                   >
                                     {result.name}
                                   </Typography>
 
-                                  {/* 💡 ข้อความ Hint สำหรับด้านหน้าการ์ด */}
                                   <Typography
                                     variant="caption"
                                     sx={{
@@ -1085,7 +1099,6 @@ export default function App() {
                               </Card>
                             </Box>
 
-                            {/* === หลังการ์ด: แสดงคำอธิบายและไม่มีปุ่มกด === */}
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
@@ -1114,7 +1127,7 @@ export default function App() {
                                   alignItems: "center",
                                   p: { xs: 3, sm: 4 },
                                   position: "relative",
-                                  overflow: "hidden", // 💡 ซ่อนส่วนที่ล้นของลายน้ำ
+                                  overflow: "hidden",
                                 }}
                               >
                                 <Box
@@ -1124,7 +1137,6 @@ export default function App() {
                                     width: "100%",
                                   }}
                                 >
-                                  {/* 🌟 2. สัญลักษณ์ตกแต่งด้านบน */}
                                   <Typography
                                     sx={{
                                       color: btnColor,
@@ -1136,13 +1148,12 @@ export default function App() {
                                     ✧ ✧ ✧
                                   </Typography>
 
-                                  {/* ข้อความบรรยายหลัก */}
                                   <Typography
                                     variant="body1"
                                     sx={{
                                       color: "#e0e0e0",
                                       fontStyle: "italic",
-                                      lineHeight: 1.8, // 💡 เพิ่มระยะห่างบรรทัดให้อ่านสบายขึ้น
+                                      lineHeight: 1.8,
                                       fontSize: { xs: "0.8rem", sm: "0.95rem" },
                                       textAlign: "center",
                                       mb: 3,
@@ -1166,7 +1177,6 @@ export default function App() {
                                   />
                                 </Box>
 
-                                {/* ข้อความ Hint ปิดการ์ด */}
                                 <Typography
                                   variant="caption"
                                   sx={{
