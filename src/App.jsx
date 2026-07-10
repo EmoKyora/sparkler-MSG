@@ -416,7 +416,7 @@ export default function App() {
               alignItems: "center",
               padding: "20px",
               boxSizing: "border-box",
-              overflow: "hidden",
+              overflow: "hidden", // บังคับไม่ให้ scroll
             }}
           >
             <AnimatePresence>
@@ -649,8 +649,59 @@ export default function App() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        position: "relative",
                       }}
                     >
+                      {/* === 🌟 Floating Particles (ละอองแสงลอยรอบๆ SSR) 🌟 === */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: "-20%",
+                          left: "-10%",
+                          width: "120%",
+                          height: "140%",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                        }}
+                      >
+                        {[...Array(30)].map((_, i) => {
+                          const size = Math.random() * 5 + 2;
+                          const startX = `${Math.random() * 100}%`;
+                          const driftX = (Math.random() - 0.5) * 60;
+                          const duration = Math.random() * 5 + 4;
+                          const delay = Math.random() * 5;
+                          const color = i % 2 === 0 ? (result.themeColor || "#FFD700") : "#FFFFFF";
+
+                          return (
+                            <motion.div
+                              key={`ssr-float-particle-${i}`}
+                              initial={{ opacity: 0, x: 0, y: "100%" }}
+                              animate={{
+                                opacity: [0, 0.8, 0.8, 0],
+                                y: ["100%", "-20%"],
+                                x: [0, driftX, driftX * 1.5],
+                              }}
+                              transition={{
+                                duration: duration,
+                                repeat: Infinity,
+                                delay: delay,
+                                ease: "linear",
+                              }}
+                              style={{
+                                position: "absolute",
+                                bottom: 0,
+                                left: startX,
+                                width: size,
+                                height: size,
+                                borderRadius: "50%",
+                                backgroundColor: color,
+                                boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
+                              }}
+                            />
+                          );
+                        })}
+                      </Box>
+
                       {/* ภาพ SSR */}
                       <div
                         style={{
@@ -672,7 +723,7 @@ export default function App() {
                           sx={{
                             width: "100%",
                             maxWidth: "500px",
-                            height: { xs: "50vh", md: "65vh" },
+                            height: { xs: "40vh", md: "65vh" }, // ลดส่วนสูงรูปลงบนมือถือไม่ให้กินที่
                             objectFit: "contain",
                             filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FFD700"}99)`,
                           }}
@@ -684,7 +735,7 @@ export default function App() {
                         sx={{
                           perspective: 1000,
                           width: "100%",
-                          mt: -2,
+                          mt: { xs: -1, sm: -2 }, // ดึงกล่องข้อความขึ้นนิดหน่อย
                           zIndex: 3,
                         }}
                       >
@@ -706,6 +757,7 @@ export default function App() {
                             style={{
                               width: "100%",
                               transformStyle: "preserve-3d",
+                              WebkitTransformStyle: "preserve-3d", // แก้บั๊ก iOS
                               position: "relative",
                             }}
                           >
@@ -713,13 +765,13 @@ export default function App() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
+                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
                                 position: "relative",
                                 width: "100%",
                                 padding: "3px",
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                // 🌟 1. Pulsing Glow สำหรับกรอบการ์ด 🌟
                                 '@keyframes pulseFrameFront': {
                                   '0%': {
                                     backgroundPosition: '0% 50%',
@@ -743,13 +795,14 @@ export default function App() {
                                   height: "100%",
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
-                                  p: { xs: 3, sm: 4 },
+                                  p: { xs: 2.5, sm: 4 }, // ลด padding มือถือ
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "180px", sm: "200px" },
+                                  minHeight: { xs: "120px", sm: "200px" }, // ลด minHeight มือถือ
+                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
                                 }}
                               >
                                 <Typography
@@ -781,8 +834,8 @@ export default function App() {
                                   variant="body1"
                                   sx={{
                                     color: "#e0e0e0",
-                                    lineHeight: 1.6,
-                                    fontSize: { xs: "0.85rem", sm: "1rem" },
+                                    lineHeight: { xs: 1.4, sm: 1.6 },
+                                    fontSize: { xs: "0.75rem", sm: "1rem" }, // ลดขนาดตัวหนังสือมือถือ
                                     whiteSpace: "pre-line",
                                     width: "100%",
                                   }}
@@ -796,6 +849,7 @@ export default function App() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
+                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
                                 transform: "rotateY(180deg)",
                                 position: "absolute",
                                 top: 0,
@@ -806,7 +860,6 @@ export default function App() {
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                // 🌟 เพิ่ม Pulsing Glow ให้ด้านหลังการ์ดด้วย 🌟
                                 '@keyframes pulseFrameBack': {
                                   '0%': {
                                     backgroundPosition: '0% 50%',
@@ -830,13 +883,14 @@ export default function App() {
                                   height: "100%",
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
-                                  p: { xs: 3, sm: 4 },
+                                  p: { xs: 2.5, sm: 4 }, // ลด padding มือถือ
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "180px", sm: "200px" },
+                                  minHeight: { xs: "120px", sm: "200px" },
+                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
                                 }}
                               >
                                 <Typography
@@ -846,7 +900,7 @@ export default function App() {
                                     mb: 1.5,
                                     fontWeight: "bold",
                                     fontFamily: "serif",
-                                    fontSize: { xs: "1.2rem", sm: "1.8rem" },
+                                    fontSize: { xs: "1rem", sm: "1.8rem" }, // ลดไซส์ฟอนต์หลัก
                                     color: "#FFFFFF",
                                     textShadow: `
                                     1px 1px 3px rgba(0, 0, 0, 0.8),
@@ -863,8 +917,8 @@ export default function App() {
                                     width: "100%",
                                     color: "#e0e0e0",
                                     fontStyle: "italic",
-                                    lineHeight: 1.8,
-                                    fontSize: { xs: "0.8rem", sm: "0.95rem" },
+                                    lineHeight: { xs: 1.4, sm: 1.8 },
+                                    fontSize: { xs: "0.6rem", sm: "0.95rem" },
                                     textAlign: "center",
                                     whiteSpace: "pre-line",
                                     textShadow: "0 2px 4px rgba(0,0,0,0.5)",
@@ -978,12 +1032,14 @@ export default function App() {
                             style={{
                               width: "100%",
                               transformStyle: "preserve-3d",
+                              WebkitTransformStyle: "preserve-3d", // แก้บั๊ก iOS
                               position: "relative",
                             }}
                           >
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
+                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
                                 position: "relative",
                                 padding: "3px",
                                 borderRadius: "24px",
@@ -996,7 +1052,8 @@ export default function App() {
                                 sx={{
                                   position: "relative",
                                   width: "100%",
-                                  height: { xs: "500px", sm: "600px" },
+                                  height: { xs: "70vh", sm: "600px" }, // ลดขนาดไม่ให้ล้นมือถือ
+                                  maxHeight: { xs: "500px", sm: "none" },
                                   bgcolor: "#0a0510",
                                   color: "white",
                                   borderRadius: "21px",
@@ -1004,6 +1061,7 @@ export default function App() {
                                   flexDirection: "column",
                                   overflow: "hidden",
                                   boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
+                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
                                 }}
                               >
                                 <Box
@@ -1044,7 +1102,7 @@ export default function App() {
                                     left: 0,
                                     width: "100%",
                                     textAlign: "center",
-                                    p: { xs: 3, sm: 4 },
+                                    p: { xs: 2.5, sm: 4 }, // ลด padding
                                     pb: { xs: 2, sm: 2 },
                                     zIndex: 2,
                                   }}
@@ -1074,7 +1132,7 @@ export default function App() {
                                     sx={{
                                       fontWeight: "bold",
                                       fontFamily: "serif",
-                                      fontSize: { xs: "1.2rem", sm: "1.8rem" },
+                                      fontSize: { xs: "1rem", sm: "1.8rem" }, // ลดขนาดฟอนต์บนมือถือ
                                       color: "#FFFFFF",
                                       textShadow: nameShadow,
                                       mb: 0.5,
@@ -1102,6 +1160,7 @@ export default function App() {
                             <Box
                               sx={{
                                 backfaceVisibility: "hidden",
+                                WebkitBackfaceVisibility: "hidden", // แก้บั๊ก iOS
                                 transform: "rotateY(180deg)",
                                 position: "absolute",
                                 top: 0,
@@ -1125,9 +1184,10 @@ export default function App() {
                                   flexDirection: "column",
                                   justifyContent: "center",
                                   alignItems: "center",
-                                  p: { xs: 3, sm: 4 },
+                                  p: { xs: 2.5, sm: 4 }, // ลด padding
                                   position: "relative",
                                   overflow: "hidden",
+                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
                                 }}
                               >
                                 <Box
@@ -1153,8 +1213,8 @@ export default function App() {
                                     sx={{
                                       color: "#e0e0e0",
                                       fontStyle: "italic",
-                                      lineHeight: 1.8,
-                                      fontSize: { xs: "0.8rem", sm: "0.95rem" },
+                                      lineHeight: { xs: 1.4, sm: 1.8 },
+                                      fontSize: { xs: "0.75rem", sm: "0.95rem" }, // ลดขนาดฟอนต์บนมือถือ
                                       textAlign: "center",
                                       mb: 3,
                                       whiteSpace: "pre-line",
