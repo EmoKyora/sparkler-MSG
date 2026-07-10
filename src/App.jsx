@@ -38,7 +38,7 @@ const sparklerItems = [
   {
     id: 3,
     name: "ไฟเย็นกล่องไม้ไขลาน",
-    type: "SSR", 
+    type: "SSR",
     desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง
     \nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
     quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
@@ -273,7 +273,7 @@ export default function App() {
           <Typography
             variant="h2"
             sx={{
-              fontFamily: "serif",
+              fontFamily: "'Shippori Mincho', serif",
               fontWeight: "900",
               textShadow: "0 0 20px #FF4500, 0 0 40px #FF69B4",
               mb: 0.5,
@@ -287,10 +287,9 @@ export default function App() {
           <Typography
             variant="h5"
             sx={{
-              fontFamily: "serif",
+              fontFamily: "'Shippori Mincho', serif",
               color: "#FFD700",
               textAlign: "center",
-              mb: 4,
               fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
               letterSpacing: "6px",
               textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
@@ -314,7 +313,7 @@ export default function App() {
               maxWidth: { xs: "90vw", sm: "600px", md: "700px" },
               mb: { xs: 4, md: 6 },
               px: 2,
-              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "0.7rem" },
               lineHeight: 2,
               fontStyle: "italic",
               textShadow: "0 2px 4px rgba(0,0,0,0.5)",
@@ -322,11 +321,9 @@ export default function App() {
           >
             ประกายแสงแห่งรุ่งอรุณกลางอนธกาลรัตติกาลสีทมิฬประดับดารา
             <br />
-            ส่องผกาผงาดรัศมีโชติแสงสังหารพร่างพราย
+            ส่องผกาผงาดรัศมีโชติแสงสังหารพร่างพราย ละม้ายคล้ายสุริยะ
             <br />
-            ละม้ายคล้ายสุริยะสาดส่องสู้ดวงศศิรัศมีแขงาม
-            <br />
-            กลางฤทัยในคิมหันตฤดู
+            สาดส่องสู้ดวงศศิรัศมีแขงามกลางฤทัยในคิมหันตฤดู
           </Typography>
         </motion.div>
 
@@ -670,7 +667,10 @@ export default function App() {
                           const driftX = (Math.random() - 0.5) * 60;
                           const duration = Math.random() * 5 + 4;
                           const delay = Math.random() * 5;
-                          const color = i % 2 === 0 ? (result.themeColor || "#FFD700") : "#FFFFFF";
+                          const color =
+                            i % 2 === 0
+                              ? result.themeColor || "#FFD700"
+                              : "#FFFFFF";
 
                           return (
                             <motion.div
@@ -772,21 +772,22 @@ export default function App() {
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                '@keyframes pulseFrameFront': {
-                                  '0%': {
-                                    backgroundPosition: '0% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                "@keyframes pulseFrameFront": {
+                                  "0%": {
+                                    backgroundPosition: "0% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`,
                                   },
-                                  '50%': {
-                                    backgroundPosition: '100% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`
+                                  "50%": {
+                                    backgroundPosition: "100% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`,
                                   },
-                                  '100%': {
-                                    backgroundPosition: '0% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
-                                  }
+                                  "100%": {
+                                    backgroundPosition: "0% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`,
+                                  },
                                 },
-                                animation: "pulseFrameFront 4s ease-in-out infinite",
+                                animation:
+                                  "pulseFrameFront 4s ease-in-out infinite",
                               }}
                             >
                               <Box
@@ -860,21 +861,22 @@ export default function App() {
                                 borderRadius: "16px",
                                 background: `linear-gradient(135deg, ${result.themeColor || "#FFD700"}, ${result.themeGrad || "#FF4500"}, ${result.themeColor || "#FFD700"}, #FFF)`,
                                 backgroundSize: "300% 300%",
-                                '@keyframes pulseFrameBack': {
-                                  '0%': {
-                                    backgroundPosition: '0% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
+                                "@keyframes pulseFrameBack": {
+                                  "0%": {
+                                    backgroundPosition: "0% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`,
                                   },
-                                  '50%': {
-                                    backgroundPosition: '100% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`
+                                  "50%": {
+                                    backgroundPosition: "100% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}AA, 0 0 45px ${result.themeColor || "#FFD700"}99`,
                                   },
-                                  '100%': {
-                                    backgroundPosition: '0% 50%',
-                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`
-                                  }
+                                  "100%": {
+                                    backgroundPosition: "0% 50%",
+                                    boxShadow: `0 10px 40px ${result.themeColor || "#FFD700"}66, 0 0 10px ${result.themeColor || "#FFD700"}40`,
+                                  },
                                 },
-                                animation: "pulseFrameBack 4s ease-in-out infinite",
+                                animation:
+                                  "pulseFrameBack 4s ease-in-out infinite",
                               }}
                             >
                               <Box
@@ -905,7 +907,7 @@ export default function App() {
                                     textShadow: `
                                     1px 1px 3px rgba(0, 0, 0, 0.8),
                                     0 0 8px ${result.themeColor || "#FFD700"}
-                                    `,  
+                                    `,
                                   }}
                                 >
                                   {result.name}
@@ -1214,7 +1216,10 @@ export default function App() {
                                       color: "#e0e0e0",
                                       fontStyle: "italic",
                                       lineHeight: { xs: 1.4, sm: 1.8 },
-                                      fontSize: { xs: "0.75rem", sm: "0.95rem" }, // ลดขนาดฟอนต์บนมือถือ
+                                      fontSize: {
+                                        xs: "0.75rem",
+                                        sm: "0.95rem",
+                                      }, // ลดขนาดฟอนต์บนมือถือ
                                       textAlign: "center",
                                       mb: 3,
                                       whiteSpace: "pre-line",
