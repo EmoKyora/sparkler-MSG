@@ -126,8 +126,8 @@ export default function App() {
       setIsRolling(false);
 
       if (pulledItem.type === "SSR") {
-        setShowFlash(true);
-        setTimeout(() => setShowFlash(false), 500);
+        /* setShowFlash(true);
+        setTimeout(() => setShowFlash(false), 500); */
         setShowFireworks(true);
         setTimeout(() => {
           setShowFireworks(false);
@@ -440,13 +440,13 @@ export default function App() {
                 />
               )}
             </AnimatePresence>
-            <AnimatePresence>
+          <AnimatePresence>
               {showFireworks && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  // หน่วงเวลาให้ระเบิดโชว์สัก 1 วิ แล้วค่อยๆ เฟดหายไปทั้งแผง
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 0 }} 
+                  transition={{ duration: 2, delay: 1 }} 
                   style={{
                     position: "absolute",
                     top: 0,
@@ -458,60 +458,77 @@ export default function App() {
                     overflow: "hidden",
                   }}
                 >
-                  {/* ออร่าสว่างเบาๆ ด้านหลัง */}
+                  {/* 1. แสงแฟลชสว่างวาบจุดศูนย์กลาง */}
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.3 }}
-                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0.8, scale: 0.5 }}
+                    animate={{ opacity: 0, scale: 2 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                     style={{
                       position: "absolute",
                       width: "100%",
                       height: "100%",
-                      background: `radial-gradient(circle at 50% 80%, ${result?.themeColor || "#FFD700"}40 0%, transparent 80%)`,
+                      background: `radial-gradient(circle at 50% 50%, #FFFFFF 0%, ${result?.themeColor || "#FFD700"} 30%, transparent 70%)`,
+                      mixBlendMode: "screen",
                     }}
                   />
 
-                  {/* ละอองแสงหิ่งห้อย / โคมลอย */}
-                  {[...Array(40)].map((_, i) => {
-                    const size = Math.random() * 10 + 4; // ขนาดสุ่มใหญ่เล็ก
-                    const startX = Math.random() * 100 + "%"; // สุ่มตำแหน่งแนวนอน
-                    const delay = Math.random() * 2; // สุ่มเวลาโผล่
-                    const duration = Math.random() * 6 + 4; // ลอยช้าๆ 4-10 วินาที
-                    const sway = (Math.random() - 0.5) * 80; // ระยะการลอยส่ายไปมา (px)
+                  {/* 2. คลื่นกระแทก (Shockwave Rings) */}
+                  {[...Array(2)].map((_, i) => (
+                    <motion.div
+                      key={`shockwave-${i}`}
+                      initial={{ scale: 0, opacity: 1, x: "-50%", y: "-50%" }}
+                      animate={{ scale: i === 0 ? 2.5 : 4, opacity: 0 }}
+                      transition={{ duration: 0.7 + i * 0.2, ease: "easeOut" }}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        width: "300px",
+                        height: "300px",
+                        borderRadius: "50%",
+                        border: `4px solid ${i === 0 ? "#FFF" : result?.themeColor || "#FFD700"}`,
+                        boxShadow: `0 0 20px ${result?.themeColor || "#FFD700"}, inset 0 0 20px ${result?.themeColor || "#FFD700"}`,
+                      }}
+                    />
+                  ))}
 
+                  {/* 3. สะเก็ดระเบิดพุ่งกระจายอย่างรุนแรง (Explosive Particles) */}
+                  {[...Array(80)].map((_, i) => {
+                    const size = Math.random() * 8 + 3; // ขนาดเม็ดแสง
+                    const angle = Math.random() * Math.PI * 2; // ทิศทางรอบทิศ
+                    const distance = Math.random() * 70 + 30; // ระยะทางที่พุ่งออกไป (vw)
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
                     const colors = [
                       result?.themeColor || "#FFD700",
                       result?.themeGrad || "#FFA500",
                       "#FFFFFF",
-                      "#FFB6C1",
+                      "#FFFACD"
                     ];
-                    const color =
-                      colors[Math.floor(Math.random() * colors.length)];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
 
                     return (
                       <motion.div
-                        key={`orb-${i}`}
-                        initial={{ opacity: 0, top: "110%", x: 0 }}
+                        key={`explosion-part-${i}`}
+                        initial={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", left: "50%", top: "50%" }}
                         animate={{
-                          opacity: [0, 0.8, 0.8, 0],
-                          top: "-10%", // ลอยขึ้นไปทะลุจอด้านบน
-                          x: [0, sway, -sway, sway / 2], // ลอยส่ายไปมาซ้ายขวา
+                          opacity: [1, 1, 0],
+                          scale: [1, 0.5, 0],
+                          x: `calc(-50% + ${tx}vw)`,
+                          y: `calc(-50% + ${ty}vh)`,
                         }}
                         transition={{
-                          duration: duration,
-                          delay: delay,
-                          repeat: Infinity,
-                          ease: "easeInOut",
+                          duration: Math.random() * 1.5 + 0.5, // ความเร็วของการพุ่ง
+                          ease: "easeOut", // พุ่งแรงตอนแรก แล้วชะลอตอนปลาย (เหมือนระเบิดจริง)
                         }}
                         style={{
                           position: "absolute",
-                          left: startX,
                           width: size,
                           height: size,
                           borderRadius: "50%",
                           backgroundColor: color,
                           boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
-                          filter: "blur(1px)", // ทำขอบให้ดูฟุ้งๆ นุ่มนวล
                         }}
                       />
                     );
