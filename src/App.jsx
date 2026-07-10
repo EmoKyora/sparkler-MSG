@@ -455,33 +455,67 @@ export default function App() {
                     height: "100%",
                     zIndex: 0,
                     pointerEvents: "none",
+                    overflow: "hidden",
                   }}
                 >
-                  <Fireworks
-                    options={{
-                      rocketsPoint: { min: 0, max: 100 },
-                      hue: { min: 0, max: 360 },
-                      delay: { min: 30, max: 60 },
-                      speed: 2,
-                      acceleration: 1.05,
-                      friction: 0.95,
-                      gravity: 1.5,
-                      particles: 90,
-                      traceLength: 3,
-                      traceSpeed: 10,
-                      explosion: 5,
-                      intensity: 30,
-                      flickering: 50,
-                      lineStyle: "round",
-                    }}
+                  {/* ออร่าสว่างเบาๆ ด้านหลัง */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.3 }}
+                    exit={{ opacity: 0 }}
                     style={{
-                      top: 0,
-                      left: 0,
+                      position: "absolute",
                       width: "100%",
                       height: "100%",
-                      position: "absolute",
+                      background: `radial-gradient(circle at 50% 80%, ${result?.themeColor || "#FFD700"}40 0%, transparent 80%)`,
                     }}
                   />
+
+                  {/* ละอองแสงหิ่งห้อย / โคมลอย */}
+                  {[...Array(40)].map((_, i) => {
+                    const size = Math.random() * 10 + 4; // ขนาดสุ่มใหญ่เล็ก
+                    const startX = Math.random() * 100 + "%"; // สุ่มตำแหน่งแนวนอน
+                    const delay = Math.random() * 2; // สุ่มเวลาโผล่
+                    const duration = Math.random() * 6 + 4; // ลอยช้าๆ 4-10 วินาที
+                    const sway = (Math.random() - 0.5) * 80; // ระยะการลอยส่ายไปมา (px)
+
+                    const colors = [
+                      result?.themeColor || "#FFD700",
+                      result?.themeGrad || "#FFA500",
+                      "#FFFFFF",
+                      "#FFB6C1",
+                    ];
+                    const color =
+                      colors[Math.floor(Math.random() * colors.length)];
+
+                    return (
+                      <motion.div
+                        key={`orb-${i}`}
+                        initial={{ opacity: 0, top: "110%", x: 0 }}
+                        animate={{
+                          opacity: [0, 0.8, 0.8, 0],
+                          top: "-10%", // ลอยขึ้นไปทะลุจอด้านบน
+                          x: [0, sway, -sway, sway / 2], // ลอยส่ายไปมาซ้ายขวา
+                        }}
+                        transition={{
+                          duration: duration,
+                          delay: delay,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        style={{
+                          position: "absolute",
+                          left: startX,
+                          width: size,
+                          height: size,
+                          borderRadius: "50%",
+                          backgroundColor: color,
+                          boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
+                          filter: "blur(1px)", // ทำขอบให้ดูฟุ้งๆ นุ่มนวล
+                        }}
+                      />
+                    );
+                  })}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -642,7 +676,7 @@ export default function App() {
                       }}
                       style={{
                         width: "100%",
-                        maxWidth: "850px",
+                        maxWidth: "900px",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -796,14 +830,16 @@ export default function App() {
                                   height: "100%",
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
-                                  p: { xs: 2.5, sm: 4 }, // ลด padding มือถือ
+                                  p: { xs: 2.5, sm: 4 },
+                                  pb: { xs: 4, sm: 5 }, // 1️⃣ เพิ่มระยะเว้นด้านล่างกันตัวอักษรทับกัน
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "120px", sm: "200px" }, // ลด minHeight มือถือ
-                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
+                                  minHeight: { xs: "180px", sm: "280px" },
+                                  transform: "translateZ(1px)",
+                                  position: "relative", // 2️⃣ ต้องใส่เพื่อให้ absolute ด้านล่างทำงานตามกรอบนี้
                                 }}
                               >
                                 <Typography
@@ -836,12 +872,26 @@ export default function App() {
                                   sx={{
                                     color: "#e0e0e0",
                                     lineHeight: { xs: 1.4, sm: 1.6 },
-                                    fontSize: { xs: "0.75rem", sm: "1rem" }, // ลดขนาดตัวหนังสือมือถือ
+                                    fontSize: { xs: "0.75rem", sm: "1rem" },
                                     whiteSpace: "pre-line",
                                     width: "100%",
                                   }}
                                 >
                                   {result.quote}
+                                </Typography>
+
+                                <Typography
+                                  variant="caption"
+                                  sx={{
+                                    position: "absolute",
+                                    bottom: "12px",
+                                    color: result.themeColor || "#FFD700",
+                                    opacity: 0.8,
+                                    fontSize: "0.6rem",
+                                    letterSpacing: 1,
+                                  }}
+                                >
+                                  ✨ แตะการ์ดเพื่อพลิก ✨
                                 </Typography>
                               </Box>
                             </Box>
@@ -885,32 +935,40 @@ export default function App() {
                                   height: "100%",
                                   bgcolor: "rgba(10, 5, 20, 0.95)",
                                   borderRadius: "13px",
-                                  p: { xs: 2.5, sm: 4 }, // ลด padding มือถือ
+                                  p: { xs: 2.5, sm: 4 }, // 🟢 ปรับ padding กลับมาให้สมดุลบนล่างเท่ากัน
                                   textAlign: "center",
                                   display: "flex",
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "120px", sm: "200px" },
-                                  transform: "translateZ(1px)", // แก้บั๊กข้อความทะลุ iOS
+                                  minHeight: { xs: "180px", sm: "280px" },
+                                  transform: "translateZ(1px)",
                                 }}
                               >
                                 <Typography
                                   variant="h4"
                                   sx={{
                                     mt: 0,
-                                    mb: 1.5,
+                                    mb: 0.5,
                                     fontWeight: "bold",
                                     fontFamily: "serif",
-                                    fontSize: { xs: "1rem", sm: "1.8rem" }, // ลดไซส์ฟอนต์หลัก
+                                    fontSize: { xs: "1rem", sm: "1.8rem" },
                                     color: "#FFFFFF",
-                                    textShadow: `
-                                    1px 1px 3px rgba(0, 0, 0, 0.8),
-                                    0 0 8px ${result.themeColor || "#FFD700"}
-                                    `,
+                                    textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FFD700"}`,
                                   }}
                                 >
                                   {result.name}
+                                </Typography>
+
+                                <Typography
+                                  sx={{
+                                    color: result.themeColor || "#FFD700",
+                                    opacity: 0.7,
+                                    mb: 0.5,
+                                    letterSpacing: 3,
+                                  }}
+                                >
+                                  ✧ ✧ ✧
                                 </Typography>
 
                                 <Typography
@@ -919,14 +977,40 @@ export default function App() {
                                     width: "100%",
                                     color: "#e0e0e0",
                                     fontStyle: "italic",
-                                    lineHeight: { xs: 1.4, sm: 1.8 },
+                                    lineHeight: { xs: 1.4, sm: 1.4 },
                                     fontSize: { xs: "0.6rem", sm: "0.95rem" },
                                     textAlign: "center",
                                     whiteSpace: "pre-line",
                                     textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                                    mb: 2.5, // 🟢 เพิ่ม margin-bottom ตรงนี้เพื่อดันให้ห่างจากเส้นเรืองแสงนิดหน่อย
                                   }}
                                 >
                                   {result.desc}
+                                </Typography>
+                                <Box
+                                  sx={{
+                                    width: "40px",
+                                    height: "2px",
+                                    bgcolor: result.themeColor || "#FFD700",
+                                    opacity: 0.8,
+                                    borderRadius: "2px",
+                                    boxShadow: `0 0 10px ${result.themeColor || "#FFD700"}, 0 0 4px ${result.themeColor || "#FFD700"}`,
+                                    mb: 1,
+                                    flexShrink: 0,
+                                  }}
+                                />
+                                <Typography
+                                  variant="caption"
+                                  sx={{
+                                    position: "absolute",
+                                    bottom: "12px",
+                                    color: result.themeColor || "#FFD700",
+                                    opacity: 0.8,
+                                    fontSize: "0.6rem",
+                                    letterSpacing: 1,
+                                  }}
+                                >
+                                  ✨ แตะที่ว่างเพื่อปิด ✨
                                 </Typography>
                               </Box>
                             </Box>
