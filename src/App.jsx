@@ -325,7 +325,7 @@ export default function App() {
               maxWidth: { xs: "90vw", sm: "600px", md: "700px" },
               mb: { xs: 4, md: 6 },
               px: 2,
-              fontSize: { xs: "0.9rem", sm: "1rem", md: "0.7rem" },
+              fontSize: { xs: "0.6rem", sm: "0.6rem", md: "0.7rem" },
               lineHeight: 2,
               fontStyle: "italic",
               textShadow: "0 2px 4px rgba(0,0,0,0.5)",
@@ -1039,6 +1039,7 @@ export default function App() {
 
                                 <Typography
                                   sx={{
+                                    display: { xs: "none", sm: "block" },
                                     color: result.themeColor || "#FFD700",
                                     opacity: 0.7,
                                     mb: 0.5,
@@ -1065,7 +1066,8 @@ export default function App() {
                                   {result.desc}
                                 </Typography>
                                 <Box
-                                  sx={{
+                                  sx={{ 
+                                    display: { xs: "none", sm: "block" },
                                     width: "40px",
                                     height: "2px",
                                     bgcolor: result.themeColor || "#FFD700",
