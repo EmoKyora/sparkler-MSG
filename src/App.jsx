@@ -331,7 +331,9 @@ export default function App() {
         )}
       </IconButton>
 
-      {/* Hero Section (ส่วนแรกขนาดเต็มจอ) */}
+      {/* ========================================== */}
+      {/* Hero Section (ปรับปรุงความพรีเมียม) */}
+      {/* ========================================== */}
       <Box
         sx={{
           minHeight: "100dvh",
@@ -345,6 +347,24 @@ export default function App() {
           px: 2,
         }}
       >
+        {/* แสงเรืองรองด้านหลังข้อความ (Backdrop Glow) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          style={{
+            position: "absolute",
+            width: "300px",
+            height: "300px",
+            background:
+              "radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%)",
+            filter: "blur(40px)",
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* ส่วนหัวข้อ (Title) */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -354,6 +374,7 @@ export default function App() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            zIndex: 1,
           }}
         >
           <Typography
@@ -361,14 +382,27 @@ export default function App() {
             sx={{
               fontFamily: "'Shippori Mincho', serif",
               fontWeight: "900",
-              textShadow: "0 0 20px #FF4500, 0 0 40px #FF69B4",
+              color: "#FFFFFF",
+              textShadow:
+                "0 0 20px rgba(255,69,0,0.8), 0 0 40px rgba(255,105,180,0.6)",
               mb: 0.5,
               textAlign: "center",
-              fontSize: { xs: "3.5rem", sm: "4.5rem", md: "5.5rem" },
+              fontSize: { xs: "4rem", sm: "5rem", md: "6rem" }, // ขยายขนาดให้สะใจขึ้น
               letterSpacing: "4px",
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
             }}
           >
-            夜花 🏮
+            夜花{" "}
+            <span
+              style={{
+                fontSize: "0.7em",
+                filter: "drop-shadow(0 0 10px #FF4500)",
+              }}
+            >
+              🏮
+            </span>
           </Typography>
           <Typography
             variant="h5"
@@ -376,133 +410,216 @@ export default function App() {
               fontFamily: "'Shippori Mincho', serif",
               color: "#FFD700",
               textAlign: "center",
-              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
-              letterSpacing: "6px",
-              textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
-              mb: 2,
+              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
+              letterSpacing: { xs: "8px", md: "12px" }, // เพิ่มระยะห่างตัวอักษรให้ดูแพง
+              textShadow: "0 0 15px rgba(255, 215, 0, 0.6)",
+              mb: 4,
             }}
           >
             YOHANA
           </Typography>
         </motion.div>
 
+        {/* ส่วนบทกวี (Poem) */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.5 }}
+          style={{ zIndex: 1 }}
         >
-          <Typography
-            variant="body1"
+          <Box
             sx={{
-              color: "#e0e0e0",
-              textAlign: "center",
-              maxWidth: { xs: "90vw", sm: "600px", md: "700px" },
-              mb: { xs: 4, md: 6 },
-              px: 2,
-              fontSize: { xs: "0.6rem", sm: "0.6rem", md: "0.7rem" },
-              lineHeight: 2,
-              fontStyle: "italic",
-              textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-            }}
-          >
-            ประกายแสงแห่งรุ่งอรุณกลางอนธกาลรัตติกาลสีทมิฬประดับดารา
-            <br />
-            ส่องผกาผงาดรัศมีโชติแสงสังหารพร่างพราย ละม้ายคล้ายสุริยะ
-            <br />
-            สาดส่องสู้ดวงศศิรัศมีแขงามกลางฤทัยในคิมหันตฤดู
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          whileHover={{
-            scale: 1.05,
-            textShadow: "0px 0px 8px rgb(255,255,255)",
-          }}
-          whileTap={{ scale: 0.95 }}
-          animate={{
-            boxShadow: [
-              "0 0 20px #FF4500",
-              "0 0 40px #FFD700",
-              "0 0 20px #FF4500",
-            ],
-          }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          style={{ borderRadius: "50px", position: "relative", mt: 1 }}
-        >
-          <motion.div
-            animate={{ scale: [1, 1.3], opacity: [0.5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              borderRadius: "50px",
-              border: "2px solid #FFD700",
-              zIndex: 0,
-            }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleRollGacha}
-            sx={{
-              bgcolor: "transparent",
-              border: "2px solid #FFD700",
-              color: "#FFD700",
-              fontSize: { xs: "1.2rem", md: "1.5rem" },
-              fontWeight: "bold",
-              px: { xs: 5, md: 8 },
-              py: { xs: 1.5, md: 2 },
-              borderRadius: "50px",
-              background:
-                "linear-gradient(45deg, rgba(255,69,0,0.3) 0%, rgba(255,215,0,0.3) 100%)",
-              backdropFilter: "blur(10px)",
-              transition: "all 0.3s ease",
+              display: "flex",
+              flexDirection: "column",
+              gap: 1.5,
+              mb: { xs: 6, md: 8 },
               position: "relative",
-              zIndex: 1,
-              "&:hover": {
-                bgcolor: "rgba(255,215,0,0.2)",
-                border: "2px solid #FFF",
-                color: "#FFF",
-              },
             }}
           >
-            ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
-          </Button>
+            {/* เส้นคั่นบทกวีบน */}
+            <Box
+              sx={{
+                width: "40px",
+                height: "1px",
+                background:
+                  "linear-gradient(90deg, transparent, #FFD700, transparent)",
+                margin: "0 auto",
+                opacity: 0.5,
+                mb: 1,
+              }}
+            />
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: "rgba(255, 255, 255, 0.9)",
+                textAlign: "center",
+                maxWidth: { xs: "90vw", sm: "600px" },
+                fontSize: { xs: "0.85rem", sm: "1rem", md: "1.1rem" }, // ปรับขนาดให้อ่านง่ายขึ้น
+                lineHeight: 2.2,
+                fontStyle: "italic",
+                textShadow: "0 2px 10px rgba(0,0,0,0.8)",
+                letterSpacing: "0.5px",
+              }}
+            >
+              ประกายแสงแห่งรุ่งอรุณกลางอนธกาลรัตติกาลสีทมิฬประดับดารา
+              <br />
+              ส่องผกาผงาดรัศมีโชติแสงสังหารพร่างพราย ละม้ายคล้ายสุริยะ
+              <br />
+              สาดส่องสู้ดวงศศิรัศมีแขงามกลางฤทัยในคิมหันตฤดู
+            </Typography>
+
+            {/* เส้นคั่นบทกวีล่าง */}
+            <Box
+              sx={{
+                width: "40px",
+                height: "1px",
+                background:
+                  "linear-gradient(90deg, transparent, #FFD700, transparent)",
+                margin: "0 auto",
+                opacity: 0.5,
+                mt: 1,
+              }}
+            />
+          </Box>
         </motion.div>
 
-        {/* Scroll Indicator (บอกผู้ใช้ให้เลื่อนลง) */}
+        {/* ปุ่ม Gacha (Glassmorphism Effect) */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          style={{ zIndex: 1 }}
+        >
+          <Box sx={{ position: "relative", borderRadius: "50px" }}>
+            {/* วงแหวนเรืองแสงเต้นตามจังหวะ */}
+            <motion.div
+              animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0, 0.3] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              style={{
+                position: "absolute",
+                top: -5,
+                left: -5,
+                right: -5,
+                bottom: -5,
+                borderRadius: "50px",
+                border: "2px solid #FFD700",
+                zIndex: 0,
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={handleRollGacha}
+              sx={{
+                bgcolor: "rgba(20, 10, 30, 0.4)",
+                border: "1px solid rgba(255,215,0,0.4)",
+                color: "#FFD700",
+                fontSize: { xs: "1.1rem", md: "1.3rem" },
+                fontWeight: "bold",
+                px: { xs: 4, md: 6 },
+                py: { xs: 1.5, md: 2 },
+                borderRadius: "50px",
+                boxShadow:
+                  "inset 0 0 20px rgba(255,215,0,0.1), 0 4px 15px rgba(0,0,0,0.5)",
+                backdropFilter: "blur(12px)",
+                transition: "all 0.3s ease",
+                position: "relative",
+                overflow: "hidden", // เก็บเอฟเฟกต์แสงเงาไว้ข้างใน
+                zIndex: 1,
+                "&:hover": {
+                  bgcolor: "rgba(255,215,0,0.15)",
+                  border: "1px solid rgba(255,215,0,0.8)",
+                  boxShadow: "0 0 20px rgba(255,215,0,0.4)",
+                  color: "#FFF",
+                },
+              }}
+            >
+              {/* แสงวิ่งพาดผ่านปุ่ม */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: "-100%",
+                  width: "50%",
+                  height: "100%",
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                  transform: "skewX(-20deg)",
+                  animation: "shine 3s infinite",
+                  "@keyframes shine": {
+                    "0%": { left: "-100%" },
+                    "20%": { left: "200%" },
+                    "100%": { left: "200%" },
+                  },
+                }}
+              />
+              ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
+            </Button>
+          </Box>
+        </motion.div>
+
+        {/* Scroll Indicator (ดูลึกลับและหรูหราขึ้น) */}
+        <motion.div
+          animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
           style={{
             position: "absolute",
-            bottom: "30px",
-            opacity: 0.6,
+            bottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "4px",
+            zIndex: 1,
           }}
         >
-          <KeyboardArrowDownIcon sx={{ fontSize: 40, color: "#FFD700" }} />
+          <Typography
+            sx={{
+              color: "#FFD700",
+              fontSize: "0.6rem",
+              letterSpacing: "2px",
+              fontFamily: "'Shippori Mincho', serif",
+              textShadow: "0 0 5px rgba(255,215,0,0.5)",
+            }}
+          >
+            SCROLL
+          </Typography>
+          <KeyboardArrowDownIcon sx={{ fontSize: 30, color: "#FFD700" }} />
         </motion.div>
-      </Box>
-
-      {/* Content Section (ส่วนคำโปรยที่จะเฟดลอยขึ้นมาเมื่อเลื่อนเจอ + รายการไฟเย็น) */}
+      </Box> 
       <Box
         sx={{
           minHeight: "100dvh",
-          width: "100%", // บังคับไม่ให้ล้นขอบจอ
+          width: "100%",
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center", // ถ้าของเยอะมันจะเลื่อนลงไปตามธรรมชาติ
+          justifyContent: "center",
           position: "relative",
           zIndex: 1,
-          px: { xs: 2, sm: 4, md: 6 }, // ปรับระยะห่างขอบซ้ายขวาให้สมดุล
+          px: { xs: 2, sm: 4, md: 6 },
           py: { xs: 10, md: 12 },
         }}
       >
-        {/* ข้อความคำโปรย - ปรับปรุงสไตล์ให้ดูหรูหรา มีมิติลึกซึ้ง และเป็นทรงบทกวี */}
+        {/* แสงเรืองรองเบาๆ ด้านหลัง Grid (Ambient Glow) */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "30%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "60vw",
+            height: "60vw",
+            background:
+              "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 60%)",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
+        />
+
+        {/* ข้อความคำโปรย */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -510,130 +627,115 @@ export default function App() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           style={{
             textAlign: "center",
-            marginBottom: "70px",
+            marginBottom: "80px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
-            maxWidth: "640px", // บีบความกว้างให้สัดส่วนการแสดงผลข้อความสวยงามและอ่านง่าย
-            margin: "0 auto 60px auto",
-            letterSpacing: "0.05em",
+            maxWidth: "640px",
+            zIndex: 1,
           }}
         >
-          {/* เส้นประดับสไตล์ญี่ปุ่น - ปรับความยาวและสีทองไล่ระดับให้คมชัดขึ้น */}
+          {/* เส้นหยดน้ำสีทอง (Elegant Top Line) */}
           <Box
             sx={{
               width: "1px",
-              height: "50px",
-              background:
-                "linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.8))",
-              mb: 3,
+              height: "60px",
+              background: "linear-gradient(to bottom, transparent, #FFD700)",
+              mb: 4,
+              opacity: 0.7,
             }}
           />
 
-          {/* ข้อความบทกวีหลัก - เล่นมิติสีและความเรืองแสง */}
           <Typography
             variant="h4"
             sx={{
               fontFamily: "'Shippori Mincho', serif",
-              color: "#FFFFFF", // สีหลักเป็นสีขาวเพื่อความโมเดิร์นและคมชัด
-              lineHeight: { xs: 2.0, md: 2.3 },
-              letterSpacing: { xs: "1px", md: "3px" },
-              fontSize: { xs: "1.15rem", sm: "1.4rem", md: "1.4rem" },
+              color: "rgba(255, 255, 255, 0.9)",
+              lineHeight: { xs: 2.2, md: 2.4 },
+              letterSpacing: { xs: "1.5px", md: "2.5px" },
+              fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.5rem" },
               fontWeight: 300,
-              px: 2,
-              textShadow:
-                "0px 4px 20px rgba(0, 0, 0, 0.9), 0px 0px 15px rgba(253, 230, 138, 0.15)",
+              textShadow: "0px 4px 20px rgba(0, 0, 0, 0.9)",
             }}
           >
             ประกายไฟแบบไหน
             <br />
-            ที่จะ
-            <Box
-              component="span"
-              sx={{
-                color: "#FDE68A",
-                fontWeight: 400,
-                textShadow: "0 0 10px rgba(253, 230, 138, 0.4)",
-              }}
-            >
-              {" แต่งแต้ม เติมสีสัน "}
-            </Box>
-            <br />
-            ให้ผืนฟ้าอันมืดมิดใน
+            ที่จะ{" "}
             <Box
               component="span"
               sx={{
                 color: "#FFD700",
-                borderBottom: "1px dashed rgba(255,215,0,0.4)",
-                pb: 0.5,
+                fontWeight: 500,
+                textShadow: "0 0 15px rgba(255, 215, 0, 0.5)",
               }}
             >
-              ค่ำคืนสุดพิเศษ
-            </Box>
+              แต้มสีสัน
+            </Box>{" "}
+            ให้ผืนฟ้าอันมืดมิด
+            <br />
+            ในค่ำคืนสุด{" "}
+            <Box
+              component="span"
+              sx={{
+                color: "#FFFFFF",
+                fontWeight: 500,
+                textShadow: "0 0 15px rgba(255, 255, 255, 0.8)",
+              }}
+            >
+              พิเศษ
+            </Box>{" "}
             ของคุณกันนะ ?
           </Typography>
 
-          {/* ตัวคั่นด้านล่าง - ออกแบบใหม่ให้มินิมอลแต่หรูหราขึ้น */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 3,
-              mt: 4,
-            }}
-          >
+          {/* ตัวคั่นล่างสไตล์มินิมอลเจแปนนิส */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 5 }}>
             <Box
               sx={{
-                width: "20px",
+                width: "30px",
                 height: "1px",
                 background:
-                  "linear-gradient(to left, rgba(214, 175, 55, 0.6), transparent)",
+                  "linear-gradient(to left, rgba(255,215,0,0.5), transparent)",
               }}
             />
             <Typography
               sx={{
-                color: "#D4AF37",
-                fontSize: "0.75rem",
+                color: "#FFD700",
+                fontSize: "0.6rem",
                 letterSpacing: "4px",
-                opacity: 0.6,
-                animation: "pulseOpacity 3s ease-in-out infinite",
-                "@keyframes pulseOpacity": {
-                  "0%, 100%": { opacity: 0.4 },
-                  "50%": { opacity: 0.8 },
-                },
+                opacity: 0.7,
               }}
             >
               ✦ ✦ ✦
             </Typography>
             <Box
               sx={{
-                width: "20px",
+                width: "30px",
                 height: "1px",
                 background:
-                  "linear-gradient(to right, rgba(214, 175, 55, 0.6), transparent)",
+                  "linear-gradient(to right, rgba(255,215,0,0.5), transparent)",
               }}
             />
           </Box>
         </motion.div>
 
-        {/* ส่วนแสดงรายการไฟเย็น (Grid) - ปรับสไตล์ Card ให้ดูโมเดิร์นลักชูรี */}
+        {/* ส่วนแสดงรายการไฟเย็น (Grid) */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          style={{ width: "100%", maxWidth: "1000px" }}
+          style={{ width: "100%", maxWidth: "1000px", zIndex: 1 }}
         >
           <Box
             sx={{
               display: "grid",
               gridTemplateColumns: {
-                xs: "repeat(2, 1fr)", // มือถือ
-                sm: "repeat(3, 1fr)", // แท็บเล็ต
-                md: "repeat(4, 1fr)", // เดสก์ท็อป
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(4, 1fr)",
               },
-              gap: { xs: 2, md: 3, lg: 4 },
+              gap: { xs: 2.5, md: 4 },
               width: "100%",
             }}
           >
@@ -645,158 +747,151 @@ export default function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
               >
-                {/* กรอบด้านนอก */}
+                {/* ตัวการ์ดแบบ Glassmorphism */}
                 <Box
                   sx={{
                     position: "relative",
-                    padding: "2px",
-                    borderRadius: "18px",
-                    background:
-                      "linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(255, 255, 255, 0.1), rgba(212, 175, 55, 0.3))",
-                    boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
+                    width: "100%",
+                    aspectRatio: "1 / 1.35",
+                    bgcolor: "rgba(20, 10, 30, 0.3)", // สีกระจกเข้มๆ
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,215,0,0.15)",
+                    backdropFilter: "blur(8px)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    overflow: "hidden",
                     cursor: "pointer",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
                     transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
                     "&:hover": {
                       transform: "translateY(-8px)",
-                      background:
-                        "linear-gradient(135deg, rgba(212, 175, 55, 0.8), #FFF, rgba(212, 175, 55, 0.8))",
-                      boxShadow: "0 10px 25px rgba(212, 175, 55, 0.2)",
-                      // จัดการภาพตอนชี้เมาส์
-                      "& .image-default": {
-                        opacity: 0, // ซ่อนรูปที่ยังไม่จุดไฟ
-                      },
+                      bgcolor: "rgba(30, 15, 45, 0.5)",
+                      border: "1px solid rgba(255,215,0,0.6)",
+                      boxShadow:
+                        "0 15px 35px rgba(255,215,0,0.15), inset 0 0 20px rgba(255,215,0,0.1)",
+                      "& .image-default": { opacity: 0 },
                       "& .image-hover": {
-                        opacity: 1, // แสดงรูปลุกไหม้
+                        opacity: 1,
                         transform: "scale(1.08)",
-                        filter:
-                          "drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6))",
+                        filter: "drop-shadow(0px 0px 15px rgba(255,215,0,0.5))",
+                      },
+                      "& .card-name": {
+                        color: "#FFF",
+                        textShadow: "0 0 10px rgba(255,215,0,0.8)",
+                      },
+                      "& .name-underline": {
+                        width: "60%",
+                        background: "#FFD700",
+                        boxShadow: "0 0 10px #FFD700",
                       },
                     },
                   }}
                 >
-                  {/* การ์ดด้านใน */}
+                  {/* คอนเทนเนอร์รูปภาพ */}
                   <Box
                     sx={{
-                      width: "100%",
-                      bgcolor: "#0a0510",
-                      borderRadius: "16px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
                       position: "relative",
-                      overflow: "hidden",
-                      boxShadow: "inset 0 0 20px rgba(0,0,0,0.9)",
-                      aspectRatio: "1 / 1.3",
+                      width: "100%",
+                      height: "100%",
+                      zIndex: 1,
                     }}
                   >
-                    {/* คอนเทนเนอร์สำหรับรูปภาพ */}
                     <Box
-                      sx={{
-                        position: "relative",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    >
-                      {/* ภาพปกติ (imageNo) - ก่อนเอาเมาส์ชี้ */}
-                      <Box
-                        className="image-default"
-                        component="img"
-                        // ป้องกัน Error กรณีไอเทมไหนไม่มี imageNo (เช่น id: 4) ให้ใช้ image แทนไปก่อน
-                        src={item.imageNo || item.image}
-                        alt={`${item.name} unlit`}
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "contain",
-                          p: "15%",
-                          pb: "35%",
-                          transition: "all 0.4s ease",
-                          opacity: 1, // ปรากฏอยู่ตอนแรก
-                          filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8))",
-                        }}
-                      />
-
-                      {/* ภาพตอนจุดแล้ว (image) - จะแสดงตอนเอาเมาส์ชี้ */}
-                      <Box
-                        className="image-hover"
-                        component="img"
-                        src={item.image}
-                        alt={`${item.name} lit`}
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "contain",
-                          p: 2,
-                          pb: 6,
-                          transition: "all 0.4s ease",
-                          opacity: 0, // ซ่อนไว้ตอนแรก
-                        }}
-                      />
-                    </Box>
-
-                    {/* Gradient Overlay */}
-                    <Box
+                      className="image-default"
+                      component="img"
+                      src={item.imageNo || item.image}
+                      alt={`${item.name} unlit`}
                       sx={{
                         position: "absolute",
                         top: 0,
                         left: 0,
                         width: "100%",
                         height: "100%",
-                        background:
-                          "linear-gradient(to bottom, rgba(10, 5, 20, 0) 40%, rgba(10, 5, 20, 0.95) 100%)",
-                        pointerEvents: "none",
-                        zIndex: 1,
+                        objectFit: "contain",
+                        p: "15%",
+                        pb: "35%",
+                        transition: "all 0.5s ease",
+                        opacity: 1,
+                        filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.9))",
                       }}
                     />
-
-                    {/* ชื่อไฟเย็น */}
                     <Box
+                      className="image-hover"
+                      component="img"
+                      src={item.image}
+                      alt={`${item.name} lit`}
                       sx={{
                         position: "absolute",
-                        bottom: 0,
+                        top: 0,
                         left: 0,
                         width: "100%",
-                        textAlign: "center",
-                        p: { xs: 1.5, sm: 2.5 },
-                        zIndex: 2,
+                        height: "100%",
+                        objectFit: "contain",
+                        p: 2,
+                        pb: 6,
+                        transition: "all 0.5s ease",
+                        opacity: 0,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Gradient Overlay ไล่สีดำขอบล่างเพื่อให้ตัวหนังสือชัด */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "60%",
+                      background:
+                        "linear-gradient(to bottom, transparent 0%, rgba(5,5,16,0.9) 100%)",
+                      pointerEvents: "none",
+                      zIndex: 2,
+                    }}
+                  />
+
+                  {/* ชื่อไอเทม */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      width: "100%",
+                      textAlign: "center",
+                      p: { xs: 2, sm: 2.5 },
+                      zIndex: 3,
+                    }}
+                  >
+                    <Typography
+                      className="card-name"
+                      sx={{
+                        color: "rgba(255,255,255,0.85)",
+                        fontFamily: "'Shippori Mincho', serif",
+                        fontSize: { xs: "0.85rem", sm: "1rem" },
+                        fontWeight: 500,
+                        letterSpacing: "1px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        transition: "all 0.3s ease",
                       }}
                     >
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: "#FFFFFF",
-                          fontFamily: "'Shippori Mincho', serif",
-                          fontSize: { xs: "0.85rem", sm: "1rem" },
-                          fontWeight: "bold",
-                          textShadow:
-                            "1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(212, 175, 55, 0.4)",
+                      {item.name}
+                    </Typography>
 
-                          letterSpacing: "1px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {item.name}
-                      </Typography>
-
-                      {/* เส้นขีดตกแต่งเล็กๆ */}
-                      <Box
-                        sx={{
-                          width: "30px",
-                          height: "1px",
-                          bgcolor: "#D4AF37",
-                          margin: "8px auto 0",
-                          opacity: 0.6,
-                        }}
-                      />
-                    </Box>
+                    {/* เส้นขีดใต้ชื่อที่จะขยายออกตอน Hover */}
+                    <Box
+                      className="name-underline"
+                      sx={{
+                        width: "20px",
+                        height: "2px",
+                        background: "rgba(255,215,0,0.3)",
+                        margin: "8px auto 0",
+                        borderRadius: "2px",
+                        transition: "all 0.4s ease",
+                      }}
+                    />
                   </Box>
                 </Box>
               </motion.div>
@@ -804,7 +899,6 @@ export default function App() {
           </Box>
         </motion.div>
       </Box>
-
       {/* Overlay Modal (เหมือนเดิม) */}
       <AnimatePresence>
         {openModal && (
