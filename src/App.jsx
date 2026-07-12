@@ -455,7 +455,7 @@ export default function App() {
                 color: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 maxWidth: { xs: "90vw", sm: "600px" },
-                fontSize: { xs: "0.85rem", sm: "1rem", md: "1.1rem" }, // ปรับขนาดให้อ่านง่ายขึ้น
+                fontSize: { xs: "0.65rem", sm: "0.8rem", md: "0.8rem" }, // ปรับขนาดให้อ่านง่ายขึ้น
                 lineHeight: 2.2,
                 fontStyle: "italic",
                 textShadow: "0 2px 10px rgba(0,0,0,0.8)",
