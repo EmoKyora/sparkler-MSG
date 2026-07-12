@@ -189,7 +189,8 @@ export default function App() {
           left: 0,
           width: "100vw",
           height: "100vh",
-          backgroundImage: "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
+          backgroundImage:
+            "radial-gradient(circle at 50% 30%, #2a1538 0%, #050510 70%)",
           zIndex: 0,
           pointerEvents: "none",
         }}
@@ -440,12 +441,15 @@ export default function App() {
               color: "#FFD700",
               lineHeight: 2.2,
               letterSpacing: "2px",
-              textShadow: "0 0 20px rgba(255,215,0,0.6), 0 0 5px rgba(255,105,180,0.4)",
+              textShadow:
+                "0 0 20px rgba(255,215,0,0.6), 0 0 5px rgba(255,105,180,0.4)",
               fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
             }}
           >
-            ไฟเย็นแบบไหน<br />
-            ที่จะแต่งแต้ม เติมสีสัน<br />
+            ไฟเย็นแบบไหน
+            <br />
+            ที่จะแต่งแต้ม เติมสีสัน
+            <br />
             ให้ผืนฟ้าอันมืดมิดในค่ำคืนสุดพิเศษของคุณกัน
           </Typography>
         </motion.div>
@@ -965,7 +969,8 @@ export default function App() {
                                     bottom: "12px",
                                     color: result.themeColor || "#FFD700",
                                     opacity: 0.8,
-                                    fontSize: "0.6rem",
+
+                                    fontSize: { xs: "0.4rem", sm: "0.6rem" },
                                     letterSpacing: 1,
                                   }}
                                 >
@@ -1066,7 +1071,7 @@ export default function App() {
                                   {result.desc}
                                 </Typography>
                                 <Box
-                                  sx={{ 
+                                  sx={{
                                     display: { xs: "none", sm: "block" },
                                     width: "40px",
                                     height: "2px",
@@ -1085,7 +1090,8 @@ export default function App() {
                                     bottom: "12px",
                                     color: result.themeColor || "#FFD700",
                                     opacity: 0.8,
-                                    fontSize: "0.6rem",
+
+                                    fontSize: { xs: "0.4rem", sm: "0.6rem" },
                                     letterSpacing: 1,
                                   }}
                                 >
@@ -1308,7 +1314,8 @@ export default function App() {
                                     sx={{
                                       display: "block",
                                       color: btnColor,
-                                      fontSize: "0.6rem",
+
+                                      fontSize: { xs: "0.4rem", sm: "0.6rem" },
                                       letterSpacing: 1,
                                       opacity: 0.8,
                                     }}
@@ -1409,7 +1416,8 @@ export default function App() {
                                     bottom: "20px",
                                     color: btnColor,
                                     opacity: 0.8,
-                                    fontSize: "0.6rem",
+
+                                    fontSize: { xs: "0.4rem", sm: "0.6rem" },
                                     letterSpacing: 1,
                                     zIndex: 1,
                                   }}
