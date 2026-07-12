@@ -72,6 +72,7 @@ const sparklerList = [
   {
     id: 4,
     name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
     image: `${baseUrl}images/sparkler/Shoji.png`,
   },
   {
@@ -240,8 +241,8 @@ export default function App() {
   return (
     <Box
       sx={{
-        height: "100dvh", // 🟢 บังคับความสูงตายตัว
-        width: "100vw",
+        height: "100dvh",
+        width: "100%",
         bgcolor: "#050510",
         color: "#fff",
         display: "flex",
@@ -489,81 +490,130 @@ export default function App() {
       <Box
         sx={{
           minHeight: "100dvh",
+          width: "100%", // บังคับไม่ให้ล้นขอบจอ
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center", // ถ้าของเยอะมันจะเลื่อนลงไปตามธรรมชาติ
           position: "relative",
           zIndex: 1,
-          px: { xs: 2, md: 4 },
-          py: { xs: 8, md: 10 },
+          px: { xs: 2, sm: 4, md: 6 }, // ปรับระยะห่างขอบซ้ายขวาให้สมดุล
+          py: { xs: 10, md: 12 },
         }}
       >
-        {/* ข้อความคำโปรย - ปรับให้ดูหรูหรา มินิมอล และไม่เชย */}
+        {/* ข้อความคำโปรย - ปรับปรุงสไตล์ให้ดูหรูหรา มีมิติลึกซึ้ง และเป็นทรงบทกวี */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.4 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           style={{
             textAlign: "center",
-            marginBottom: "60px",
+            marginBottom: "70px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: "100%",
+            maxWidth: "640px", // บีบความกว้างให้สัดส่วนการแสดงผลข้อความสวยงามและอ่านง่าย
+            margin: "0 auto 60px auto",
+            letterSpacing: "0.05em",
           }}
         >
-          {/* เส้นประดับสไตล์ญี่ปุ่น */}
+          {/* เส้นประดับสไตล์ญี่ปุ่น - ปรับความยาวและสีทองไล่ระดับให้คมชัดขึ้น */}
           <Box
             sx={{
-              width: "2px",
-              height: "40px",
-              background: "linear-gradient(to bottom, transparent, #D4AF37)",
+              width: "1px",
+              height: "50px",
+              background:
+                "linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.8))",
               mb: 3,
-              opacity: 0.6,
             }}
           />
 
+          {/* ข้อความบทกวีหลัก - เล่นมิติสีและความเรืองแสง */}
           <Typography
             variant="h4"
             sx={{
               fontFamily: "'Shippori Mincho', serif",
-              color: "#FDE68A", // สีทองแชมเปญ ดูแพงกว่าสีเหลืองสด
-              lineHeight: 2.2,
-              letterSpacing: { xs: "2px", md: "4px" },
-              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
-              textShadow: "0px 4px 15px rgba(0, 0, 0, 0.8)", // เปลี่ยนเงาเรืองแสงเป็นเงามืดให้ตัวหนังสือดูลอยขึ้นมา
+              color: "#FFFFFF", // สีหลักเป็นสีขาวเพื่อความโมเดิร์นและคมชัด
+              lineHeight: { xs: 2.0, md: 2.3 },
+              letterSpacing: { xs: "1px", md: "3px" },
+              fontSize: { xs: "1.15rem", sm: "1.4rem", md: "1.4rem" },
               fontWeight: 300,
+              px: 2,
+              textShadow:
+                "0px 4px 20px rgba(0, 0, 0, 0.9), 0px 0px 15px rgba(253, 230, 138, 0.15)",
             }}
           >
             ประกายไฟแบบไหน
             <br />
-            ที่จะแต่งแต้ม เติมสีสัน
+            ที่จะ
+            <Box
+              component="span"
+              sx={{
+                color: "#FDE68A",
+                fontWeight: 400,
+                textShadow: "0 0 10px rgba(253, 230, 138, 0.4)",
+              }}
+            >
+              {" แต่งแต้ม เติมสีสัน "}
+            </Box>
             <br />
-            ให้ผืนฟ้าอันมืดมิดในค่ำคืนสุดพิเศษของคุณกัน
+            ให้ผืนฟ้าอันมืดมิดใน
+            <Box
+              component="span"
+              sx={{
+                color: "#FFD700",
+                borderBottom: "1px dashed rgba(255,215,0,0.4)",
+                pb: 0.5,
+              }}
+            >
+              ค่ำคืนสุดพิเศษ
+            </Box>
+            ของคุณกันนะ ?
           </Typography>
 
+          {/* ตัวคั่นด้านล่าง - ออกแบบใหม่ให้มินิมอลแต่หรูหราขึ้น */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: 2,
+              gap: 3,
               mt: 4,
-              opacity: 0.7,
             }}
           >
-            <Box sx={{ width: "30px", height: "1px", bgcolor: "#D4AF37" }} />
+            <Box
+              sx={{
+                width: "20px",
+                height: "1px",
+                background:
+                  "linear-gradient(to left, rgba(214, 175, 55, 0.6), transparent)",
+              }}
+            />
             <Typography
               sx={{
                 color: "#D4AF37",
-                fontSize: "0.8rem",
-                letterSpacing: "3px",
+                fontSize: "0.75rem",
+                letterSpacing: "4px",
+                opacity: 0.6,
+                animation: "pulseOpacity 3s ease-in-out infinite",
+                "@keyframes pulseOpacity": {
+                  "0%, 100%": { opacity: 0.4 },
+                  "50%": { opacity: 0.8 },
+                },
               }}
             >
-              ✧ ✧ ✧
+              ✦ ✦ ✦
             </Typography>
-            <Box sx={{ width: "30px", height: "1px", bgcolor: "#D4AF37" }} />
+            <Box
+              sx={{
+                width: "20px",
+                height: "1px",
+                background:
+                  "linear-gradient(to right, rgba(214, 175, 55, 0.6), transparent)",
+              }}
+            />
           </Box>
         </motion.div>
 
@@ -571,7 +621,7 @@ export default function App() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           style={{ width: "100%", maxWidth: "1000px" }}
         >
@@ -579,8 +629,9 @@ export default function App() {
             sx={{
               display: "grid",
               gridTemplateColumns: {
-                xs: "repeat(2, 1fr)",
-                sm: "repeat(4, 1fr)",
+                xs: "repeat(2, 1fr)", // มือถือ
+                sm: "repeat(3, 1fr)", // แท็บเล็ต
+                md: "repeat(4, 1fr)", // เดสก์ท็อป
               },
               gap: { xs: 2, md: 3, lg: 4 },
               width: "100%",
@@ -592,7 +643,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
               >
                 {/* กรอบด้านนอก */}
                 <Box
@@ -610,7 +661,12 @@ export default function App() {
                       background:
                         "linear-gradient(135deg, rgba(212, 175, 55, 0.8), #FFF, rgba(212, 175, 55, 0.8))",
                       boxShadow: "0 10px 25px rgba(212, 175, 55, 0.2)",
-                      "& .inner-image": {
+                      // จัดการภาพตอนชี้เมาส์
+                      "& .image-default": {
+                        opacity: 0, // ซ่อนรูปที่ยังไม่จุดไฟ
+                      },
+                      "& .image-hover": {
+                        opacity: 1, // แสดงรูปลุกไหม้
                         transform: "scale(1.08)",
                         filter:
                           "drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6))",
@@ -618,7 +674,7 @@ export default function App() {
                     },
                   }}
                 >
-                  {/* การ์ดด้านใน (ทรงการ์ดยาว) */}
+                  {/* การ์ดด้านใน */}
                   <Box
                     sx={{
                       width: "100%",
@@ -630,33 +686,61 @@ export default function App() {
                       position: "relative",
                       overflow: "hidden",
                       boxShadow: "inset 0 0 20px rgba(0,0,0,0.9)",
-                      // บังคับสัดส่วนให้เป็นแนวตั้ง (การ์ดยาว) เช่น กว้าง 1 ส่วน สูง 1.6 ส่วน
-                      aspectRatio: "1 / 1.4",
+                      aspectRatio: "1 / 1.3",
                     }}
                   >
-                    {/* ภาพไฟเย็น */}
+                    {/* คอนเทนเนอร์สำหรับรูปภาพ */}
                     <Box
-                      className="inner-image"
-                      component="img"
-                      src={item.image}
-                      alt={item.name}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src =
-                          "https://via.placeholder.com/200x300/1a1025/D4AF37?text=Sparkler";
-                      }}
                       sx={{
+                        position: "relative",
                         width: "100%",
                         height: "100%",
-                        objectFit: "contain",
-                        p: 2,
-                        pb: 6, // ดันภาพขึ้นเยอะหน่อย เพื่อเผื่อที่ว่างด้านล่างให้ชื่อ
-                        transition: "all 0.4s ease",
-                        filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8))",
                       }}
-                    />
+                    >
+                      {/* ภาพปกติ (imageNo) - ก่อนเอาเมาส์ชี้ */}
+                      <Box
+                        className="image-default"
+                        component="img"
+                        // ป้องกัน Error กรณีไอเทมไหนไม่มี imageNo (เช่น id: 4) ให้ใช้ image แทนไปก่อน
+                        src={item.imageNo || item.image}
+                        alt={`${item.name} unlit`}
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                          p: "15%",
+                          pb: "35%",
+                          transition: "all 0.4s ease",
+                          opacity: 1, // ปรากฏอยู่ตอนแรก
+                          filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8))",
+                        }}
+                      />
 
-                    {/* Gradient Overlay (เงาดำฐานการ์ดไล่ระดับสูงขึ้น เพื่อให้กลืนกับความยาวการ์ด) */}
+                      {/* ภาพตอนจุดแล้ว (image) - จะแสดงตอนเอาเมาส์ชี้ */}
+                      <Box
+                        className="image-hover"
+                        component="img"
+                        src={item.image}
+                        alt={`${item.name} lit`}
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                          p: 2,
+                          pb: 6,
+                          transition: "all 0.4s ease",
+                          opacity: 0, // ซ่อนไว้ตอนแรก
+                        }}
+                      />
+                    </Box>
+
+                    {/* Gradient Overlay */}
                     <Box
                       sx={{
                         position: "absolute",
@@ -688,17 +772,21 @@ export default function App() {
                         sx={{
                           color: "#FFFFFF",
                           fontFamily: "'Shippori Mincho', serif",
-                          fontSize: { xs: "0.85rem", sm: "1rem" }, // เพิ่มขนาดฟอนต์นิดหน่อยให้สมดุลกับการ์ดที่ยาวขึ้น
+                          fontSize: { xs: "0.85rem", sm: "1rem" },
                           fontWeight: "bold",
                           textShadow:
                             "1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(212, 175, 55, 0.4)",
+
                           letterSpacing: "1px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {item.name}
                       </Typography>
 
-                      {/* เส้นขีดตกแต่งเล็กๆ ใต้ชื่อ เพิ่มความหรูหรา */}
+                      {/* เส้นขีดตกแต่งเล็กๆ */}
                       <Box
                         sx={{
                           width: "30px",
