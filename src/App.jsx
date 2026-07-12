@@ -50,6 +50,77 @@ const sparklerItems = [
   },
 ];
 
+const sparklerList = [
+  {
+    id: 1,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 2,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 3,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 4,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 5,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+
+  {
+    id: 6,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 7,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 8,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 9,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+
+  {
+    id: 10,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+
+  {
+    id: 11,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+];
+
 export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -307,6 +378,7 @@ export default function App() {
               fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
               letterSpacing: "6px",
               textShadow: "0 0 10px rgba(255, 215, 0, 0.5)",
+              mb: 2,
             }}
           >
             YOHANA
@@ -354,7 +426,7 @@ export default function App() {
             ],
           }}
           transition={{ repeat: Infinity, duration: 2 }}
-          style={{ borderRadius: "50px", position: "relative" }}
+          style={{ borderRadius: "50px", position: "relative", mt: 1 }}
         >
           <motion.div
             animate={{ scale: [1, 1.3], opacity: [0.5, 0] }}
@@ -413,7 +485,7 @@ export default function App() {
         </motion.div>
       </Box>
 
-      {/* Content Section (ส่วนคำโปรยที่จะเฟดลอยขึ้นมาเมื่อเลื่อนเจอ) */}
+      {/* Content Section (ส่วนคำโปรยที่จะเฟดลอยขึ้นมาเมื่อเลื่อนเจอ + รายการไฟเย็น) */}
       <Box
         sx={{
           minHeight: "100dvh",
@@ -424,34 +496,224 @@ export default function App() {
           justifyContent: "center",
           position: "relative",
           zIndex: 1,
-          px: 2,
+          px: { xs: 2, md: 4 },
+          py: { xs: 8, md: 10 },
         }}
       >
+        {/* ข้อความคำโปรย - ปรับให้ดูหรูหรา มินิมอล และไม่เชย */}
         <motion.div
-          initial={{ opacity: 0, y: 60, filter: "blur(8px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: false, amount: 0.4 }} // ให้เล่นซ้ำได้เวลาเลื่อนขึ้นลง
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          style={{ textAlign: "center" }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          style={{
+            textAlign: "center",
+            marginBottom: "60px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
+          {/* เส้นประดับสไตล์ญี่ปุ่น */}
+          <Box
+            sx={{
+              width: "2px",
+              height: "40px",
+              background: "linear-gradient(to bottom, transparent, #D4AF37)",
+              mb: 3,
+              opacity: 0.6,
+            }}
+          />
+
           <Typography
             variant="h4"
             sx={{
               fontFamily: "'Shippori Mincho', serif",
-              color: "#FFD700",
+              color: "#FDE68A", // สีทองแชมเปญ ดูแพงกว่าสีเหลืองสด
               lineHeight: 2.2,
-              letterSpacing: "2px",
-              textShadow:
-                "0 0 20px rgba(255,215,0,0.6), 0 0 5px rgba(255,105,180,0.4)",
-              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
+              letterSpacing: { xs: "2px", md: "4px" },
+              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
+              textShadow: "0px 4px 15px rgba(0, 0, 0, 0.8)", // เปลี่ยนเงาเรืองแสงเป็นเงามืดให้ตัวหนังสือดูลอยขึ้นมา
+              fontWeight: 300,
             }}
           >
-            ไฟเย็นแบบไหน
+            ประกายไฟแบบไหน
             <br />
             ที่จะแต่งแต้ม เติมสีสัน
             <br />
             ให้ผืนฟ้าอันมืดมิดในค่ำคืนสุดพิเศษของคุณกัน
           </Typography>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              mt: 4,
+              opacity: 0.7,
+            }}
+          >
+            <Box sx={{ width: "30px", height: "1px", bgcolor: "#D4AF37" }} />
+            <Typography
+              sx={{
+                color: "#D4AF37",
+                fontSize: "0.8rem",
+                letterSpacing: "3px",
+              }}
+            >
+              ✧ ✧ ✧
+            </Typography>
+            <Box sx={{ width: "30px", height: "1px", bgcolor: "#D4AF37" }} />
+          </Box>
+        </motion.div>
+
+        {/* ส่วนแสดงรายการไฟเย็น (Grid) - ปรับสไตล์ Card ให้ดูโมเดิร์นลักชูรี */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+          style={{ width: "100%", maxWidth: "1000px" }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(4, 1fr)",
+              },
+              gap: { xs: 2, md: 3, lg: 4 },
+              width: "100%",
+            }}
+          >
+            {sparklerList.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                {/* กรอบด้านนอก */}
+                <Box
+                  sx={{
+                    position: "relative",
+                    padding: "2px",
+                    borderRadius: "18px",
+                    background:
+                      "linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(255, 255, 255, 0.1), rgba(212, 175, 55, 0.3))",
+                    boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
+                    cursor: "pointer",
+                    transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      background:
+                        "linear-gradient(135deg, rgba(212, 175, 55, 0.8), #FFF, rgba(212, 175, 55, 0.8))",
+                      boxShadow: "0 10px 25px rgba(212, 175, 55, 0.2)",
+                      "& .inner-image": {
+                        transform: "scale(1.08)",
+                        filter:
+                          "drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6))",
+                      },
+                    },
+                  }}
+                >
+                  {/* การ์ดด้านใน (ทรงการ์ดยาว) */}
+                  <Box
+                    sx={{
+                      width: "100%",
+                      bgcolor: "#0a0510",
+                      borderRadius: "16px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      position: "relative",
+                      overflow: "hidden",
+                      boxShadow: "inset 0 0 20px rgba(0,0,0,0.9)",
+                      // บังคับสัดส่วนให้เป็นแนวตั้ง (การ์ดยาว) เช่น กว้าง 1 ส่วน สูง 1.6 ส่วน
+                      aspectRatio: "1 / 1.4",
+                    }}
+                  >
+                    {/* ภาพไฟเย็น */}
+                    <Box
+                      className="inner-image"
+                      component="img"
+                      src={item.image}
+                      alt={item.name}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          "https://via.placeholder.com/200x300/1a1025/D4AF37?text=Sparkler";
+                      }}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        p: 2,
+                        pb: 6, // ดันภาพขึ้นเยอะหน่อย เพื่อเผื่อที่ว่างด้านล่างให้ชื่อ
+                        transition: "all 0.4s ease",
+                        filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.8))",
+                      }}
+                    />
+
+                    {/* Gradient Overlay (เงาดำฐานการ์ดไล่ระดับสูงขึ้น เพื่อให้กลืนกับความยาวการ์ด) */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        background:
+                          "linear-gradient(to bottom, rgba(10, 5, 20, 0) 40%, rgba(10, 5, 20, 0.95) 100%)",
+                        pointerEvents: "none",
+                        zIndex: 1,
+                      }}
+                    />
+
+                    {/* ชื่อไฟเย็น */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        width: "100%",
+                        textAlign: "center",
+                        p: { xs: 1.5, sm: 2.5 },
+                        zIndex: 2,
+                      }}
+                    >
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: "#FFFFFF",
+                          fontFamily: "'Shippori Mincho', serif",
+                          fontSize: { xs: "0.85rem", sm: "1rem" }, // เพิ่มขนาดฟอนต์นิดหน่อยให้สมดุลกับการ์ดที่ยาวขึ้น
+                          fontWeight: "bold",
+                          textShadow:
+                            "1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(212, 175, 55, 0.4)",
+                          letterSpacing: "1px",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+
+                      {/* เส้นขีดตกแต่งเล็กๆ ใต้ชื่อ เพิ่มความหรูหรา */}
+                      <Box
+                        sx={{
+                          width: "30px",
+                          height: "1px",
+                          bgcolor: "#D4AF37",
+                          margin: "8px auto 0",
+                          opacity: 0.6,
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              </motion.div>
+            ))}
+          </Box>
         </motion.div>
       </Box>
 
