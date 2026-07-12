@@ -13,7 +13,15 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // เพิ่มไอคอนลูกศร
 import { Fireworks } from "@fireworks-js/react";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 const baseUrl = import.meta.env.BASE_URL;
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "'Shippori Mincho', 'Prompt', sans-serif",
+  },
+});
 
 const sparklerItems = [
   {
@@ -239,6 +247,8 @@ export default function App() {
   const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
     <Box
       sx={{
         height: "100dvh",
@@ -406,8 +416,7 @@ export default function App() {
           </Typography>
           <Typography
             variant="h5"
-            sx={{
-              fontFamily: "'Shippori Mincho', serif",
+            sx={{ 
               color: "#FFD700",
               textAlign: "center",
               fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
@@ -451,7 +460,7 @@ export default function App() {
 
             <Typography
               variant="body1"
-              sx={{
+              sx={{ 
                 color: "rgba(255, 255, 255, 0.9)",
                 textAlign: "center",
                 maxWidth: { xs: "90vw", sm: "600px" },
@@ -578,8 +587,7 @@ export default function App() {
             sx={{
               color: "#FFD700",
               fontSize: "0.6rem",
-              letterSpacing: "2px",
-              fontFamily: "'Shippori Mincho', serif",
+              letterSpacing: "2px", 
               textShadow: "0 0 5px rgba(255,215,0,0.5)",
             }}
           >
@@ -649,8 +657,7 @@ export default function App() {
 
           <Typography
             variant="h4"
-            sx={{
-              fontFamily: "'Shippori Mincho', serif",
+            sx={{ 
               color: "rgba(255, 255, 255, 0.9)",
               lineHeight: { xs: 2.2, md: 2.4 },
               letterSpacing: { xs: "1.5px", md: "2.5px" },
@@ -866,8 +873,7 @@ export default function App() {
                     <Typography
                       className="card-name"
                       sx={{
-                        color: "rgba(255,255,255,0.85)",
-                        fontFamily: "'Shippori Mincho', serif",
+                        color: "rgba(255,255,255,0.85)", 
                         fontSize: { xs: "0.85rem", sm: "1rem" },
                         fontWeight: 500,
                         letterSpacing: "1px",
@@ -1476,8 +1482,7 @@ export default function App() {
                                   sx={{
                                     mt: 0,
                                     mb: 0.5,
-                                    fontWeight: "bold",
-                                    fontFamily: "serif",
+                                    fontWeight: "bold", 
                                     fontSize: { xs: "1rem", sm: "1.8rem" },
                                     color: "#FFFFFF",
                                     textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FFD700"}`,
@@ -1742,8 +1747,7 @@ export default function App() {
                                   <Typography
                                     variant="h4"
                                     sx={{
-                                      fontWeight: "bold",
-                                      fontFamily: "serif",
+                                      fontWeight: "bold", 
                                       fontSize: { xs: "1rem", sm: "1.8rem" },
                                       color: "#FFFFFF",
                                       textShadow: nameShadow,
@@ -1902,5 +1906,6 @@ export default function App() {
         )}
       </AnimatePresence>
     </Box>
+    </ThemeProvider>
   );
 }
