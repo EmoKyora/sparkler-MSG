@@ -915,7 +915,7 @@ export default function App() {
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "120px", sm: "280px" },
+                                  minHeight: { xs: "150px", sm: "280px" },
                                   transform: "translateZ(1px)",
                                   position: "relative",
                                 }}
@@ -1018,7 +1018,7 @@ export default function App() {
                                   flexDirection: "column",
                                   alignItems: "center",
                                   justifyContent: "center",
-                                  minHeight: { xs: "120px", sm: "280px" },
+                                  minHeight: { xs: "150px", sm: "280px" },
                                   transform: "translateZ(1px)",
                                 }}
                               >
