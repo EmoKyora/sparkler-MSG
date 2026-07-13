@@ -50,23 +50,233 @@ const sparklerItems = [
     quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
     image: `${baseUrl}images/ssr/Shoji.png`,
     rate: 20,
-    themeColor: "#FF69B4", // สีชมพู Hot Pink สำหรับ SSR
-    themeGrad: "#FFB7C5", // สีชมพูซากุระอ่อน
+    themeColor: "#096CFF",
+    themeGrad: "#87CEFA",
   },
+  /* 
+  {
+    id: 4,
+    name: "ไฟเย็นเซย์รินะ",
+    type: "Normal",
+    desc: `เมื่อจุดมวลมายาจะปรากฎขึ้น อาจเป็นสิ่งที่คุณนึกถึงชั่วขณะ ถวิลหา ไม่ว่าจะเป็นความทรงจำ สิ่งของ หรือใครสักคน แต่สิ่งที่ปรากฏ จะเป็นเพียงเศษเสี้ยวเล็ก ๆ ที่มากพอให้คุณนึกถึงเรื่องราวพวกนั้นเท่านั้น\n
+    คิดถึงหรือเปล่า? 
+    อย่างน้อย มันก็คงอยู่เป็นเพื่อนคุณ ..จนกว่า
+    แสงไฟนั้นจะดับลง`,
+    quote: "",
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+    rate: 50,
+  },
+  {
+    id: 5,
+    name: "ไฟเย็นเซย์รินะ",
+    type: "SR",
+    desc: `เมื่อจุดมวลมายาจะปรากฎขึ้น อาจเป็นสิ่งที่คุณนึกถึงชั่วขณะ ถวิลหา ไม่ว่าจะเป็นความทรงจำ สิ่งของ หรือใครสักคน แต่สิ่งที่ปรากฏ จะเป็นเพียงเศษเสี้ยวเล็ก ๆ ที่มากพอให้คุณนึกถึงเรื่องราวพวกนั้นเท่านั้น\n
+    คิดถึงหรือเปล่า? 
+    อย่างน้อย มันก็คงอยู่เป็นเพื่อนคุณ ..จนกว่า
+    แสงไฟนั้นจะดับลง`,
+    quote: "",
+    quote: "",
+    image: `${baseUrl}images/chibi/Shoji.png`,
+    rate: 30,
+  },
+  {
+    id: 6,
+    name: "ไฟเย็นเซย์รินะ",
+    type: "SSR",
+    desc: `เมื่อจุดมวลมายาจะปรากฎขึ้น อาจเป็นสิ่งที่คุณนึกถึงชั่วขณะ ถวิลหา ไม่ว่าจะเป็นความทรงจำ สิ่งของ หรือใครสักคน แต่สิ่งที่ปรากฏ จะเป็นเพียงเศษเสี้ยวเล็ก ๆ ที่มากพอให้คุณนึกถึงเรื่องราวพวกนั้นเท่านั้น\n
+    คิดถึงหรือเปล่า? 
+    อย่างน้อย มันก็คงอยู่เป็นเพื่อนคุณ ..จนกว่าแสงไฟนั้นจะดับลง`,
+    quote: "",
+    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 20,
+    themeColor: "#096CFF",
+    themeGrad: "#87CEFA",
+  }, */
+
+  /* {
+    id: 7,
+    name: "ไฟเย็นประกายเร้นเงา",
+    type: "Normal",
+    desc: `เมื่อจุดไฟ...
+    ประกายสีเงินอมม่วงสลัวจะหยาดหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายอยู่รอบกาย
+    คอยดูดซับความเหนื่อยล้าและขุ่นมัวในจิตใจ\n
+    จนเมื่อแสงไฟมอดดับ...
+    พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ ๆ ให้จางหายไปในความมืด\n
+    ลองหยุดพัก... ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    quote: "",
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+    rate: 50,
+  },
+  {
+    id: 8,
+    name: "ไฟเย็นประกายเร้นเงา",
+    type: "SR",
+    desc: `เมื่อจุดไฟ...
+    ประกายสีเงินอมม่วงสลัวจะหยาดหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายอยู่รอบกาย
+    คอยดูดซับความเหนื่อยล้าและขุ่นมัวในจิตใจ\n
+    จนเมื่อแสงไฟมอดดับ...
+    พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ ๆ ให้จางหายไปในความมืด\n
+    ลองหยุดพัก... ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    quote: "",
+    image: `${baseUrl}images/chibi/Shoji.png`,
+    rate: 30,
+  },
+  {
+    id: 9,
+    name: "ไฟเย็นประกายเร้นเงา",
+    type: "SSR",
+    desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ จนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n
+    ลองหยุดพัก... ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 20,
+    themeColor: "#096CFF",
+    themeGrad: "#87CEFA",
+  }, */
+
+ /*  {
+    id: 10,
+    name: "ไฟเย็นสึรุ",
+    type: "Normal",
+    desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป\n
+    จนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ โผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n
+    ก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม\n
+    อยากลองอธิษฐานแล้วเป่ามันดูไหม ?`, 
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+    rate: 50,
+  },
+  {
+    id: 11,
+    name: "ไฟเย็นสึรุ",
+    type: "SR",
+    desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป\n
+    จนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ โผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n
+    ก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม\n
+    อยากลองอธิษฐานแล้วเป่ามันดูไหม ?`, 
+    image: `${baseUrl}images/chibi/Shoji.png`,
+    rate: 30,
+  },
+  {
+    id: 12,
+    name: "ไฟเย็นสึรุ",
+    type: "SSR",
+    desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป จนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ โผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n
+    ก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม อยากลองอธิษฐานแล้วเป่ามันดูไหม ?`,
+    quote: (
+      <>
+        “<b>เฮ้</b> เอาไปสิ”
+      </>
+    ),
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 20,
+    themeColor: "#C9EE66",
+    themeGrad: "#E6C969",
+  }, */
+
+  /* {
+    id: 13,
+    name: "ไฟพี่ชาวี",
+    type: "Normal",
+    desc: `ประกายสีฟ้าสว่างขึ้นเมื่อถูกจุดไฟ มันส่องแสงพร่างพราวราวเกล็ดหิมะ ค่อย ๆ เรียงตัวกันอย่างสวยงามจนกลายเป็น… ใบหน้าของ คามิโซโนะ เท็นเง็น (?) แบบคมชัด 3 มิติขนาดเท่าจริง\n
+    คุณรู้สึกได้ถึงละอองเย็น ๆ ที่โปรยลงมาสัมผัสผิวผะแผ่ว แม้จะเป็นดอกไม้ไฟที่ประหลาดสักหน่อยแต่อย่างน้อยก็ช่วยดับร้อนให้ได้บ้างล่ะนะ`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+    rate: 50,
+  },
+  {
+    id: 14,
+    name: "ไฟพี่ชาวี",
+    type: "SR",
+    desc: `ประกายสีฟ้าสว่างขึ้นเมื่อถูกจุดไฟ มันส่องแสงพร่างพราวราวเกล็ดหิมะ ค่อย ๆ เรียงตัวกันอย่างสวยงามจนกลายเป็น… ใบหน้าของ คามิโซโนะ เท็นเง็น (?) แบบคมชัด 3 มิติขนาดเท่าจริง\n
+    คุณรู้สึกได้ถึงละอองเย็น ๆ ที่โปรยลงมาสัมผัสผิวผะแผ่ว แม้จะเป็นดอกไม้ไฟที่ประหลาดสักหน่อยแต่อย่างน้อยก็ช่วยดับร้อนให้ได้บ้างล่ะนะ`,
+    image: `${baseUrl}images/chibi/Shoji.png`,
+    rate: 30,
+  },
+  {
+    id: 15,
+    name: "ไฟพี่ชาวี",
+    type: "SSR",
+    desc: `ประกายสีฟ้าสว่างขึ้นเมื่อถูกจุดไฟ มันส่องแสงพร่างพราวราวเกล็ดหิมะ ค่อย ๆ เรียงตัวกันอย่างสวยงามจนกลายเป็น… ใบหน้าของ คามิโซโนะ เท็นเง็น (?) แบบคมชัด 3 มิติขนาดเท่าจริง\n
+    คุณรู้สึกได้ถึงละอองเย็น ๆ ที่โปรยลงมาสัมผัสผิวผะแผ่ว แม้จะเป็นดอกไม้ไฟที่ประหลาดสักหน่อยแต่อย่างน้อยก็ช่วยดับร้อนให้ได้บ้างล่ะนะ`,
+    quote: (
+      <>
+        “<b>เอ้า</b> รับไฟ‘เย็น’นี่ไปสิ ความ cool ของฉันจะช่วยคลายร้อนให้เธอเอง” <br></br>.ขยิบตา .เสยผม
+      </>
+    ),
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 20,
+    themeColor: "#DDFFFF",
+    themeGrad: "#e7fefe",
+  }, */
 ];
 
 const sparklerList = [
-  { id: 1, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 2, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 3, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 4, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 5, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 6, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 7, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 8, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 9, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 10, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
-  { id: 11, name: "ไฟเย็นกล่องไม้ไขลาน", imageNo: `${baseUrl}images/sparklerNO/Shoji.png`, image: `${baseUrl}images/sparkler/Shoji.png` },
+  {
+    id: 1,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 2,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 3,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 4,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 5,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 6,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 7,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 8,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 9,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 10,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
+  {
+    id: 11,
+    name: "ไฟเย็นกล่องไม้ไขลาน",
+    imageNo: `${baseUrl}images/sparklerNO/Shoji.png`,
+    image: `${baseUrl}images/sparkler/Shoji.png`,
+  },
 ];
 
 export default function App() {
@@ -164,26 +374,26 @@ export default function App() {
   const isSR = result?.type === "SR";
 
   const cardBorderGradient = isSR
-    ? "linear-gradient(135deg, #F8BBD0, #FFFFFF, #F48FB1, #EC407A)" // ขอบ SR สีชมพูเงิน
-    : "linear-gradient(135deg, #4A148C, #9C27B0, #7B1FA2, #38006B)"; // ขอบ Normal สีม่วงลึก
+    ? "linear-gradient(135deg, #A3A3A3, #FFFFFF, #E0E0E0, #6B6B6B)"
+    : "linear-gradient(135deg, #555555, #888888, #777777, #444444)";
 
   const cardGlow = isSR
-    ? "0 0 25px rgba(244, 143, 177, 0.4)"
-    : "0 0 15px rgba(156, 39, 176, 0.3)";
+    ? "0 0 25px rgba(255, 255, 255, 0.35)"
+    : "0 0 10px rgba(0, 0, 0, 0.3)";
 
-  const tagBg = isSR ? "rgba(252, 228, 236, 0.2)" : "rgba(123, 31, 162, 0.2)";
+  const tagBg = isSR ? "rgba(240, 240, 240, 0.2)" : "rgba(120, 120, 120, 0.15)";
   const tagBorder = isSR
-    ? "rgba(244, 143, 177, 0.8)"
-    : "rgba(156, 39, 176, 0.5)";
+    ? "rgba(220, 220, 220, 0.8)"
+    : "rgba(150, 150, 150, 0.4)";
   const tagGlow = isSR
-    ? "0 0 10px rgba(244, 143, 177, 0.6)"
+    ? "0 0 8px rgba(255, 255, 255, 0.5)"
     : "0 0 0px transparent";
 
   const nameShadow = isSR
-    ? "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px #F48FB1"
-    : "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 5px #CE93D8";
+    ? "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px #FFFFFF"
+    : "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 5px #888888";
 
-  const btnColor = isSR ? "#FCE4EC" : "#E1BEE7";
+  const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   return (
     <ThemeProvider theme={theme}>
@@ -1758,7 +1968,7 @@ export default function App() {
                                       sx={{
                                         color: "#e0e0e0",
                                         fontStyle: "italic",
-                                        lineHeight: { xs: 1.4, sm: 1.8 },
+                                        lineHeight: { xs: 1.4, sm: 1.4 },
                                         fontSize: {
                                           xs: "0.75rem",
                                           sm: "0.95rem",
