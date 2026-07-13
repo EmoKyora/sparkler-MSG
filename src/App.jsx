@@ -1542,7 +1542,7 @@ export default function App() {
                                     sx={{
                                       color: "#e0e0e0",
                                       lineHeight: { xs: 1.4, sm: 1.6 },
-                                      fontSize: { xs: "0.75rem", sm: "1rem" },
+                                      fontSize: { xs: "0.75rem", sm: "1.5rem" },
                                       whiteSpace: "pre-line",
                                       width: "100%",
                                     }}
