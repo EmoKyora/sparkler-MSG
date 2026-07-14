@@ -77,13 +77,13 @@ const sparklerItemstest = [
     id: 6,
     name: "ไฟเย็นประกายเร้นเงา",
     type: "SSR",
-    desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\n\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก... ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
-    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
+    desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ— หมายถึง มันอันตรายน่ะครับ"`,
     image: `${baseUrl}images/ssr/Kyora.png`,
     rate: 4.28, // Adjusted
     themeColor: "#FFA2B7",
     themeGrad: "#000000",
-    bgPosition: "right top",
+    bgPositionDesktop: "right top",
   },
   {
     id: 7,
@@ -184,11 +184,10 @@ const sparklerItems = [
     desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
     quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ— หมายถึง มันอันตรายน่ะครับ"`,
     image: `${baseUrl}images/ssr/Kyora.png`,
-    rate: 4.28, // Adjusted
+    rate: 4.28, 
     themeColor: "#FFA2B7",
     themeGrad: "#000000",
     bgPositionDesktop: "right top",
-    bgPositionMobile: "center 10%",
   },
 ];
 
@@ -272,7 +271,7 @@ export default function App() {
   const audioRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const canHover = useMediaQuery("(hover: hover)");
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
@@ -1063,7 +1062,8 @@ export default function App() {
                 alignItems: "center", // บังคับให้อยู่ตรงกลางแนวตั้ง
                 padding: "20px",
                 boxSizing: "border-box",
-                overflow: "hidden", // ป้องกันการทะลุขอบจอ
+                overflowY: isMobile ? "hidden" : "auto",
+                overflowX: "hidden",
               }}
             >
               <AnimatePresence>
@@ -1075,16 +1075,16 @@ export default function App() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 4, ease: "easeOut" }}
                     style={{
+                      display: isMobile ? "none" : "block",
                       position: "absolute",
                       top: 0,
                       left: 0,
                       width: "100%",
                       height: "100%",
                       backgroundImage: `url(${result.image})`,
-                      backgroundSize: isMobile ? "150% auto" : "cover",
-                      backgroundPosition: isMobile
-                        ? result.bgPositionMobile || "center top"
-                        : result.bgPositionDesktop || "right 10%",
+                      backgroundSize: "cover",
+                      backgroundPosition:
+                        result.bgPositionDesktop || "right 10%",
                       backgroundRepeat: "no-repeat",
                       mixBlendMode: "screen",
                       zIndex: 0,
@@ -1438,8 +1438,9 @@ export default function App() {
                               maxWidth: "500px",
                               height: "auto",
                               maxHeight: {
-                                xs: "55vh",
-                                md: "calc(95vh - 200px)",
+                                xs: "50dvh",
+                                sm: "calc(100dvh - 320px)",
+                                md: "calc(100dvh - 280px)",
                               },
                               objectFit: "contain",
                               filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FF69B4"}99)`,
