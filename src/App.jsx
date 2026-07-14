@@ -1520,10 +1520,12 @@ export default function App() {
                                 transformStyle: "preserve-3d",
                                 WebkitTransformStyle: "preserve-3d",
                                 position: "relative",
+                                display: "grid",
                               }}
                             >
                               <Box
                                 sx={{
+                                  gridArea: "1 / 1",
                                   backfaceVisibility: "hidden",
                                   WebkitBackfaceVisibility: "hidden",
                                   position: "relative",
@@ -1623,12 +1625,11 @@ export default function App() {
 
                               <Box
                                 sx={{
+                                  gridArea: "1 / 1",
                                   backfaceVisibility: "hidden",
                                   WebkitBackfaceVisibility: "hidden",
                                   transform: "rotateY(180deg)",
-                                  position: "absolute",
-                                  top: 0,
-                                  left: 0,
+                                  position: "relative",
                                   width: "100%",
                                   height: "100%",
                                   padding: "3px",
@@ -1700,29 +1701,17 @@ export default function App() {
                                       width: "100%",
                                       color: "#e0e0e0",
                                       fontStyle: "italic",
-                                      lineHeight: { xs: 1.4, sm: 1.4 },
-                                      fontSize: { xs: "0.6rem", sm: "0.7rem" },
+                                      lineHeight: { xs: 1.4, sm: 1.6 }, // ✨ ปรับระยะบรรทัดให้กระชับขึ้น
+                                      fontSize: { xs: "0.7rem", sm: "0.85rem" }, // ✨ ปรับขนาดฟอนต์บนมือถือให้พอดี
                                       textAlign: "center",
                                       whiteSpace: "pre-line",
                                       textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                                      mb: 1,
+                                      mb: { xs: 1.5, sm: 2 }, // ✨ ลดระยะห่างขอบล่างนิดหน่อย
                                     }}
                                   >
                                     {result.desc}
                                   </Typography>
-                                  <Box
-                                    sx={{
-                                      display: { xs: "none", sm: "block" },
-                                      width: "40px",
-                                      height: "2px",
-                                      bgcolor: result.themeColor || "#FF69B4",
-                                      opacity: 0.8,
-                                      borderRadius: "2px",
-                                      boxShadow: `0 0 10px ${result.themeColor || "#FF69B4"}, 0 0 4px ${result.themeColor || "#FF69B4"}`,
-                                      mb: 1,
-                                      flexShrink: 0,
-                                    }}
-                                  />
+                                   
                                   <Typography
                                     variant="caption"
                                     sx={{
