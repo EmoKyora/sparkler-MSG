@@ -1077,8 +1077,7 @@ export default function App() {
                 alignItems: "center", // บังคับให้อยู่ตรงกลางแนวตั้ง
                 padding: "20px",
                 boxSizing: "border-box",
-                overflowY: isMobile ? "hidden" : "auto",
-                overflowX: "hidden",
+                overflow: "hidden",
               }}
             >
               <AnimatePresence>
@@ -1210,8 +1209,24 @@ export default function App() {
                 )}
               </AnimatePresence>
               <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  overflowY: isMobile ? "hidden" : "auto", // 💡 เลื่อนตรงนี้มาไว้ที่กล่องในแทน
+                  overflowX: "hidden",
+                  display: "flex",
+                  padding: "20px",
+                  boxSizing: "border-box",
+                  zIndex: 10,
+                }}
+              >
+              <div
                 onClick={(e) => e.stopPropagation()}
                 style={{
+                  margin: "auto",
                   width: "100%",
                   maxWidth: result?.type === "SSR" ? "700px" : "450px",
                   maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
@@ -2032,7 +2047,7 @@ export default function App() {
                     )}
                   </div>
                 )}
-              </div>
+              </div></div>
             </motion.div>
           )}
         </AnimatePresence>
