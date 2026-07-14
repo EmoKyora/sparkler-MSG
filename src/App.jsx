@@ -424,6 +424,17 @@ export default function App() {
     : "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 5px #888888";
 
   const btnColor = isSR ? "#E0E0E0" : "#888888";
+
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden"; // ล็อกไม่ให้ไถหน้าเว็บหลักได้
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto"; // คืนค่าเวลา Component Unmount
+    };
+  }, [openModal]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -691,6 +702,7 @@ export default function App() {
               />
               <Button
                 variant="contained"
+                disabled={isRolling || openModal}
                 onClick={handleRollGacha}
                 sx={{
                   bgcolor: "rgba(26, 11, 46, 0.6)",
@@ -713,6 +725,11 @@ export default function App() {
                     border: "1px solid rgba(255, 105, 180, 0.8)",
                     boxShadow: "0 0 20px rgba(255, 105, 180, 0.5)",
                     color: "#FFF",
+                  },
+                  "&.Mui-disabled": {
+                    bgcolor: "rgba(26, 11, 46, 0.4)",
+                    color: "rgba(255, 255, 255, 0.3)",
+                    border: "1px solid rgba(255, 105, 180, 0.2)",
                   },
                 }}
               >
@@ -1084,17 +1101,17 @@ export default function App() {
                 position: "fixed",
                 top: 0,
                 left: 0,
-                width: "100vw",
-                height: "100vh",
+                right: 0, // ยึดขอบขวา
+                bottom: 0, // ยึดขอบล่าง (ใช้แทน 100vh เพื่อแก้ปัญหามือถือ)
                 backgroundColor: "rgba(5, 2, 10, 0.85)",
                 backdropFilter: "blur(12px)",
                 zIndex: 9999,
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "center", // บังคับให้อยู่ตรงกลางแนวตั้ง
                 padding: "20px",
                 boxSizing: "border-box",
-                overflow: "hidden",
+                overflow: "hidden", // ป้องกันการทะลุขอบจอ
               }}
             >
               <AnimatePresence>
@@ -1227,6 +1244,10 @@ export default function App() {
                 style={{
                   width: "100%",
                   maxWidth: result?.type === "SSR" ? "700px" : "450px",
+                  maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
+                  display: "flex", // เพิ่ม Flex ให้ Wrapper ของการ์ด
+                  justifyContent: "center",
+                  alignItems: "center",
                   transition: "max-width 0.3s ease-in-out",
                   zIndex: 10,
                 }}
@@ -1363,6 +1384,7 @@ export default function App() {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
+                      alignItems: "center", // เสริมความชัวร์ให้คอนเทนต์กลาง
                       perspective: 1000,
                     }}
                   >
@@ -1383,6 +1405,7 @@ export default function App() {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
+                          justifyContent: "center",
                           position: "relative",
                         }}
                       >
@@ -1458,7 +1481,11 @@ export default function App() {
                             sx={{
                               width: "100%",
                               maxWidth: "500px",
-                              height: { xs: "40vh", md: "65vh" },
+                              height: "auto",
+                              maxHeight: {
+                                xs: "45vh",
+                                md: "calc(95vh - 350px)", 
+                              },
                               objectFit: "contain",
                               filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FF69B4"}99)`,
                             }}
@@ -1505,7 +1532,7 @@ export default function App() {
                                   borderRadius: "16px",
                                   background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
                                   backgroundSize: "300% 300%",
-                                  "@keyframes pulseFrameFront": {
+                                  [`@keyframes pulseFrameFront_${result.id}`]: {
                                     "0%": {
                                       backgroundPosition: "0% 50%",
                                       boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
@@ -1519,8 +1546,7 @@ export default function App() {
                                       boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
                                     },
                                   },
-                                  animation:
-                                    "pulseFrameFront 4s ease-in-out infinite",
+                                  animation: `pulseFrameFront_${result.id} 4s ease-in-out infinite`,
                                 }}
                               >
                                 <Box
@@ -1571,7 +1597,7 @@ export default function App() {
                                     sx={{
                                       color: "#e0e0e0",
                                       lineHeight: { xs: 1.4, sm: 1.6 },
-                                      fontSize: { xs: "0.75rem", sm: "1.5rem" },
+                                      fontSize: { xs: "0.75rem", sm: "1rem" },
                                       whiteSpace: "pre-line",
                                       width: "100%",
                                     }}
@@ -1609,7 +1635,7 @@ export default function App() {
                                   borderRadius: "16px",
                                   background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
                                   backgroundSize: "300% 300%",
-                                  "@keyframes pulseFrameBack": {
+                                  [`@keyframes pulseFrameBack_${result.id}`]: {
                                     "0%": {
                                       backgroundPosition: "0% 50%",
                                       boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
@@ -1623,8 +1649,7 @@ export default function App() {
                                       boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
                                     },
                                   },
-                                  animation:
-                                    "pulseFrameBack 4s ease-in-out infinite",
+                                  animation: `pulseFrameBack_${result.id} 4s ease-in-out infinite`,
                                 }}
                               >
                                 <Box
@@ -1997,7 +2022,7 @@ export default function App() {
                                       sx={{
                                         color: "#e0e0e0",
                                         fontStyle: "italic",
-                                        lineHeight: { xs: 1.4, sm: 1.4 },
+                                        lineHeight: { xs: 1.4, sm: 1.8 },
                                         fontSize: {
                                           xs: "0.75rem",
                                           sm: "0.95rem",
