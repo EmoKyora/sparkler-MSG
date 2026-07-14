@@ -1483,8 +1483,8 @@ export default function App() {
                               maxWidth: "500px",
                               height: "auto",
                               maxHeight: {
-                                xs: "45vh",
-                                md: "calc(95vh - 350px)", 
+                                xs: "55vh",
+                                md: "calc(95vh - 200px)",
                               },
                               objectFit: "contain",
                               filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FF69B4"}99)`,
@@ -1555,14 +1555,14 @@ export default function App() {
                                     height: "100%",
                                     bgcolor: "rgba(5, 2, 10, 0.95)",
                                     borderRadius: "13px",
-                                    p: { xs: 2.5, sm: 4 },
+                                    p: { xs: 2, sm: 2.5 },
                                     pb: { xs: 4, sm: 5 },
                                     textAlign: "center",
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    minHeight: { xs: "150px", sm: "280px" },
+                                    minHeight: { xs: "120px", sm: "200px" },
                                     transform: "translateZ(1px)",
                                     position: "relative",
                                   }}
@@ -1658,13 +1658,13 @@ export default function App() {
                                     height: "100%",
                                     bgcolor: "rgba(5, 2, 10, 0.95)",
                                     borderRadius: "13px",
-                                    p: { xs: 2.5, sm: 4 },
+                                    p: { xs: 1.5, sm: 2 },
                                     textAlign: "center",
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    minHeight: { xs: "150px", sm: "280px" },
+                                    minHeight: { xs: "120px", sm: "200px" },
                                     transform: "translateZ(1px)",
                                   }}
                                 >
@@ -1674,7 +1674,7 @@ export default function App() {
                                       mt: 0,
                                       mb: 0.5,
                                       fontWeight: "bold",
-                                      fontSize: { xs: "1rem", sm: "1.8rem" },
+                                      fontSize: { xs: "1rem", sm: "1.5rem" },
                                       color: "#FFFFFF",
                                       textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FF69B4"}`,
                                     }}
@@ -1687,8 +1687,8 @@ export default function App() {
                                       display: { xs: "none", sm: "block" },
                                       color: result.themeColor || "#FF69B4",
                                       opacity: 0.7,
-                                      mb: 0.5,
-                                      letterSpacing: 3,
+                                      mb: 0,
+                                      letterSpacing: 1,
                                     }}
                                   >
                                     ✧ ✧ ✧
@@ -1701,11 +1701,11 @@ export default function App() {
                                       color: "#e0e0e0",
                                       fontStyle: "italic",
                                       lineHeight: { xs: 1.4, sm: 1.4 },
-                                      fontSize: { xs: "0.6rem", sm: "0.95rem" },
+                                      fontSize: { xs: "0.6rem", sm: "0.7rem" },
                                       textAlign: "center",
                                       whiteSpace: "pre-line",
                                       textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                                      mb: 2.5,
+                                      mb: 1,
                                     }}
                                   >
                                     {result.desc}
