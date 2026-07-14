@@ -23,7 +23,7 @@ const theme = createTheme({
   },
 });
 
-const sparklerItems = [
+const sparklerItemstest = [
   {
     id: 1,
     name: "ไฟเย็นกล่องไม้ไขลาน",
@@ -68,10 +68,10 @@ const sparklerItems = [
     id: 5,
     name: "ไฟเย็นประกายเร้นเงา",
     type: "SR",
-    desc: `เมื่อจุดไฟ...\nประกายสีเงินอมม่วงสลัวจะหยาดหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายอยู่รอบกาย\nคอยดูดซับความเหนื่อยล้าและขุ่นมัวในจิตใจ\n\nจนเมื่อแสงไฟมอดดับ...\nพวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก... ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    desc: `เมื่อจุดไฟ...\nประกายสีเงินอมม่วงสลัวจะหยาดหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายอยู่รอบกาย\nคอยดูดซับความเหนื่อยล้าและขุ่นมัวในจิตใจ\n\nจนเมื่อแสงไฟมอดดับ...\nพวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\n ให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
     quote: "",
     image: `${baseUrl}images/chibi/Shoji.png`,
-    rate: 10, // Adjusted
+    rate: 10,
   },
   {
     id: 6,
@@ -81,8 +81,9 @@ const sparklerItems = [
     quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
     image: `${baseUrl}images/ssr/Kyora.png`,
     rate: 4.28, // Adjusted
-    themeColor: "#096CFF",
-    themeGrad: "#87CEFA",
+    themeColor: "#FFA2B7",
+    themeGrad: "#000000",
+    bgPosition: "right top",
   },
   {
     id: 7,
@@ -175,26 +176,20 @@ const sparklerItems = [
     themeGrad: "#060606",
   },
 ];
-const sparklerItemstest = [ 
+const sparklerItems = [
   {
-    id: 1,
-    name: "ไฟเย็นกล่องไม้ไขลาน",
-    type: "SR",
-    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? \nลองเล่นเป็นวาทยากรสักครั้งไหม`,
-    quote: "",
-    image: `${baseUrl}images/chibi/Shoji.png`,
-    rate: 50,
-  },
-  {
-    id: 2,
-    name: "ไฟเย็นกล่องไม้ไขลาน",
+    id: 6,
+    name: "ไฟเย็นประกายเร้นเงา",
     type: "SSR",
-    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
-    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
-    image: `${baseUrl}images/ssr/Shoji.png`,
-    rate: 50,
-    themeColor: "#096CFF",
-    themeGrad: "#87CEFA",
+    desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
+    quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ— หมายถึง มันอันตรายน่ะครับ"
+`,
+    image: `${baseUrl}images/ssr/Kyora.png`,
+    rate: 4.28, // Adjusted
+    themeColor: "#FFA2B7",
+    themeGrad: "#000000",
+    bgPositionDesktop: "right top",
+    bgPositionMobile: "center 10%",
   },
 ];
 
@@ -278,6 +273,7 @@ export default function App() {
   const audioRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const canHover = useMediaQuery("(hover: hover)");
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
@@ -1086,8 +1082,11 @@ export default function App() {
                       width: "100%",
                       height: "100%",
                       backgroundImage: `url(${result.image})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "right 20%",
+                      backgroundSize: isMobile ? "150% auto" : "cover",
+                      backgroundPosition: isMobile
+                        ? result.bgPositionMobile || "center top"
+                        : result.bgPositionDesktop || "right 10%",
+                      backgroundRepeat: "no-repeat",
                       mixBlendMode: "screen",
                       zIndex: 0,
                       pointerEvents: "none",
