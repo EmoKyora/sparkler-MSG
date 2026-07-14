@@ -107,7 +107,7 @@ const sparklerItemstest = [
       </>
     ),
     image: `${baseUrl}images/ssr/Tsuru.png`,
-    rate: 4.28, 
+    rate: 4.28,
     themeColor: "#C9EE66",
     themeGrad: "#E6C969",
     bgPositionDesktop: "right 10%",
@@ -179,7 +179,7 @@ const sparklerItemstest = [
     themeGrad: "#060606",
   },
 ];
-const sparklerItems = [ 
+const sparklerItems = [
   {
     id: 6,
     name: "ประกายเร้นเงา",
@@ -187,7 +187,7 @@ const sparklerItems = [
     desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
     quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ— หมายถึง มันอันตรายน่ะครับ"`,
     image: `${baseUrl}images/ssr/Kyora.png`,
-    rate: 40,  
+    rate: 40,
     themeColor: "#FFA2B7",
     themeGrad: "#000000",
     bgPositionDesktop: "right 5%",
@@ -199,13 +199,13 @@ const sparklerItems = [
     desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป\n\nจนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ โผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n\nก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม\n\nอยากลองอธิษฐานแล้วเป่ามันดูไหม ?`,
     quote: "",
     image: `${baseUrl}images/chibi/Tsuru.png`,
-    rate: 20,  
+    rate: 20,
   },
   {
     id: 8,
     name: "สลักคำขอ",
     type: "SSR",
-    desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป\n\nจนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ โผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n\nก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม\n\nอยากลองอธิษฐานแล้วเป่ามันดูไหม ?`,
+    desc: `ละอองแสงสีทองสว่างเป็นประกายแวววาวเมื่อถูกจุดขึ้น นอกจากนั้นก็ดูไม่ต่างจากไฟเย็นธรรมดาทั่วไป\n\nจนกระทั่งคุณลองแกว่งมันดู ก็จะปรากฏเป็นเจ้านกกระดาษล่องลอยล้อมรอบคุณ \nโผล่เพิ่มขึ้นมาเรื่อยๆไม่สิ้นสุดตามจำนวนที่คุณสะบัด\n\nก่อนที่จะดับลง เหล่านกกระดาษไม่ว่าจะมากน้อยได้รวมตัวกัน กลายเป็นเพียงแสงเทียนริบหรี่อยู่ปลายด้าม\n\nอยากลองอธิษฐานแล้วเป่ามันดูไหม ?`,
     quote: (
       <>
         “<b>เฮ้ย</b> เอาไปสิ”
@@ -214,7 +214,7 @@ const sparklerItems = [
       </>
     ),
     image: `${baseUrl}images/ssr/Tsuru.png`,
-    rate: 40, 
+    rate: 40,
     themeColor: "#C9EE66",
     themeGrad: "#E6C969",
     bgPositionDesktop: "right 10%",
@@ -1238,770 +1238,469 @@ export default function App() {
                   zIndex: 10,
                 }}
               >
-              <div
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  margin: "auto",
-                  width: "100%",
-                  maxWidth: result?.type === "SSR" ? "700px" : "450px",
-                  maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
-                  display: "flex", // เพิ่ม Flex ให้ Wrapper ของการ์ด
-                  justifyContent: "center",
-                  alignItems: "center",
-                  transition: "max-width 0.3s ease-in-out",
-                  zIndex: 10,
-                }}
-              >
-                {isRolling && (
-                  <motion.div
-                    key="rolling"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.2 }}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "200px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        position: "relative",
-                        width: 180,
-                        height: 180,
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    margin: "auto",
+                    width: "100%",
+                    maxWidth: result?.type === "SSR" ? "700px" : "450px",
+                    maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
+                    display: "flex", // เพิ่ม Flex ให้ Wrapper ของการ์ด
+                    justifyContent: "center",
+                    alignItems: "center",
+                    transition: "max-width 0.3s ease-in-out",
+                    zIndex: 10,
+                  }}
+                >
+                  {isRolling && (
+                    <motion.div
+                      key="rolling"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.2 }}
+                      style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
+                        height: "200px",
                       }}
                     >
-                      <motion.div
-                        animate={{
-                          scale: [0.8, 1.5, 0.8],
-                          rotate: [0, 90, 180],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        style={{
-                          position: "absolute",
-                          width: "100%",
-                          height: "100%",
+                      <Box
+                        sx={{
+                          position: "relative",
+                          width: 180,
+                          height: 180,
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
-                        <div
+                        <motion.div
+                          animate={{
+                            scale: [0.8, 1.5, 0.8],
+                            rotate: [0, 90, 180],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
                           style={{
                             position: "absolute",
-                            width: "120%",
-                            height: "2px",
-                            background:
-                              "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                           }}
-                        />
-                        <div
-                          style={{
-                            position: "absolute",
-                            width: "2px",
-                            height: "120%",
-                            background:
-                              "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
-                          }}
-                        />
-                      </motion.div>
-
-                      {[...Array(40)].map((_, i) => {
-                        const angle = (i * 9 * Math.PI) / 180;
-                        const distance = Math.random() * 70 + 40;
-                        const duration = Math.random() * 0.8 + 0.4;
-                        const delay = Math.random() * 1;
-                        const size = Math.random() * 4 + 2;
-                        const color =
-                          i % 3 === 0
-                            ? "#FF69B4"
-                            : i % 2 === 0
-                              ? "#FFB7C5"
-                              : "#FFF";
-
-                        return (
-                          <motion.div
-                            key={`spark-${i}`}
-                            initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
-                            animate={{
-                              opacity: [1, 1, 0],
-                              scale: [0, 1.5, 0],
-                              x: Math.cos(angle) * distance,
-                              y: Math.sin(angle) * distance,
-                            }}
-                            transition={{
-                              duration: duration,
-                              repeat: Infinity,
-                              ease: "easeOut",
-                              delay: delay,
-                            }}
+                        >
+                          <div
                             style={{
                               position: "absolute",
-                              width: size,
-                              height: size,
-                              borderRadius: "50%",
-                              backgroundColor: color,
-                              boxShadow: `0 0 ${size * 2.5}px ${color}`,
+                              width: "120%",
+                              height: "2px",
+                              background:
+                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
                             }}
                           />
-                        );
-                      })}
+                          <div
+                            style={{
+                              position: "absolute",
+                              width: "2px",
+                              height: "120%",
+                              background:
+                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                            }}
+                          />
+                        </motion.div>
 
-                      <motion.div
-                        animate={{ scale: [1, 1.8, 1], opacity: [0.9, 1, 0.9] }}
-                        transition={{
-                          duration: 0.5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        style={{
-                          position: "absolute",
-                          width: 18,
-                          height: 18,
-                          borderRadius: "50%",
-                          backgroundColor: "#FFF",
-                          boxShadow: `
+                        {[...Array(40)].map((_, i) => {
+                          const angle = (i * 9 * Math.PI) / 180;
+                          const distance = Math.random() * 70 + 40;
+                          const duration = Math.random() * 0.8 + 0.4;
+                          const delay = Math.random() * 1;
+                          const size = Math.random() * 4 + 2;
+                          const color =
+                            i % 3 === 0
+                              ? "#FF69B4"
+                              : i % 2 === 0
+                                ? "#FFB7C5"
+                                : "#FFF";
+
+                          return (
+                            <motion.div
+                              key={`spark-${i}`}
+                              initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
+                              animate={{
+                                opacity: [1, 1, 0],
+                                scale: [0, 1.5, 0],
+                                x: Math.cos(angle) * distance,
+                                y: Math.sin(angle) * distance,
+                              }}
+                              transition={{
+                                duration: duration,
+                                repeat: Infinity,
+                                ease: "easeOut",
+                                delay: delay,
+                              }}
+                              style={{
+                                position: "absolute",
+                                width: size,
+                                height: size,
+                                borderRadius: "50%",
+                                backgroundColor: color,
+                                boxShadow: `0 0 ${size * 2.5}px ${color}`,
+                              }}
+                            />
+                          );
+                        })}
+
+                        <motion.div
+                          animate={{
+                            scale: [1, 1.8, 1],
+                            opacity: [0.9, 1, 0.9],
+                          }}
+                          transition={{
+                            duration: 0.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          style={{
+                            position: "absolute",
+                            width: 18,
+                            height: 18,
+                            borderRadius: "50%",
+                            backgroundColor: "#FFF",
+                            boxShadow: `
                           0 0 30px 10px rgba(255, 105, 180, 0.8), 
                           0 0 60px 30px rgba(255, 183, 197, 0.5)
                         `,
-                        }}
-                      />
-                    </Box>
-                  </motion.div>
-                )}
-
-                {!isRolling && result && (
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center", // เสริมความชัวร์ให้คอนเทนต์กลาง
-                      perspective: 1000,
-                    }}
-                  >
-                    {result.type === "SSR" ? (
-                      <motion.div
-                        key="result-ssr"
-                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{
-                          type: "spring",
-                          damping: 15,
-                          stiffness: 80,
-                          duration: 0.8,
-                        }}
-                        style={{
-                          width: "100%",
-                          maxWidth: "900px",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          position: "relative",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            top: "-20%",
-                            left: "-10%",
-                            width: "120%",
-                            height: "140%",
-                            pointerEvents: "none",
-                            zIndex: 1,
                           }}
-                        >
-                          {[...Array(30)].map((_, i) => {
-                            const size = Math.random() * 5 + 2;
-                            const startX = `${Math.random() * 100}%`;
-                            const driftX = (Math.random() - 0.5) * 60;
-                            const duration = Math.random() * 5 + 4;
-                            const delay = Math.random() * 5;
-                            const color =
-                              i % 2 === 0
-                                ? result.themeColor || "#FF69B4"
-                                : "#FFFFFF";
+                        />
+                      </Box>
+                    </motion.div>
+                  )}
 
-                            return (
-                              <motion.div
-                                key={`ssr-float-particle-${i}`}
-                                initial={{ opacity: 0, x: 0, y: "100%" }}
-                                animate={{
-                                  opacity: [0, 0.8, 0.8, 0],
-                                  y: ["100%", "-20%"],
-                                  x: [0, driftX, driftX * 1.5],
-                                }}
-                                transition={{
-                                  duration: duration,
-                                  repeat: Infinity,
-                                  delay: delay,
-                                  ease: "linear",
-                                }}
-                                style={{
-                                  position: "absolute",
-                                  bottom: 0,
-                                  left: startX,
-                                  width: size,
-                                  height: size,
-                                  borderRadius: "50%",
-                                  backgroundColor: color,
-                                  boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
-                                }}
-                              />
-                            );
-                          })}
-                        </Box>
-
-                        <div
+                  {!isRolling && result && (
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center", // เสริมความชัวร์ให้คอนเทนต์กลาง
+                        perspective: 1000,
+                      }}
+                    >
+                      {result.type === "SSR" ? (
+                        <motion.div
+                          key="result-ssr"
+                          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{
+                            type: "spring",
+                            damping: 15,
+                            stiffness: 80,
+                            duration: 0.8,
+                          }}
                           style={{
                             width: "100%",
+                            maxWidth: "900px",
                             display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                             justifyContent: "center",
-                            zIndex: 2,
+                            position: "relative",
                           }}
                         >
-                          <Box
-                            component="img"
-                            src={result.image}
-                            alt={result.name}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src =
-                                "https://via.placeholder.com/500x650/transparent/FF69B4?text=Image";
-                            }}
-                            sx={{
-                              width: "100%",
-                              maxWidth: "500px",
-                              height: "auto",
-                              maxHeight: {
-                                xs: "50dvh",
-                                sm: "calc(100dvh - 320px)",
-                                md: "calc(100dvh - 280px)",
-                              },
-                              objectFit: "contain",
-                              filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FF69B4"}99)`,
-                            }}
-                          />
-                        </div>
-
-                        <Box
-                          sx={{
-                            perspective: 1000,
-                            width: "100%",
-                            mt: { xs: -1, sm: -2 },
-                            zIndex: 3,
-                          }}
-                        >
-                          <motion.div
-                            initial="rest"
-                            animate={!canHover && isFlipped ? "hover" : "rest"}
-                            whileHover={canHover ? "hover" : "rest"}
-                            onClick={() => {
-                              if (!canHover) setIsFlipped(!isFlipped);
-                            }}
-                            style={{ width: "100%", position: "relative" }}
-                          >
-                            <motion.div
-                              variants={{
-                                rest: { rotateY: 0 },
-                                hover: { rotateY: 180 },
-                              }}
-                              transition={{ duration: 0.6 }}
-                              style={{
-                                width: "100%",
-                                transformStyle: "preserve-3d",
-                                WebkitTransformStyle: "preserve-3d",
-                                position: "relative",
-                                display: "grid",
-                              }}
-                            >
-                              <Box
-                                sx={{
-                                  gridArea: "1 / 1",
-                                  backfaceVisibility: "hidden",
-                                  WebkitBackfaceVisibility: "hidden",
-                                  position: "relative",
-                                  width: "100%",
-                                  padding: "3px",
-                                  borderRadius: "16px",
-                                  background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
-                                  backgroundSize: "300% 300%",
-                                  [`@keyframes pulseFrameFront_${result.id}`]: {
-                                    "0%": {
-                                      backgroundPosition: "0% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
-                                    },
-                                    "50%": {
-                                      backgroundPosition: "100% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}AA, 0 0 45px ${result.themeColor || "#FF69B4"}99`,
-                                    },
-                                    "100%": {
-                                      backgroundPosition: "0% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
-                                    },
-                                  },
-                                  animation: `pulseFrameFront_${result.id} 4s ease-in-out infinite`,
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    width: "100%",
-                                    height: "100%",
-                                    bgcolor: "rgba(5, 2, 10, 0.95)",
-                                    borderRadius: "13px",
-                                    p: { xs: 2, sm: 2.5 },
-                                    pb: { xs: 4, sm: 5 },
-                                    textAlign: "center",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    minHeight: { xs: "120px", sm: "200px" },
-                                    transform: "translateZ(1px)",
-                                    position: "relative",
-                                  }}
-                                >
-                                  <Typography
-                                    variant="overline"
-                                    sx={{
-                                      position: "absolute",
-                                      top: "-18px",
-                                      left: "50%",
-                                      transform: "translateX(-50%)",
-                                      display: "inline-block",
-                                      color: "#FFF",
-                                      bgcolor: `${result.themeColor || "#FF69B4"}33`,
-                                      fontWeight: "900",
-                                      letterSpacing: 5,
-                                      fontSize: "0.80rem",
-                                      px: 3,
-                                      py: 0.5,
-                                      border: `1px solid ${result.themeColor || "#FF69B4"}CC`,
-                                      borderRadius: "30px",
-                                      backdropFilter: "blur(6px)",
-                                      textShadow: `0 0 10px ${result.themeColor || "#FF69B4"}`,
-                                      boxShadow: `0 0 15px ${result.themeColor || "#FF69B4"}80`,
-                                    }}
-                                  >
-                                    ✦ SSR ✦
-                                  </Typography>
-
-                                  <Typography
-                                    variant="body1"
-                                    sx={{
-                                      color: "#e0e0e0",
-                                      lineHeight: { xs: 1.4, sm: 1.6 },
-                                      fontSize: { xs: "0.75rem", sm: "1rem" },
-                                      whiteSpace: "pre-line",
-                                      width: "100%",
-                                    }}
-                                  >
-                                    {result.quote}
-                                  </Typography>
-
-                                  <Typography
-                                    variant="caption"
-                                    sx={{
-                                      position: "absolute",
-                                      bottom: "12px",
-                                      color: result.themeColor || "#FF69B4",
-                                      opacity: 0.8,
-                                      fontSize: { xs: "0.4rem", sm: "0.6rem" },
-                                      letterSpacing: 1,
-                                    }}
-                                  >
-                                    ✨ แตะการ์ดเพื่อพลิก ✨
-                                  </Typography>
-                                </Box>
-                              </Box>
-
-                              <Box
-                                sx={{
-                                  gridArea: "1 / 1",
-                                  backfaceVisibility: "hidden",
-                                  WebkitBackfaceVisibility: "hidden",
-                                  transform: "rotateY(180deg)",
-                                  position: "relative",
-                                  width: "100%",
-                                  height: "100%",
-                                  padding: "3px",
-                                  borderRadius: "16px",
-                                  background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
-                                  backgroundSize: "300% 300%",
-                                  [`@keyframes pulseFrameBack_${result.id}`]: {
-                                    "0%": {
-                                      backgroundPosition: "0% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
-                                    },
-                                    "50%": {
-                                      backgroundPosition: "100% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}AA, 0 0 45px ${result.themeColor || "#FF69B4"}99`,
-                                    },
-                                    "100%": {
-                                      backgroundPosition: "0% 50%",
-                                      boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
-                                    },
-                                  },
-                                  animation: `pulseFrameBack_${result.id} 4s ease-in-out infinite`,
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    width: "100%",
-                                    height: "100%",
-                                    bgcolor: "rgba(5, 2, 10, 0.95)",
-                                    borderRadius: "13px",
-                                    p: { xs: 1.5, sm: 2 },
-                                    textAlign: "center",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    minHeight: { xs: "120px", sm: "200px" },
-                                    transform: "translateZ(1px)",
-                                  }}
-                                >
-                                  <Typography
-                                    variant="h4"
-                                    sx={{
-                                      mt: 0,
-                                      mb: 0.5,
-                                      fontWeight: "bold",
-                                      fontSize: { xs: "1rem", sm: "1.5rem" },
-                                      color: "#FFFFFF",
-                                      textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FF69B4"}`,
-                                    }}
-                                  >
-                                    {result.name}
-                                  </Typography>
-
-                                  <Typography
-                                    sx={{
-                                      display: { xs: "none", sm: "block" },
-                                      color: result.themeColor || "#FF69B4",
-                                      opacity: 0.7,
-                                      mb: 0,
-                                      letterSpacing: 1,
-                                    }}
-                                  >
-                                    ✧ ✧ ✧
-                                  </Typography>
-
-                                  <Typography
-                                    variant="body1"
-                                    sx={{
-                                      width: "100%",
-                                      color: "#e0e0e0",
-                                      fontStyle: "italic",
-                                      lineHeight: { xs: 1.4, sm: 1.6 }, // ✨ ปรับระยะบรรทัดให้กระชับขึ้น
-                                      fontSize: { xs: "0.7rem", sm: "0.85rem" }, // ✨ ปรับขนาดฟอนต์บนมือถือให้พอดี
-                                      textAlign: "center",
-                                      whiteSpace: "pre-line",
-                                      textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                                      mb: { xs: 1.5, sm: 2 }, // ✨ ลดระยะห่างขอบล่างนิดหน่อย
-                                    }}
-                                  >
-                                    {result.desc}
-                                  </Typography>
-
-                                  <Typography
-                                    variant="caption"
-                                    sx={{
-                                      position: "absolute",
-                                      bottom: "12px",
-                                      color: result.themeColor || "#FF69B4",
-                                      opacity: 0.8,
-                                      fontSize: { xs: "0.4rem", sm: "0.6rem" },
-                                      letterSpacing: 1,
-                                    }}
-                                  >
-                                    ✨ แตะที่ว่างเพื่อปิด ✨
-                                  </Typography>
-                                </Box>
-                              </Box>
-                            </motion.div>
-                          </motion.div>
-                        </Box>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="result-other"
-                        initial={{ rotateY: 90, scale: 0.8, opacity: 0, y: 50 }}
-                        animate={{ rotateY: 0, scale: 1, opacity: 1, y: 0 }}
-                        transition={{
-                          type: "spring",
-                          damping: 15,
-                          stiffness: 80,
-                          duration: 0.8,
-                        }}
-                        style={{
-                          width: "100%",
-                          maxWidth: "450px",
-                          perspective: 1000,
-                          position: "relative",
-                        }}
-                      >
-                        {isSR && (
                           <Box
                             sx={{
                               position: "absolute",
-                              top: "-15%",
-                              left: "-15%",
-                              width: "130%",
-                              height: "130%",
+                              top: "-20%",
+                              left: "-10%",
+                              width: "120%",
+                              height: "140%",
                               pointerEvents: "none",
-                              zIndex: 0,
+                              zIndex: 1,
                             }}
                           >
-                            {[...Array(15)].map((_, i) => {
-                              const size = Math.random() * 15 + 10;
-                              const top = `${Math.random() * 100}%`;
-                              const left = `${Math.random() * 100}%`;
-                              const delay = Math.random() * 2;
-                              const duration = Math.random() * 1.5 + 1.5;
+                            {[...Array(30)].map((_, i) => {
+                              const size = Math.random() * 5 + 2;
+                              const startX = `${Math.random() * 100}%`;
+                              const driftX = (Math.random() - 0.5) * 60;
+                              const duration = Math.random() * 5 + 4;
+                              const delay = Math.random() * 5;
+                              const color =
+                                i % 2 === 0
+                                  ? result.themeColor || "#FF69B4"
+                                  : "#FFFFFF";
 
                               return (
                                 <motion.div
-                                  key={`sr-sparkle-${i}`}
-                                  initial={{ opacity: 0, scale: 0, rotate: 0 }}
+                                  key={`ssr-float-particle-${i}`}
+                                  initial={{ opacity: 0, x: 0, y: "100%" }}
                                   animate={{
-                                    opacity: [0, 1, 1, 0],
-                                    scale: [0, 1, 0.8, 0],
-                                    rotate: [0, 90, 180],
+                                    opacity: [0, 0.8, 0.8, 0],
+                                    y: ["100%", "-20%"],
+                                    x: [0, driftX, driftX * 1.5],
                                   }}
                                   transition={{
                                     duration: duration,
                                     repeat: Infinity,
                                     delay: delay,
-                                    ease: "easeInOut",
+                                    ease: "linear",
                                   }}
                                   style={{
                                     position: "absolute",
-                                    top: top,
-                                    left: left,
-                                    width: `${size}px`,
-                                    height: `${size}px`,
-                                    backgroundColor: "#FFF",
-                                    clipPath:
-                                      "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
-                                    boxShadow:
-                                      "0 0 15px #FF69B4, 0 0 30px #FFB7C5",
+                                    bottom: 0,
+                                    left: startX,
+                                    width: size,
+                                    height: size,
+                                    borderRadius: "50%",
+                                    backgroundColor: color,
+                                    boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
                                   }}
                                 />
                               );
                             })}
                           </Box>
-                        )}
 
-                        <motion.div
-                          animate={{ y: [-5, 5, -5] }}
-                          transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                          style={{ zIndex: 1, position: "relative" }}
-                        >
-                          <motion.div
-                            initial="rest"
-                            animate={!canHover && isFlipped ? "hover" : "rest"}
-                            whileHover={canHover ? "hover" : "rest"}
-                            onClick={() => {
-                              if (!canHover) setIsFlipped(!isFlipped);
+                          <div
+                            style={{
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              zIndex: 2,
                             }}
-                            style={{ width: "100%", position: "relative" }}
+                          >
+                            <Box
+                              component="img"
+                              src={result.image}
+                              alt={result.name}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                  "https://via.placeholder.com/500x650/transparent/FF69B4?text=Image";
+                              }}
+                              sx={{
+                                width: "100%",
+                                maxWidth: "500px",
+                                height: "auto",
+                                maxHeight: {
+                                  xs: "50dvh",
+                                  sm: "calc(100dvh - 320px)",
+                                  md: "calc(100dvh - 280px)",
+                                },
+                                objectFit: "contain",
+                                filter: `drop-shadow(0px 0px 5px ${result.themeColor || "#FF69B4"}99)`,
+                              }}
+                            />
+                          </div>
+
+                          <Box
+                            sx={{
+                              perspective: 1000,
+                              width: "100%",
+                              mt: { xs: -1, sm: -2 },
+                              zIndex: 3,
+                            }}
                           >
                             <motion.div
-                              variants={{
-                                rest: { rotateY: 0 },
-                                hover: { rotateY: 180 },
+                              initial="rest"
+                              animate={
+                                !canHover && isFlipped ? "hover" : "rest"
+                              }
+                              whileHover={canHover ? "hover" : "rest"}
+                              onClick={() => {
+                                if (!canHover) setIsFlipped(!isFlipped);
                               }}
-                              transition={{ duration: 0.6 }}
-                              style={{
-                                width: "100%",
-                                transformStyle: "preserve-3d",
-                                WebkitTransformStyle: "preserve-3d",
-                                position: "relative",
-                              }}
+                              style={{ width: "100%", position: "relative" }}
                             >
-                              <Box
-                                sx={{
-                                  backfaceVisibility: "hidden",
-                                  WebkitBackfaceVisibility: "hidden",
+                              <motion.div
+                                variants={{
+                                  rest: { rotateY: 0 },
+                                  hover: { rotateY: 180 },
+                                }}
+                                transition={{ duration: 0.6 }}
+                                style={{
+                                  width: "100%",
+                                  transformStyle: "preserve-3d",
+                                  WebkitTransformStyle: "preserve-3d",
                                   position: "relative",
-                                  padding: "3px",
-                                  borderRadius: "24px",
-                                  background: cardBorderGradient,
-                                  boxShadow: cardGlow,
-                                  animation: "gradient-shift 4s ease infinite",
+                                  display: "grid",
                                 }}
                               >
-                                <Card
+                                <Box
                                   sx={{
+                                    gridArea: "1 / 1",
+                                    backfaceVisibility: "hidden",
+                                    WebkitBackfaceVisibility: "hidden",
                                     position: "relative",
                                     width: "100%",
-                                    height: { xs: "70vh", sm: "600px" },
-                                    maxHeight: { xs: "500px", sm: "none" },
-                                    bgcolor: "#05020A",
-                                    color: "white",
-                                    borderRadius: "21px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    overflow: "hidden",
-                                    boxShadow: "inset 0 0 20px rgba(0,0,0,0.8)",
-                                    transform: "translateZ(1px)",
+                                    padding: "3px",
+                                    borderRadius: "16px",
+                                    background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
+                                    backgroundSize: "300% 300%",
+                                    [`@keyframes pulseFrameFront_${result.id}`]:
+                                      {
+                                        "0%": {
+                                          backgroundPosition: "0% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
+                                        },
+                                        "50%": {
+                                          backgroundPosition: "100% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}AA, 0 0 45px ${result.themeColor || "#FF69B4"}99`,
+                                        },
+                                        "100%": {
+                                          backgroundPosition: "0% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
+                                        },
+                                      },
+                                    animation: `pulseFrameFront_${result.id} 4s ease-in-out infinite`,
                                   }}
                                 >
                                   <Box
-                                    component="img"
-                                    src={result.image}
-                                    alt={result.name}
-                                    onError={(e) => {
-                                      e.target.onerror = null;
-                                      e.target.src =
-                                        "https://via.placeholder.com/450x650/1a1025/FF69B4?text=Sparkler+Image";
-                                    }}
                                     sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      left: 0,
-                                      width: "100%",
-                                      height: "calc(100% - 130px)",
-                                      objectFit: "contain",
-                                      mt: 2,
-                                    }}
-                                  />
-                                  <Box
-                                    sx={{
-                                      position: "absolute",
-                                      top: 0,
-                                      left: 0,
                                       width: "100%",
                                       height: "100%",
-                                      background:
-                                        "linear-gradient(to bottom, rgba(5, 2, 10, 0) 60%, rgba(5, 2, 10, 0.95) 100%)",
-                                      pointerEvents: "none",
-                                    }}
-                                  />
-                                  <CardContent
-                                    sx={{
-                                      position: "absolute",
-                                      bottom: 0,
-                                      left: 0,
-                                      width: "100%",
+                                      bgcolor: "rgba(5, 2, 10, 0.95)",
+                                      borderRadius: "13px",
+                                      p: { xs: 2, sm: 2.5 },
+                                      pb: { xs: 4, sm: 5 },
                                       textAlign: "center",
-                                      p: { xs: 2.5, sm: 4 },
-                                      pb: { xs: 2, sm: 2 },
-                                      zIndex: 2,
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      minHeight: { xs: "120px", sm: "200px" },
+                                      transform: "translateZ(1px)",
+                                      position: "relative",
                                     }}
                                   >
                                     <Typography
                                       variant="overline"
                                       sx={{
+                                        position: "absolute",
+                                        top: "-18px",
+                                        left: "50%",
+                                        transform: "translateX(-50%)",
                                         display: "inline-block",
                                         color: "#FFF",
-                                        bgcolor: tagBg,
+                                        bgcolor: `${result.themeColor || "#FF69B4"}33`,
                                         fontWeight: "900",
                                         letterSpacing: 5,
                                         fontSize: "0.80rem",
                                         px: 3,
                                         py: 0.5,
-                                        border: `1px solid ${tagBorder}`,
+                                        border: `1px solid ${result.themeColor || "#FF69B4"}CC`,
                                         borderRadius: "30px",
-                                        mb: 1.5,
                                         backdropFilter: "blur(6px)",
-                                        textShadow: tagGlow,
+                                        textShadow: `0 0 10px ${result.themeColor || "#FF69B4"}`,
+                                        boxShadow: `0 0 15px ${result.themeColor || "#FF69B4"}80`,
                                       }}
                                     >
-                                      ✦ {result.type} ✦
+                                      ✦ SSR ✦
                                     </Typography>
+
+                                    <Typography
+                                      variant="body1"
+                                      sx={{
+                                        color: "#e0e0e0",
+                                        lineHeight: { xs: 1.4, sm: 1.6 },
+                                        fontSize: { xs: "0.75rem", sm: "1rem" },
+                                        whiteSpace: "pre-line",
+                                        width: "100%",
+                                      }}
+                                    >
+                                      {result.quote}
+                                    </Typography>
+
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        position: "absolute",
+                                        bottom: "12px",
+                                        color: result.themeColor || "#FF69B4",
+                                        opacity: 0.8,
+                                        fontSize: {
+                                          xs: "0.4rem",
+                                          sm: "0.6rem",
+                                        },
+                                        letterSpacing: 1,
+                                      }}
+                                    >
+                                      ✨ แตะการ์ดเพื่อพลิก ✨
+                                    </Typography>
+                                  </Box>
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    gridArea: "1 / 1",
+                                    backfaceVisibility: "hidden",
+                                    WebkitBackfaceVisibility: "hidden",
+                                    transform: "rotateY(180deg)",
+                                    position: "relative",
+                                    width: "100%",
+                                    height: "100%",
+                                    padding: "3px",
+                                    borderRadius: "16px",
+                                    background: `linear-gradient(135deg, ${result.themeColor || "#FF69B4"}, ${result.themeGrad || "#FFB7C5"}, ${result.themeColor || "#FF69B4"}, #FFF)`,
+                                    backgroundSize: "300% 300%",
+                                    [`@keyframes pulseFrameBack_${result.id}`]:
+                                      {
+                                        "0%": {
+                                          backgroundPosition: "0% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
+                                        },
+                                        "50%": {
+                                          backgroundPosition: "100% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}AA, 0 0 45px ${result.themeColor || "#FF69B4"}99`,
+                                        },
+                                        "100%": {
+                                          backgroundPosition: "0% 50%",
+                                          boxShadow: `0 10px 40px ${result.themeColor || "#FF69B4"}66, 0 0 10px ${result.themeColor || "#FF69B4"}40`,
+                                        },
+                                      },
+                                    animation: `pulseFrameBack_${result.id} 4s ease-in-out infinite`,
+                                  }}
+                                >
+                                  <Box
+                                    sx={{
+                                      width: "100%",
+                                      height: "100%",
+                                      bgcolor: "rgba(5, 2, 10, 0.95)",
+                                      borderRadius: "13px",
+                                      p: { xs: 1.5, sm: 2 },
+                                      textAlign: "center",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      minHeight: { xs: "120px", sm: "200px" },
+                                      transform: "translateZ(1px)",
+                                    }}
+                                  >
                                     <Typography
                                       variant="h4"
                                       sx={{
-                                        fontWeight: "bold",
-                                        fontSize: { xs: "1rem", sm: "1.8rem" },
-                                        color: "#FFFFFF",
-                                        textShadow: nameShadow,
+                                        mt: 0,
                                         mb: 0.5,
+                                        fontWeight: "bold",
+                                        fontSize: { xs: "1rem", sm: "1.5rem" },
+                                        color: "#FFFFFF",
+                                        textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FF69B4"}`,
                                       }}
                                     >
                                       {result.name}
                                     </Typography>
 
                                     <Typography
-                                      variant="caption"
                                       sx={{
-                                        display: "block",
-                                        color: btnColor,
-                                        fontSize: {
-                                          xs: "0.4rem",
-                                          sm: "0.6rem",
-                                        },
-                                        letterSpacing: 1,
-                                        opacity: 0.8,
-                                      }}
-                                    >
-                                      ✨ แตะการ์ดเพื่อพลิก ✨
-                                    </Typography>
-                                  </CardContent>
-                                </Card>
-                              </Box>
-
-                              <Box
-                                sx={{
-                                  backfaceVisibility: "hidden",
-                                  WebkitBackfaceVisibility: "hidden",
-                                  transform: "rotateY(180deg)",
-                                  position: "absolute",
-                                  top: 0,
-                                  left: 0,
-                                  width: "100%",
-                                  height: "100%",
-                                  padding: "3px",
-                                  borderRadius: "24px",
-                                  background: cardBorderGradient,
-                                  boxShadow: cardGlow,
-                                }}
-                              >
-                                <Card
-                                  sx={{
-                                    width: "100%",
-                                    height: "100%",
-                                    bgcolor: "rgba(5, 2, 10, 0.95)",
-                                    color: "white",
-                                    borderRadius: "21px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    p: { xs: 2.5, sm: 4 },
-                                    position: "relative",
-                                    overflow: "hidden",
-                                    transform: "translateZ(1px)",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      zIndex: 1,
-                                      textAlign: "center",
-                                      width: "100%",
-                                    }}
-                                  >
-                                    <Typography
-                                      sx={{
-                                        color: btnColor,
+                                        display: { xs: "none", sm: "block" },
+                                        color: result.themeColor || "#FF69B4",
                                         opacity: 0.7,
-                                        mb: 2,
-                                        letterSpacing: 3,
+                                        mb: 0,
+                                        letterSpacing: 1,
                                       }}
                                     >
                                       ✧ ✧ ✧
@@ -2010,59 +1709,397 @@ export default function App() {
                                     <Typography
                                       variant="body1"
                                       sx={{
+                                        width: "100%",
                                         color: "#e0e0e0",
                                         fontStyle: "italic",
-                                        lineHeight: { xs: 1.4, sm: 1.8 },
+                                        lineHeight: { xs: 1.4, sm: 1.6 }, // ✨ ปรับระยะบรรทัดให้กระชับขึ้น
                                         fontSize: {
-                                          xs: "0.75rem",
-                                          sm: "0.95rem",
-                                        },
+                                          xs: "0.7rem",
+                                          sm: "0.85rem",
+                                        }, // ✨ ปรับขนาดฟอนต์บนมือถือให้พอดี
                                         textAlign: "center",
-                                        mb: 3,
                                         whiteSpace: "pre-line",
                                         textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                                        mb: { xs: 1.5, sm: 2 }, // ✨ ลดระยะห่างขอบล่างนิดหน่อย
                                       }}
                                     >
                                       {result.desc}
                                     </Typography>
 
-                                    <Box
+                                    <Typography
+                                      variant="caption"
                                       sx={{
-                                        width: "40px",
-                                        height: "2px",
-                                        bgcolor: btnColor,
-                                        margin: "0 auto",
-                                        opacity: 0.5,
-                                        borderRadius: "2px",
-                                        boxShadow: `0 0 10px ${btnColor}`,
+                                        position: "absolute",
+                                        bottom: "12px",
+                                        color: result.themeColor || "#FF69B4",
+                                        opacity: 0.8,
+                                        fontSize: {
+                                          xs: "0.4rem",
+                                          sm: "0.6rem",
+                                        },
+                                        letterSpacing: 1,
                                       }}
-                                    />
+                                    >
+                                      ✨ แตะที่ว่างเพื่อปิด ✨
+                                    </Typography>
                                   </Box>
+                                </Box>
+                              </motion.div>
+                            </motion.div>
+                          </Box>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="result-other"
+                          initial={{
+                            rotateY: 90,
+                            scale: 0.8,
+                            opacity: 0,
+                            y: 50,
+                          }}
+                          animate={{ rotateY: 0, scale: 1, opacity: 1, y: 0 }}
+                          transition={{
+                            type: "spring",
+                            damping: 15,
+                            stiffness: 80,
+                            duration: 0.8,
+                          }}
+                          style={{
+                            width: "100%",
+                            maxWidth: "450px",
+                            perspective: 1000,
+                            position: "relative",
+                          }}
+                        >
+                          {isSR && (
+                            <Box
+                              sx={{
+                                position: "absolute",
+                                top: "-15%",
+                                left: "-15%",
+                                width: "130%",
+                                height: "130%",
+                                pointerEvents: "none",
+                                zIndex: 0,
+                              }}
+                            >
+                              {[...Array(15)].map((_, i) => {
+                                const size = Math.random() * 15 + 10;
+                                const top = `${Math.random() * 100}%`;
+                                const left = `${Math.random() * 100}%`;
+                                const delay = Math.random() * 2;
+                                const duration = Math.random() * 1.5 + 1.5;
 
-                                  <Typography
-                                    variant="caption"
-                                    sx={{
+                                return (
+                                  <motion.div
+                                    key={`sr-sparkle-${i}`}
+                                    initial={{
+                                      opacity: 0,
+                                      scale: 0,
+                                      rotate: 0,
+                                    }}
+                                    animate={{
+                                      opacity: [0, 1, 1, 0],
+                                      scale: [0, 1, 0.8, 0],
+                                      rotate: [0, 90, 180],
+                                    }}
+                                    transition={{
+                                      duration: duration,
+                                      repeat: Infinity,
+                                      delay: delay,
+                                      ease: "easeInOut",
+                                    }}
+                                    style={{
                                       position: "absolute",
-                                      bottom: "20px",
-                                      color: btnColor,
-                                      opacity: 0.8,
-                                      fontSize: { xs: "0.4rem", sm: "0.6rem" },
-                                      letterSpacing: 1,
-                                      zIndex: 1,
+                                      top: top,
+                                      left: left,
+                                      width: `${size}px`,
+                                      height: `${size}px`,
+                                      backgroundColor: "#FFF",
+                                      clipPath:
+                                        "polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%)",
+                                      boxShadow:
+                                        "0 0 15px #FF69B4, 0 0 30px #FFB7C5",
+                                    }}
+                                  />
+                                );
+                              })}
+                            </Box>
+                          )}
+
+                          <motion.div
+                            animate={{ y: [-5, 5, -5] }}
+                            transition={{
+                              duration: 4,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            style={{ zIndex: 1, position: "relative" }}
+                          >
+                            <motion.div
+                              initial="rest"
+                              animate={
+                                !canHover && isFlipped ? "hover" : "rest"
+                              }
+                              whileHover={canHover ? "hover" : "rest"}
+                              onClick={() => {
+                                if (!canHover) setIsFlipped(!isFlipped);
+                              }}
+                              style={{ width: "100%", position: "relative" }}
+                            >
+                              <motion.div
+                                variants={{
+                                  rest: { rotateY: 0 },
+                                  hover: { rotateY: 180 },
+                                }}
+                                transition={{ duration: 0.6 }}
+                                style={{
+                                  width: "100%",
+                                  transformStyle: "preserve-3d",
+                                  WebkitTransformStyle: "preserve-3d",
+                                  position: "relative",
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    backfaceVisibility: "hidden",
+                                    WebkitBackfaceVisibility: "hidden",
+                                    position: "relative",
+                                    padding: "3px",
+                                    borderRadius: "24px",
+                                    background: cardBorderGradient,
+                                    boxShadow: cardGlow,
+                                    animation:
+                                      "gradient-shift 4s ease infinite",
+                                  }}
+                                >
+                                  <Card
+                                    sx={{
+                                      position: "relative",
+                                      width: "100%",
+                                      height: { xs: "70vh", sm: "600px" },
+                                      maxHeight: { xs: "500px", sm: "none" },
+                                      bgcolor: "#05020A",
+                                      color: "white",
+                                      borderRadius: "21px",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      overflow: "hidden",
+                                      boxShadow:
+                                        "inset 0 0 20px rgba(0,0,0,0.8)",
+                                      transform: "translateZ(1px)",
                                     }}
                                   >
-                                    ✨ แตะที่ว่างเพื่อปิด ✨
-                                  </Typography>
-                                </Card>
-                              </Box>
+                                    <Box
+                                      component="img"
+                                      src={result.image}
+                                      alt={result.name}
+                                      onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src =
+                                          "https://via.placeholder.com/450x650/1a1025/FF69B4?text=Sparkler+Image";
+                                      }}
+                                      sx={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        width: "100%",
+                                        height: "calc(100% - 130px)",
+                                        objectFit: "contain",
+                                        mt: 2,
+                                      }}
+                                    />
+                                    <Box
+                                      sx={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        background:
+                                          "linear-gradient(to bottom, rgba(5, 2, 10, 0) 60%, rgba(5, 2, 10, 0.95) 100%)",
+                                        pointerEvents: "none",
+                                      }}
+                                    />
+                                    <CardContent
+                                      sx={{
+                                        position: "absolute",
+                                        bottom: 0,
+                                        left: 0,
+                                        width: "100%",
+                                        textAlign: "center",
+                                        p: { xs: 2.5, sm: 4 },
+                                        pb: { xs: 2, sm: 2 },
+                                        zIndex: 2,
+                                      }}
+                                    >
+                                      <Typography
+                                        variant="overline"
+                                        sx={{
+                                          display: "inline-block",
+                                          color: "#FFF",
+                                          bgcolor: tagBg,
+                                          fontWeight: "900",
+                                          letterSpacing: 5,
+                                          fontSize: "0.80rem",
+                                          px: 3,
+                                          py: 0.5,
+                                          border: `1px solid ${tagBorder}`,
+                                          borderRadius: "30px",
+                                          mb: 1.5,
+                                          backdropFilter: "blur(6px)",
+                                          textShadow: tagGlow,
+                                        }}
+                                      >
+                                        ✦ {result.type} ✦
+                                      </Typography>
+                                      <Typography
+                                        variant="h4"
+                                        sx={{
+                                          fontWeight: "bold",
+                                          fontSize: {
+                                            xs: "1rem",
+                                            sm: "1.8rem",
+                                          },
+                                          color: "#FFFFFF",
+                                          textShadow: nameShadow,
+                                          mb: 0.5,
+                                        }}
+                                      >
+                                        {result.name}
+                                      </Typography>
+
+                                      <Typography
+                                        variant="caption"
+                                        sx={{
+                                          display: "block",
+                                          color: btnColor,
+                                          fontSize: {
+                                            xs: "0.4rem",
+                                            sm: "0.6rem",
+                                          },
+                                          letterSpacing: 1,
+                                          opacity: 0.8,
+                                        }}
+                                      >
+                                        ✨ แตะการ์ดเพื่อพลิก ✨
+                                      </Typography>
+                                    </CardContent>
+                                  </Card>
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    backfaceVisibility: "hidden",
+                                    WebkitBackfaceVisibility: "hidden",
+                                    transform: "rotateY(180deg)",
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    padding: "3px",
+                                    borderRadius: "24px",
+                                    background: cardBorderGradient,
+                                    boxShadow: cardGlow,
+                                  }}
+                                >
+                                  <Card
+                                    sx={{
+                                      width: "100%",
+                                      height: "100%",
+                                      bgcolor: "rgba(5, 2, 10, 0.95)",
+                                      color: "white",
+                                      borderRadius: "21px",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      p: { xs: 2.5, sm: 4 },
+                                      position: "relative",
+                                      overflow: "hidden",
+                                      transform: "translateZ(1px)",
+                                    }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        zIndex: 1,
+                                        textAlign: "center",
+                                        width: "100%",
+                                      }}
+                                    >
+                                      <Typography
+                                        sx={{
+                                          color: btnColor,
+                                          opacity: 0.7,
+                                          mb: 2,
+                                          letterSpacing: 3,
+                                        }}
+                                      >
+                                        ✧ ✧ ✧
+                                      </Typography>
+
+                                      <Typography
+                                        variant="body1"
+                                        sx={{
+                                          color: "#e0e0e0",
+                                          fontStyle: "italic",
+                                          lineHeight: { xs: 1.4, sm: 1.8 },
+                                          fontSize: {
+                                            xs: "0.75rem",
+                                            sm: "0.95rem",
+                                          },
+                                          textAlign: "center",
+                                          mb: 3,
+                                          whiteSpace: "pre-line",
+                                          textShadow:
+                                            "0 2px 4px rgba(0,0,0,0.5)",
+                                        }}
+                                      >
+                                        {result.desc}
+                                      </Typography>
+
+                                      <Box
+                                        sx={{
+                                          width: "40px",
+                                          height: "2px",
+                                          bgcolor: btnColor,
+                                          margin: "0 auto",
+                                          opacity: 0.5,
+                                          borderRadius: "2px",
+                                          boxShadow: `0 0 10px ${btnColor}`,
+                                        }}
+                                      />
+                                    </Box>
+
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        position: "absolute",
+                                        bottom: "20px",
+                                        color: btnColor,
+                                        opacity: 0.8,
+                                        fontSize: {
+                                          xs: "0.4rem",
+                                          sm: "0.6rem",
+                                        },
+                                        letterSpacing: 1,
+                                        zIndex: 1,
+                                      }}
+                                    >
+                                      ✨ แตะที่ว่างเพื่อปิด ✨
+                                    </Typography>
+                                  </Card>
+                                </Box>
+                              </motion.div>
                             </motion.div>
                           </motion.div>
                         </motion.div>
-                      </motion.div>
-                    )}
-                  </div>
-                )}
-              </div></div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
