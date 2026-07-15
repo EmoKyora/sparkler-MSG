@@ -28,21 +28,23 @@ const sparklerItemstest = [
     id: 1,
     name: "กล่องไม้ไขลาน",
     type: "SR",
-    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? \nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ\n\nมันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ? \nลองเล่นเป็นวาทยากรสักครั้งไหม`,
     quote: "",
     image: `${baseUrl}images/chibi/Shoji.png`,
-    rate: 10, // Adjusted
+    rate: 10,
   },
   {
     id: 2,
     name: "กล่องไม้ไขลาน",
     type: "SSR",
-    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ มันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
-    quote: `กระดาษในมือเขาเขียนว่า\n\n[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ\nมันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: `[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
     image: `${baseUrl}images/ssr/Shoji.png`,
-    rate: 4.28, // Adjusted
+    rate: 25,
     themeColor: "#096CFF",
     themeGrad: "#87CEFA",
+    bgPositionDesktop: "right 15%",
+    xAnimate: "20%",
   },
   {
     id: 3,
@@ -154,7 +156,7 @@ const sparklerItemstest = [
     desc: `เมื่อไฟถูกจุดขึ้น ประกายไฟสีเหลืองทองส่องแสงสว่างวาบ เสียงตึกตัก ตึกตักของหัวใจของคุณค่อย ๆ ดังขึ้นจนกลบเสียงรอบข้างของคุณ\n\nไม่มีเสียงอะไรนอกจากเสียงหัวใจของคุณที่ยังคงเต้นอยู่\nแต่ความสงบนี้อยู่ได้ไม่นานหรอก\n...\nทันทีที่ไฟกำลังจะมอดดับ ประกายไฟสุดท้ายของมันจะระเบิดออกมาเป็นพลุขนาดย่อยส่องแสงสวยงาม\n(ระวังอย่าให้ระเบิดใส่หน้าล่ะ !!!)`,
     quote: `“มันส่องประกายเหมือนดาวตกเลยเนอะ เพราะงั้นลองรับไปแล้วอธิษฐานดูไหม”\n“เร็ว ๆ สิเดี๋ยวจะดับเอานา”\n“ขออะไรไปบอกด้วยได้ไหม ฮิบิกิอยากรู้ด้วย!”`,
     image: `${baseUrl}images/ssr/Hibiki.png`,
-    rate: 30, 
+    rate: 30,
     themeColor: "#922F1D",
     themeGrad: "#922F1D",
     bgPositionDesktop: "60% 8%",
@@ -181,7 +183,20 @@ const sparklerItemstest = [
     themeGrad: "#060606",
   },
 ];
-const sparklerItems = [ 
+const sparklerItems = [
+  {
+    id: 2,
+    name: "กล่องไม้ไขลาน",
+    type: "SSR",
+    desc: `เมื่อปลายไฟเย็นถูกจุดขึ้น เสียงเพลงราวกล่องดนตรีจะค่อยบรรเลงคลอไปในบรรยากาศ\nมันอาจจะเป็นทำนองที่ไม่เคยคุ้น.. หรืออาจจะเป็นเพลงที่คุณเคยได้ยินมาก่อนสักครั้งหนึ่ง\n\nโอ๊ะ ดูเหมือนว่าถ้าสะบัดไปมามันจะเปลี่ยนจังหวะได้ด้วยนะ ?\nลองเล่นเป็นวาทยากรสักครั้งไหม`,
+    quote: `[ อันนี้ของคุณครับ ]\n[ ขอให้สนุกกับงานนะครับ ]`,
+    image: `${baseUrl}images/ssr/Shoji.png`,
+    rate: 25,
+    themeColor: "#096CFF",
+    themeGrad: "#87CEFA",
+    bgPositionDesktop: "right 15%",
+    xAnimate: "20%",
+  },
   {
     id: 12,
     name: "ไฟเย็นสุดมหัศจรรย์ของฮิบิกิผู้ยิ่งใหญ่",
@@ -189,11 +204,11 @@ const sparklerItems = [
     desc: `เมื่อไฟถูกจุดขึ้น ประกายไฟสีเหลืองทองส่องแสงสว่างวาบ เสียงตึกตัก ตึกตักของหัวใจของคุณค่อย ๆ ดังขึ้นจนกลบเสียงรอบข้างของคุณ\n\nไม่มีเสียงอะไรนอกจากเสียงหัวใจของคุณที่ยังคงเต้นอยู่\nแต่ความสงบนี้อยู่ได้ไม่นานหรอก\n...\nทันทีที่ไฟกำลังจะมอดดับ ประกายไฟสุดท้ายของมันจะระเบิดออกมาเป็นพลุขนาดย่อยส่องแสงสวยงาม\n(ระวังอย่าให้ระเบิดใส่หน้าล่ะ !!!)`,
     quote: `“มันส่องประกายเหมือนดาวตกเลยเนอะ เพราะงั้นลองรับไปแล้วอธิษฐานดูไหม”\n“เร็ว ๆ สิเดี๋ยวจะดับเอานา”\n“ขออะไรไปบอกด้วยได้ไหม ฮิบิกิอยากรู้ด้วย!”`,
     image: `${baseUrl}images/ssr/Hibiki.png`,
-    rate: 30, 
+    rate: 25,
     themeColor: "#922F1D",
     themeGrad: "#922F1D",
     bgPositionDesktop: "60% 8%",
-    xAnimate: "10%",
+    xAnimate: "9%",
   },
   {
     id: 6,
@@ -202,11 +217,11 @@ const sparklerItems = [
     desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
     quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ— หมายถึง มันอันตรายน่ะครับ"`,
     image: `${baseUrl}images/ssr/kyora.png`,
-    rate: 30,
+    rate: 25,
     themeColor: "#FFA2B7",
     themeGrad: "#000000",
     bgPositionDesktop: "right 5%",
-  }, 
+  },
   {
     id: 8,
     name: "สลักคำขอ",
@@ -220,7 +235,7 @@ const sparklerItems = [
       </>
     ),
     image: `${baseUrl}images/ssr/Tsuru.png`,
-    rate: 30,
+    rate: 25,
     themeColor: "#C9EE66",
     themeGrad: "#E6C969",
     bgPositionDesktop: "right 10%",
@@ -305,6 +320,7 @@ export default function App() {
   const [showFireworks, setShowFireworks] = useState(false);
 
   const audioRef = useRef(null);
+  const lastPulledIdRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const canHover = useMediaQuery("(hover: hover)");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -358,17 +374,32 @@ export default function App() {
     setShowFireworks(false);
 
     setTimeout(() => {
-      const rand = Math.random() * 100;
-      let cumulativeRate = 0;
-      let pulledItem = sparklerItems[0];
+      let pulledItem = sparklerItems[0]; // เปลี่ยนมาใช้ array ชุดเต็ม
+      let isDuplicate = true;
+      let maxRetries = 5; // ป้องกัน infinite loop ในกรณีเรทมีปัญหา
 
-      for (let item of sparklerItems) {
-        cumulativeRate += item.rate;
-        if (rand <= cumulativeRate) {
-          pulledItem = item;
-          break;
+      // ลูปสุ่มใหม่ถ้าได้ไอเทมซ้ำกับรอบที่แล้ว
+      while (isDuplicate && maxRetries > 0) {
+        const rand = Math.random() * 100;
+        let cumulativeRate = 0;
+
+        for (let item of sparklerItems) {
+          cumulativeRate += item.rate;
+          if (rand <= cumulativeRate) {
+            pulledItem = item;
+            break;
+          }
         }
+
+        // เช็คว่าไอเทมที่สุ่มได้ ซ้ำกับครั้งล่าสุดหรือไม่
+        if (lastPulledIdRef.current !== pulledItem.id) {
+          isDuplicate = false; // ถ้าไม่ซ้ำ ให้ออกจากลูปได้เลย
+        }
+        maxRetries--;
       }
+
+      // บันทึก ID ที่สุ่มได้ครั้งนี้เอาไว้ใช้เช็คในรอบหน้า
+      lastPulledIdRef.current = pulledItem.id;
 
       setResult(pulledItem);
       setIsRolling(false);
@@ -1106,7 +1137,12 @@ export default function App() {
                   <motion.div
                     key="ssr-bg"
                     initial={{ opacity: 0, scale: 1.3, x: "5%", y: "-5%" }}
-                    animate={{ opacity: 0.25, scale: 1.4, x: result.xAnimate || "15%", y: "-5%" }}
+                    animate={{
+                      opacity: 0.25,
+                      scale: 1.4,
+                      x: result.xAnimate || "15%",
+                      y: "-5%",
+                    }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 4, ease: "easeOut" }}
                     style={{
