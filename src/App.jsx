@@ -404,16 +404,16 @@ export default function App() {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
 
     const playAudioOnFirstInteraction = () => {
-      if (audioRef.current && !isPlaying) {
+      if (audioRef.current && audioRef.current.paused) {
         audioRef.current.loop = true;
         audioRef.current
           .play()
           .then(() => {
             setIsPlaying(true);
-            document.removeEventListener("click", playAudioOnFirstInteraction);
           })
           .catch((err) => console.log("Autoplay prevented:", err));
-      }
+      } 
+      document.removeEventListener("click", playAudioOnFirstInteraction);
     };
 
     document.addEventListener("click", playAudioOnFirstInteraction);
@@ -425,7 +425,7 @@ export default function App() {
         audioRef.current.src = "";
       }
     };
-  }, []);
+  }, []); // <--- Dependency array ว่างไว้แบบเดิม ถูกต้องแล้วครับ
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
