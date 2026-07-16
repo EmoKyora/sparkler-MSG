@@ -353,9 +353,9 @@ const sparklerList = [
   },
   {
     id: 11,
-    name: "ไฟเย็นสุดมหัศจรรย์",
-    imageNo: `${baseUrl}images/OFF/Shoji.webp`,
-    image: `${baseUrl}images/ON/Shoji.webp`,
+    name: "ไฟเย็นของฮิบิกิ",
+    imageNo: `${baseUrl}images/OFF/Hibiki.webp`,
+    image: `${baseUrl}images/ON/Hibiki.webp`,
   },
   {
     id: 12,
