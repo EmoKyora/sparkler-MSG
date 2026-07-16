@@ -392,7 +392,6 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
   const [result, setResult] = useState(null);
-  const [showFlash, setShowFlash] = useState(false);
   const [showFireworks, setShowFireworks] = useState(false);
 
   const audioRef = useRef(null);
@@ -1206,6 +1205,7 @@ export default function App() {
                 if (!isRolling) {
                   setOpenModal(false);
                   setShowFireworks(false);
+                  setIsFlipped(false);
                 }
               }}
               style={{
@@ -2249,26 +2249,6 @@ export default function App() {
                 </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {showFlash && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100vw",
-                height: "100vh",
-                backgroundColor: "white",
-                zIndex: 999999,
-              }}
-            />
           )}
         </AnimatePresence>
       </Box>
