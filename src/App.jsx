@@ -64,7 +64,7 @@ const sparklerItems = [
     nameCha: "Kyora",
     type: "SSR",
     desc: `เมื่อจุดไฟ... ประกายสีเงินอมม่วงสลัวจะหยดลงเป็น "ฝูงปลาเงา" แหวกว่ายคอยดูดซับความเหนื่อยล้าในจิตใจ\nจนเมื่อแสงไฟมอดดับ... พวกมันก็จะสลายไป พร้อมนำพาทุกความรู้สึกแย่ๆ ให้จางหายไปในความมืด\n\nลองหยุดพัก...\nให้ฝูงปลาพวกนี้ช่วยเยียวยาจิตใจคุณดูสักหน่อยไหม?`,
-    quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ—"\n"หมายถึง มันอันตรายน่ะครับ"`,
+    quote: `"..ไม่ได้วิเศษอะไรขนาดนั้นหรอกครับ รีบ ๆ รับไปเถอะ"\n\n"รับไปแล้วกรุณาอย่าเล่นแถวหน้าร้านนะครับ มันเกะ—"\n"หมายถึง มันอันตรายน่ะครับ"`,
     image: `${baseUrl}images/NM/Kyora.png`,
     rate: 3.64,
     themeColor: "#FFA2B7",
@@ -449,31 +449,36 @@ export default function App() {
     setShowFireworks(false);
 
     setTimeout(() => {
-      let pulledItem = sparklerItems[0]; // เปลี่ยนมาใช้ array ชุดเต็ม
+      let pulledItem = sparklerItems[0];
       let isDuplicate = true;
-      let maxRetries = 5; // ป้องกัน infinite loop ในกรณีเรทมีปัญหา
+      let maxRetries = 5;
 
-      // ลูปสุ่มใหม่ถ้าได้ไอเทมซ้ำกับรอบที่แล้ว
+      const totalWeight = sparklerItems.reduce((sum, item) => {
+        return sum + Math.round(item.rate * 100);
+      }, 0);
+
       while (isDuplicate && maxRetries > 0) {
-        const rand = Math.random() * 100;
-        let cumulativeRate = 0;
+        const rand = Math.floor(Math.random() * totalWeight) + 1;
+        let cumulativeWeight = 0;
+        let foundItem = sparklerItems[sparklerItems.length - 1];
 
         for (let item of sparklerItems) {
-          cumulativeRate += item.rate;
-          if (rand <= cumulativeRate) {
-            pulledItem = item;
+          const itemWeight = Math.round(item.rate * 100);
+          cumulativeWeight += itemWeight;
+
+          if (rand <= cumulativeWeight) {
+            foundItem = item;
             break;
           }
         }
 
-        // เช็คว่าไอเทมที่สุ่มได้ ซ้ำกับครั้งล่าสุดหรือไม่
+        pulledItem = foundItem;
         if (lastPulledIdRef.current !== pulledItem.id) {
           isDuplicate = false; // ถ้าไม่ซ้ำ ให้ออกจากลูปได้เลย
         }
         maxRetries--;
       }
 
-      // บันทึก ID ที่สุ่มได้ครั้งนี้เอาไว้ใช้เช็คในรอบหน้า
       lastPulledIdRef.current = pulledItem.id;
 
       setResult(pulledItem);
