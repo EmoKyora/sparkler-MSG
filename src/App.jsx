@@ -7,11 +7,16 @@ import {
   CardContent,
   IconButton,
   useMediaQuery,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark"; // ไอคอนสำหรับเปิดคอลเล็กชัน
+import CloseIcon from "@mui/icons-material/Close"; // ไอคอนปิด
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -394,11 +399,26 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [showFireworks, setShowFireworks] = useState(false);
 
+  // เพิ่ม State สำหรับจัดการ Collection และ Dialog
+  const [openCollection, setOpenCollection] = useState(false);
+  const [collectedIds, setCollectedIds] = useState(() => {
+    const saved = localStorage.getItem("yohana_gacha_collection");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const audioRef = useRef(null);
   const lastPulledIdRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const canHover = useMediaQuery("(hover: hover)");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // เมื่อมีการอัปเดต collectedIds ให้บันทึกลง LocalStorage
+  useEffect(() => {
+    localStorage.setItem(
+      "yohana_gacha_collection",
+      JSON.stringify(collectedIds),
+    );
+  }, [collectedIds]);
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
@@ -425,7 +445,7 @@ export default function App() {
         audioRef.current.src = "";
       }
     };
-  }, []); // <--- Dependency array ว่างไว้แบบเดิม ถูกต้องแล้วครับ
+  }, []);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
@@ -474,7 +494,7 @@ export default function App() {
 
         pulledItem = foundItem;
         if (lastPulledIdRef.current !== pulledItem.id) {
-          isDuplicate = false; // ถ้าไม่ซ้ำ ให้ออกจากลูปได้เลย
+          isDuplicate = false;
         }
         maxRetries--;
       }
@@ -483,6 +503,14 @@ export default function App() {
 
       setResult(pulledItem);
       setIsRolling(false);
+
+      // เพิ่มลง Collection หากไม่ซ้ำ
+      setCollectedIds((prev) => {
+        if (!prev.includes(pulledItem.id)) {
+          return [...prev, pulledItem.id];
+        }
+        return prev;
+      });
 
       if (pulledItem.type === "SSR") {
         setShowFireworks(true);
@@ -524,15 +552,16 @@ export default function App() {
   const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   useEffect(() => {
-    if (openModal) {
-      document.body.style.overflow = "hidden"; // ล็อกไม่ให้ไถหน้าเว็บหลักได้
+    if (openModal || openCollection) {
+      document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
     return () => {
-      document.body.style.overflow = "auto"; // คืนค่าเวลา Component Unmount
+      document.body.style.overflow = "auto";
     };
-  }, [openModal]);
+  }, [openModal, openCollection]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -550,6 +579,7 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
+        {/* Background Animation & Particles */}
         <Box
           sx={{
             position: "fixed",
@@ -669,43 +699,16 @@ export default function App() {
               zIndex: 1,
             }}
           >
-            {/*  <Typography
-              variant="h2"
-              sx={{
-                fontFamily: "'Shippori Mincho', serif",
-                fontWeight: "900",
-                color: "#FFFFFF",
-                textShadow:
-                  "0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 20, 147, 0.5)",
-                mb: 0.5,
-                textAlign: "center",
-                fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
-                letterSpacing: "4px",
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              夜花{" "}
-              <span
-                style={{
-                  fontSize: "0.7em",
-                  filter: "drop-shadow(0 0 10px #FFB7C5)",
-                }}
-              >
-                🏮
-              </span>
-            </Typography> */}
             <Box
               component="img"
-              src={`${baseUrl}images/logo.webp`} /* เปลี่ยนชื่อไฟล์เป็นโลโก้ของคุณ */
+              src={`${baseUrl}images/logo.webp`}
               alt="Yohana Logo"
               sx={{
                 width: {
                   xs: "200px",
                   sm: "300px",
                   md: "320px",
-                } /* ปรับขนาดให้พอดีแต่ละจอ */,
+                },
                 height: "auto",
                 mb: 0.5,
                 filter:
@@ -789,85 +792,115 @@ export default function App() {
           </motion.div>
 
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8 }}
             style={{ zIndex: 1 }}
           >
-            <Box sx={{ position: "relative", borderRadius: "50px" }}>
-              <motion.div
-                animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0, 0.3] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  position: "absolute",
-                  top: -5,
-                  left: -5,
-                  right: -5,
-                  bottom: -5,
-                  borderRadius: "50px",
-                  border: "2px solid #FF69B4",
-                  zIndex: 0,
-                }}
-              />
-              <Button
-                variant="contained"
-                disabled={isRolling || openModal}
-                onClick={handleRollGacha}
+            <Box
+              sx={{
+                display: "flex",
+                gap: { xs: 1.5, sm: 2 },
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ position: "relative", borderRadius: "50px" }}>
+                <motion.div
+                  animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0, 0.3] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: -5,
+                    left: -5,
+                    right: -5,
+                    bottom: -5,
+                    borderRadius: "50px",
+                    border: "2px solid #FF69B4",
+                    zIndex: 0,
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  disabled={isRolling || openModal}
+                  onClick={handleRollGacha}
+                  sx={{
+                    bgcolor: "rgba(26, 11, 46, 0.6)",
+                    border: "1px solid rgba(255, 105, 180, 0.4)",
+                    color: "#FFE4E1",
+                    fontSize: { xs: "1.1rem", md: "1.3rem" },
+                    fontWeight: "bold",
+                    px: { xs: 4, md: 6 },
+                    py: { xs: 1.5, md: 2 },
+                    borderRadius: "50px",
+                    boxShadow:
+                      "inset 0 0 20px rgba(255, 105, 180, 0.1), 0 4px 15px rgba(0,0,0,0.5)",
+                    backdropFilter: "blur(12px)",
+                    transition: "all 0.3s ease",
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 1,
+                    "&:hover": {
+                      bgcolor: "rgba(255, 105, 180, 0.15)",
+                      border: "1px solid rgba(255, 105, 180, 0.8)",
+                      boxShadow: "0 0 20px rgba(255, 105, 180, 0.5)",
+                      color: "#FFF",
+                    },
+                    "&.Mui-disabled": {
+                      bgcolor: "rgba(26, 11, 46, 0.4)",
+                      color: "rgba(255, 255, 255, 0.3)",
+                      border: "1px solid rgba(255, 105, 180, 0.2)",
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: "-100%",
+                      width: "50%",
+                      height: "100%",
+                      background:
+                        "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                      transform: "skewX(-20deg)",
+                      animation: "shine 3s infinite",
+                      "@keyframes shine": {
+                        "0%": { left: "-100%" },
+                        "20%": { left: "200%" },
+                        "100%": { left: "200%" },
+                      },
+                    }}
+                  />
+                  ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
+                </Button>
+              </Box>
+
+              {/* ปุ่มเปิดคอลเล็กชัน */}
+              <IconButton
+                onClick={() => setOpenCollection(true)}
                 sx={{
                   bgcolor: "rgba(26, 11, 46, 0.6)",
                   border: "1px solid rgba(255, 105, 180, 0.4)",
-                  color: "#FFE4E1",
-                  fontSize: { xs: "1.1rem", md: "1.3rem" },
-                  fontWeight: "bold",
-                  px: { xs: 4, md: 6 },
-                  py: { xs: 1.5, md: 2 },
-                  borderRadius: "50px",
-                  boxShadow:
-                    "inset 0 0 20px rgba(255, 105, 180, 0.1), 0 4px 15px rgba(0,0,0,0.5)",
+                  color: "#FFB7C5",
+                  width: { xs: 45, sm: 55 },
+                  height: { xs: 45, sm: 55 },
+                  boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
                   backdropFilter: "blur(12px)",
-                  transition: "all 0.3s ease",
-                  position: "relative",
-                  overflow: "hidden",
                   zIndex: 1,
                   "&:hover": {
                     bgcolor: "rgba(255, 105, 180, 0.15)",
                     border: "1px solid rgba(255, 105, 180, 0.8)",
                     boxShadow: "0 0 20px rgba(255, 105, 180, 0.5)",
-                    color: "#FFF",
-                  },
-                  "&.Mui-disabled": {
-                    bgcolor: "rgba(26, 11, 46, 0.4)",
-                    color: "rgba(255, 255, 255, 0.3)",
-                    border: "1px solid rgba(255, 105, 180, 0.2)",
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: "-100%",
-                    width: "50%",
-                    height: "100%",
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-                    transform: "skewX(-20deg)",
-                    animation: "shine 3s infinite",
-                    "@keyframes shine": {
-                      "0%": { left: "-100%" },
-                      "20%": { left: "200%" },
-                      "100%": { left: "200%" },
-                    },
-                  }}
+                <CollectionsBookmarkIcon
+                  sx={{ fontSize: { xs: 20, sm: 28 } }}
                 />
-                ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
-              </Button>
+              </IconButton>
             </Box>
           </motion.div>
 
@@ -1215,14 +1248,14 @@ export default function App() {
                 position: "fixed",
                 top: 0,
                 left: 0,
-                right: 0, // ยึดขอบขวา
-                bottom: 0, // ยึดขอบล่าง (ใช้แทน 100vh เพื่อแก้ปัญหามือถือ)
+                right: 0,
+                bottom: 0,
                 backgroundColor: "rgba(5, 2, 10, 0.85)",
                 backdropFilter: "blur(12px)",
                 zIndex: 9999,
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center", // บังคับให้อยู่ตรงกลางแนวตั้ง
+                alignItems: "center",
                 padding: "20px",
                 boxSizing: "border-box",
                 overflow: "hidden",
@@ -2258,6 +2291,149 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* -------------------- เพิ่ม Dialog สำหรับเปิดดู Collection -------------------- */}
+        <Dialog
+          open={openCollection}
+          onClose={() => setOpenCollection(false)}
+          maxWidth="md"
+          fullWidth
+          PaperProps={{
+            sx: {
+              bgcolor: "rgba(15, 5, 24, 0.95)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 105, 180, 0.5)",
+              borderRadius: "16px",
+              color: "#FFF",
+              boxShadow: "0 0 30px rgba(255, 105, 180, 0.3)",
+              maxHeight: "85vh",
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid rgba(255,105,180,0.2)",
+              py: 2,
+            }}
+          >
+            <Typography
+              sx={{
+                color: "#FFB7C5",
+                fontWeight: "bold",
+                fontSize: { xs: "1.1rem", sm: "1.3rem" },
+              }}
+            >
+              ✨ สมุดบันทึกไฟเย็น ({collectedIds.length}/{sparklerItems.length})
+            </Typography>
+            <IconButton
+              onClick={() => setOpenCollection(false)}
+              sx={{ color: "#FFB7C5" }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "repeat(3, 1fr)",
+                  sm: "repeat(4, 1fr)",
+                  md: "repeat(5, 1fr)",
+                },
+                gap: { xs: 1.5, sm: 2 },
+              }}
+            >
+              {sparklerItems.map((item) => {
+                const isCollected = collectedIds.includes(item.id);
+                const isItemSR = item.type === "SR";
+                // ใช้สีกรอบของการ์ด หากเป็น SR ใช้สีขาว ถ้าเป็น SSR ใช้ themeColor
+                const borderColor = isCollected
+                  ? isItemSR
+                    ? "#E0E0E0"
+                    : item.themeColor || "#FF69B4"
+                  : "rgba(255,255,255,0.1)";
+
+                return (
+                  <Box
+                    key={item.id}
+                    sx={{
+                      border: `1px solid ${borderColor}`,
+                      borderRadius: "8px",
+                      overflow: "hidden",
+                      bgcolor: "rgba(0,0,0,0.5)",
+                      position: "relative",
+                      aspectRatio: "1/1.4",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      boxShadow: isCollected
+                        ? `0 0 10px ${borderColor}44`
+                        : "none",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "scale(1.03)",
+                        boxShadow: isCollected
+                          ? `0 0 15px ${borderColor}88`
+                          : "none",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={item.image}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        p: 1.5,
+                        pb: 3,
+                        // ถ้าเจอแล้วให้โชว์ภาพปกติ ถ้ายังไม่เจอให้ใช้ brightness(0) ทำให้ภาพเป็นสีดำทึบ (ภาพถมดำเงา)
+                        filter: isCollected
+                          ? `drop-shadow(0 0 5px ${borderColor}66)`
+                          : "brightness(0) contrast(100%) opacity(0.4)",
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 0,
+                        width: "100%",
+                        textAlign: "center",
+                        background: isCollected
+                          ? `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%)`
+                          : "transparent",
+                        py: 0.5,
+                        px: 0.5,
+                        borderTop: isCollected
+                          ? `1px solid ${borderColor}55`
+                          : "none",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "0.6rem", sm: "0.7rem" },
+                          color: isCollected
+                            ? borderColor
+                            : "rgba(255,255,255,0.2)",
+                          fontWeight: isCollected ? "bold" : "normal",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {isCollected ? `${item.nameCha}` : "???"}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+          </DialogContent>
+        </Dialog>
       </Box>
     </ThemeProvider>
   );
