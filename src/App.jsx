@@ -358,13 +358,13 @@ const sparklerList = [
   {
     id: 7,
     name: "ปะการังแสง",
-    imageNo: `${baseUrl}images/OFF/Madoka.webp`,
+    imageNo: `${baseUrl}images/OFF/Madoka1.webp`,
     image: `${baseUrl}images/ON/Madoka1.webp`,
   },
   {
     id: 8,
     name: "ปะการังแสง",
-    imageNo: `${baseUrl}images/OFF/Madoka.webp`,
+    imageNo: `${baseUrl}images/OFF/Madoka2.webp`,
     image: `${baseUrl}images/ON/Madoka2.webp`,
   },
   {
