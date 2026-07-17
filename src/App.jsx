@@ -122,7 +122,7 @@ const sparklerItems = [
         “แล้วถ้าเล่นจนเสร็จ อย่าลืมดับมันด้วยล่ะ”
       </>
     ),
-    image: `${baseUrl}images/NM/Tsuru.webp`,
+    image: `${baseUrl}images/NM/Tsuru2.webp`,
     rate: 3.64,
     themeColor: "#C9EE66",
     themeGrad: "#E6C969",
