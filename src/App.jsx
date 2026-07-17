@@ -321,8 +321,8 @@ const sparklerList = [
   {
     id: 1,
     name: "เศษฝันสีทับทิม",
-    imageNo: `${baseUrl}images/OFF/Shoji.webp`,
-    image: `${baseUrl}images/ON/Shoji.webp`,
+    imageNo: `${baseUrl}images/OFF/Zeirina.webp`,
+    image: `${baseUrl}images/ON/Zeirina.webp`,
   },
   {
     id: 2,
@@ -375,8 +375,8 @@ const sparklerList = [
   {
     id: 10,
     name: "ไอรักฤดูร้อน (😍)",
-    imageNo: `${baseUrl}images/OFF/Shoji.webp`,
-    image: `${baseUrl}images/ON/Shoji.webp`,
+    imageNo: `${baseUrl}images/OFF/Tengen.webp`,
+    image: `${baseUrl}images/ON/Tengen.webp`,
   },
   {
     id: 11,
@@ -387,8 +387,8 @@ const sparklerList = [
   {
     id: 12,
     name: "ไฟเย็นธรรมดา ๆ ครับ.",
-    imageNo: `${baseUrl}images/OFF/Shoji.webp`,
-    image: `${baseUrl}images/ON/Shoji.webp`,
+    imageNo: `${baseUrl}images/OFF/Tenshijo.webp`,
+    image: `${baseUrl}images/ON/Tenshijo.webp`,
   },
 ];
 
