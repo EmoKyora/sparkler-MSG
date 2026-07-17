@@ -55,6 +55,29 @@ const sparklerItems = [
   },
   {
     id: 3,
+    name: "กรุ่นกลิ่นบุปผา",
+    nameCha: "Jun",
+    type: "SR",
+    desc: `เมื่อปลายสุดของแท่งไม้ถูกจุด กลับพบดอกไม้บานออกมา บุปผาแก้วสีสวยอันบอบบาง คุณทำได้เพียงมองมันผลิดอก ก่อนจะค่อยร่วงโรยลงอย่างช้า ๆ ทีละกลีบ ทีละกลีบ...\n\nกลิ่นไม้หอมคละคลุ้งอยู่ทั่ว ชวนผ่อนคลายหลับตาฝันถึงเรื่องราวที่ผ่านมา หรืออนาคตที่ไม่อาจจินตนาการได้\n\nยามกลีบสุดท้ายร่วงหล่น กลิ่นหอมนั้นก็จางหายไป เหลือไว้เพียงเศษกิ่งไม้ธรรมดา ๆ อันนึง\n\nช่างเป็นช่วงเวลาที่แสนสั้น...`,
+    quote: "",
+    image: `${baseUrl}images/CB/Jun.webp`,
+    rate: 5.45,
+  },
+  {
+    id: 4,
+    name: "กรุ่นกลิ่นบุปผา",
+    nameCha: "Jun",
+    type: "SSR",
+    desc: `เมื่อปลายสุดของแท่งไม้ถูกจุด กลับพบดอกไม้บานออกมา บุปผาแก้วสีสวยอันบอบบาง คุณทำได้เพียงมองมันผลิดอก ก่อนจะค่อยร่วงโรยลงอย่างช้า ๆ ทีละกลีบ ทีละกลีบ...\n\nกลิ่นไม้หอมคละคลุ้งอยู่ทั่ว ชวนผ่อนคลายหลับตาฝันถึงเรื่องราวที่ผ่านมา หรืออนาคตที่ไม่อาจจินตนาการได้\n\nยามกลีบสุดท้ายร่วงหล่น กลิ่นหอมนั้นก็จางหายไป เหลือไว้เพียงเศษกิ่งไม้ธรรมดา ๆ อันนึง\n\nช่างเป็นช่วงเวลาที่แสนสั้น...`,
+    quote: `“ขอบคุณที่แวะเวียนมานะครับ”\n“ขอให้เป็นช่วงเวลาที่ดี..”`,
+    image: `${baseUrl}images/NM/Jun.webp`,
+    rate: 3.64,
+    themeColor: "#C3CFFF",
+    themeGrad: "#E9ECFF",
+    bgPositionDesktop: "right 15%",
+  },
+  {
+    id: 5,
     name: "ประกายเร้นเงา",
     nameCha: "Kyora",
     type: "SR",
@@ -64,7 +87,7 @@ const sparklerItems = [
     rate: 5.45,
   },
   {
-    id: 4,
+    id: 6,
     name: "ประกายเร้นเงา",
     nameCha: "Kyora",
     type: "SSR",
@@ -77,7 +100,7 @@ const sparklerItems = [
     bgPositionDesktop: "right 5%",
   },
   {
-    id: 5,
+    id: 7,
     name: "สลักคำขอ",
     nameCha: "Tsuru",
     type: "SR",
@@ -87,7 +110,7 @@ const sparklerItems = [
     rate: 5.45,
   },
   {
-    id: 6,
+    id: 8,
     name: "สลักคำขอ",
     nameCha: "Tsuru",
     type: "SSR",
@@ -105,29 +128,7 @@ const sparklerItems = [
     themeGrad: "#E6C969",
     bgPositionDesktop: "right 10%",
   },
-  {
-    id: 7,
-    name: "กรุ่นกลิ่นบุปผา",
-    nameCha: "Jun",
-    type: "SR",
-    desc: `เมื่อปลายสุดของแท่งไม้ถูกจุด กลับพบดอกไม้บานออกมา บุปผาแก้วสีสวยอันบอบบาง คุณทำได้เพียงมองมันผลิดอก ก่อนจะค่อยร่วงโรยลงอย่างช้า ๆ ทีละกลีบ ทีละกลีบ...\n\nกลิ่นไม้หอมคละคลุ้งอยู่ทั่ว ชวนผ่อนคลายหลับตาฝันถึงเรื่องราวที่ผ่านมา หรืออนาคตที่ไม่อาจจินตนาการได้\n\nยามกลีบสุดท้ายร่วงหล่น กลิ่นหอมนั้นก็จางหายไป เหลือไว้เพียงเศษกิ่งไม้ธรรมดา ๆ อันนึง\n\nช่างเป็นช่วงเวลาที่แสนสั้น...`,
-    quote: "",
-    image: `${baseUrl}images/CB/Jun.webp`,
-    rate: 5.45,
-  },
-  {
-    id: 8,
-    name: "กรุ่นกลิ่นบุปผา",
-    nameCha: "Jun",
-    type: "SSR",
-    desc: `เมื่อปลายสุดของแท่งไม้ถูกจุด กลับพบดอกไม้บานออกมา บุปผาแก้วสีสวยอันบอบบาง คุณทำได้เพียงมองมันผลิดอก ก่อนจะค่อยร่วงโรยลงอย่างช้า ๆ ทีละกลีบ ทีละกลีบ...\n\nกลิ่นไม้หอมคละคลุ้งอยู่ทั่ว ชวนผ่อนคลายหลับตาฝันถึงเรื่องราวที่ผ่านมา หรืออนาคตที่ไม่อาจจินตนาการได้\n\nยามกลีบสุดท้ายร่วงหล่น กลิ่นหอมนั้นก็จางหายไป เหลือไว้เพียงเศษกิ่งไม้ธรรมดา ๆ อันนึง\n\nช่างเป็นช่วงเวลาที่แสนสั้น...`,
-    quote: `“ขอบคุณที่แวะเวียนมานะครับ”\n“ขอให้เป็นช่วงเวลาที่ดี..”`,
-    image: `${baseUrl}images/NM/Jun.webp`,
-    rate: 3.64,
-    themeColor: "#C3CFFF",
-    themeGrad: "#E9ECFF",
-    bgPositionDesktop: "right 15%",
-  },
+
   {
     id: 9,
     name: "พู่กันสีดำ",
@@ -480,7 +481,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
+    audioRef.current = new Audio(`${baseUrl}song/music.mp3`);
     audioRef.current.preload = "auto";
     const playAudioOnFirstInteraction = () => {
       if (audioRef.current && audioRef.current.paused) {
@@ -2325,139 +2326,261 @@ export default function App() {
           onClose={() => setOpenCollection(false)}
           maxWidth="md"
           fullWidth
+          scroll="paper" // ล็อก Header ไว้ ให้ Scroll เฉพาะเนื้อหาด้านใน
           PaperProps={{
             sx: {
-              bgcolor: "rgba(15, 5, 24, 0.95)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255, 105, 180, 0.5)",
-              borderRadius: "16px",
+              bgcolor: "rgba(10, 2, 20, 0.95)", // ทำให้พื้นหลังเข้มขึ้นเพื่อให้อ่านตัวหนังสือชัด
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(255, 105, 180, 0.4)",
+              borderRadius: { xs: "16px", sm: "24px" }, // ขอบโค้งพอดีกับจอมือถือและคอม
               color: "#FFF",
-              boxShadow: "0 0 30px rgba(255, 105, 180, 0.3)",
-              maxHeight: "85vh",
+              boxShadow:
+                "0 15px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(255, 105, 180, 0.15)",
+              maxHeight: { xs: "92vh", sm: "85vh" }, // ปรับไม่ให้ล้นจอมือถือบน-ล่าง
+              margin: { xs: "16px", sm: "32px" }, // เว้นขอบซ้ายขวาให้ดูเป็น Pop-up สวยๆ
+              overflow: "hidden",
             },
           }}
         >
+          {/* ส่วนหัวของ Dialog (ปรับสีให้ตัดกับพื้นหลัง อ่านง่ายขึ้น) */}
           <DialogTitle
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "column",
               alignItems: "center",
-              borderBottom: "1px solid rgba(255,105,180,0.2)",
-              py: 2,
+              position: "relative",
+              pt: { xs: 3, sm: 4 },
+              pb: 2,
+              bgcolor: "rgba(0, 0, 0, 0.4)", // แบ็คกราวด์โปร่งแสงเข้มๆ ดันตัวหนังสือให้ชัด
+              borderBottom: "1px solid rgba(255, 105, 180, 0.25)",
             }}
           >
-            <Typography
-              sx={{
-                color: "#FFB7C5",
-                fontWeight: "bold",
-                fontSize: { xs: "1.1rem", sm: "1.3rem" },
-              }}
-            >
-              ✨ สมุดบันทึกไฟเย็น ({collectedIds.length}/{sparklerItems.length})
-            </Typography>
             <IconButton
               onClick={() => setOpenCollection(false)}
-              sx={{ color: "#FFB7C5" }}
+              sx={{
+                position: "absolute",
+                right: { xs: 8, sm: 16 },
+                top: { xs: 8, sm: 16 },
+                color: "rgba(255, 255, 255, 0.6)",
+                "&:hover": { color: "#FFB7C5", transform: "rotate(90deg)" },
+                transition: "all 0.3s ease",
+              }}
             >
               <CloseIcon />
             </IconButton>
+
+            <Typography
+              variant="h5"
+              sx={{
+                color: "#FFFFFF", // เปลี่ยนเป็นสีขาวสว่าง
+                fontWeight: 600,
+                letterSpacing: { xs: 1, sm: 2 },
+                fontSize: { xs: "1.1rem", sm: "1.5rem" },
+                textShadow: "0 0 10px #FFB7C5, 0 0 20px #FF69B4", // เพิ่มแสงเรืองรอง
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+              }}
+            >
+              <CollectionsBookmarkIcon sx={{ opacity: 0.9 }} />
+              สมุดบันทึกไฟเย็น
+            </Typography>
+
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#FFB7C5", // เปลี่ยนเป็นสีชมพูอ่อนให้อ่านง่าย
+                mt: 1,
+                letterSpacing: 1,
+                fontSize: { xs: "0.8rem", sm: "0.9rem" },
+                fontWeight: 500,
+              }}
+            >
+              รวบรวมแล้ว {collectedIds.length} / {sparklerItems.length} แบบ
+            </Typography>
+
+            <Box
+              sx={{
+                width: "80px",
+                height: "2px",
+                background:
+                  "linear-gradient(90deg, transparent, #FFB7C5, transparent)",
+                mt: 2,
+                opacity: 0.8,
+              }}
+            />
           </DialogTitle>
-          <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
+
+          {/* เนื้อหาด้านใน (Grid) */}
+          <DialogContent
+            sx={{
+              p: { xs: 2, sm: 3, md: 4 }, // ปรับระยะห่างขอบให้พอดีหน้าจอแต่ละไซส์
+              "&::-webkit-scrollbar": { width: "6px" },
+              "&::-webkit-scrollbar-track": {
+                background: "rgba(255,255,255,0.02)",
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "rgba(255, 105, 180, 0.4)",
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "rgba(255, 105, 180, 0.7)",
+              },
+            }}
+          >
             <Box
               sx={{
                 display: "grid",
                 gridTemplateColumns: {
-                  xs: "repeat(3, 1fr)",
-                  sm: "repeat(4, 1fr)",
-                  md: "repeat(5, 1fr)",
+                  xs: "repeat(2, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(4, 1fr)",
                 },
-                gap: { xs: 1.5, sm: 2 },
+                gap: { xs: 1.5, sm: 2.5, md: 3 },
               }}
             >
               {sparklerItems.map((item) => {
                 const isCollected = collectedIds.includes(item.id);
                 const isItemSR = item.type === "SR";
-                // ใช้สีกรอบของการ์ด หากเป็น SR ใช้สีขาว ถ้าเป็น SSR ใช้ themeColor
+
                 const borderColor = isCollected
                   ? isItemSR
-                    ? "#E0E0E0"
+                    ? "rgba(255, 255, 255, 0.6)"
                     : item.themeColor || "#FF69B4"
-                  : "rgba(255,255,255,0.1)";
+                  : "rgba(255,255,255,0.15)"; // กรอบตอนยังไม่ได้การ์ดให้สว่างขึ้นนิดนึง
 
                 return (
                   <Box
                     key={item.id}
                     sx={{
-                      border: `1px solid ${borderColor}`,
-                      borderRadius: "8px",
-                      overflow: "hidden",
-                      bgcolor: "rgba(0,0,0,0.5)",
                       position: "relative",
                       aspectRatio: "1/1.4",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      borderRadius: "14px",
+                      padding: "2px",
+                      background: isCollected
+                        ? `linear-gradient(135deg, rgba(255,255,255,0.3) 0%, ${borderColor} 50%, rgba(255,255,255,0.1) 100%)`
+                        : "rgba(255,255,255,0.1)",
                       boxShadow: isCollected
-                        ? `0 0 10px ${borderColor}44`
+                        ? `0 5px 15px rgba(0,0,0,0.6), 0 0 15px ${borderColor}40`
                         : "none",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "scale(1.03)",
-                        boxShadow: isCollected
-                          ? `0 0 15px ${borderColor}88`
-                          : "none",
-                      },
+                      transition:
+                        "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                      cursor: isCollected ? "pointer" : "default",
+                      "&:hover": isCollected
+                        ? {
+                            transform: "translateY(-6px)",
+                            boxShadow: `0 8px 25px rgba(0,0,0,0.8), 0 0 25px ${borderColor}90`,
+                          }
+                        : {},
                     }}
                   >
                     <Box
-                      component="img"
-                      src={item.image}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src =
-                          "https://via.placeholder.com/150x200/1a1025/FF69B4?text=?";
-                      }}
                       sx={{
                         width: "100%",
                         height: "100%",
-                        objectFit: "contain",
-                        p: 1.5,
-                        pb: 3,
-                        filter: isCollected
-                          ? `drop-shadow(0 0 5px ${borderColor}66)`
-                          : "brightness(0) contrast(100%) opacity(0.4)",
-                      }}
-                    />
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 0,
-                        width: "100%",
-                        textAlign: "center",
-                        background: isCollected
-                          ? `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%)`
-                          : "transparent",
-                        py: 0.5,
-                        px: 0.5,
-                        borderTop: isCollected
-                          ? `1px solid ${borderColor}55`
-                          : "none",
+                        borderRadius: "12px",
+                        bgcolor: "rgba(10, 2, 20, 0.95)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "relative",
+                        overflow: "hidden",
                       }}
                     >
-                      <Typography
+                      {/* แสงรัศมีด้านหลัง (เฉพาะ SSR) */}
+                      {isCollected && !isItemSR && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            width: "150%",
+                            height: "150%",
+                            background: `radial-gradient(circle, ${borderColor}33 0%, transparent 60%)`,
+                            zIndex: 0,
+                          }}
+                        />
+                      )}
+
+                      {/* ภาพไฟเย็น */}
+                      <Box
+                        component="img"
+                        src={item.image}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src =
+                            "https://via.placeholder.com/150x200/1a1025/FF69B4?text=?";
+                        }}
                         sx={{
-                          fontSize: { xs: "0.6rem", sm: "0.7rem" },
-                          color: isCollected
-                            ? borderColor
-                            : "rgba(255,255,255,0.2)",
-                          fontWeight: isCollected ? "bold" : "normal",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
+                          width: "85%",
+                          height: "85%",
+                          objectFit: "contain",
+                          mb: 4, // ดันภาพขึ้นนิดหน่อยเพื่อเว้นที่ให้ชื่อไฟเย็นด้านล่าง
+                          zIndex: 1,
+                          filter: isCollected
+                            ? `drop-shadow(0 0 8px ${borderColor}66)`
+                            : "brightness(0) opacity(0.25)", // ดรอปเป็นเงา
+                          transition: "all 0.3s ease",
+                        }}
+                      />
+
+                      {/* ส่วนข้อความด้านล่าง */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          bottom: 0,
+                          width: "100%",
+                          background: isCollected
+                            ? "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, transparent 100%)" // ไล่สีดำให้เข้มขึ้นเพื่อบังภาพด้านหลัง
+                            : "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)",
+                          pt: 3,
+                          pb: 1,
+                          px: 1,
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          zIndex: 2,
                         }}
                       >
-                        {isCollected ? `${item.nameCha}` : "???"}
-                      </Typography>
+                        {/* ชื่อตัวละคร */}
+                        <Typography
+                          sx={{
+                            fontSize: { xs: "0.7rem", sm: "0.85rem" },
+                            color: isCollected
+                              ? "#FFF"
+                              : "rgba(255,255,255,0.3)",
+                            fontWeight: isCollected ? "bold" : "normal",
+                            letterSpacing: 1,
+                            textShadow: isCollected
+                              ? `0 0 8px ${borderColor}`
+                              : "none",
+                            mb: 0.2,
+                          }}
+                        >
+                          {isCollected ? item.nameCha : "???"}
+                        </Typography>
+
+                        {/* ชื่อไฟเย็น (แทนที่ป้าย SR/SSR เดิม) */}
+                        {isCollected && (
+                          <Typography
+                            sx={{
+                              fontSize: { xs: "0.55rem", sm: "0.65rem" },
+                              color: isItemSR ? "#B0BEC5" : "#FFD700", // SR สีออกเงินๆฟ้าๆ, SSR สีทอง
+                              lineHeight: 1.2,
+                              textAlign: "center",
+                              opacity: 0.9,
+                              // ตั้งค่าป้องกันชื่อที่ยาวเกินไปให้ตัดคำสวยๆ (แสดงได้สูงสุด 2 บรรทัด)
+                              display: "-webkit-box",
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {item.name}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
                   </Box>
                 );
