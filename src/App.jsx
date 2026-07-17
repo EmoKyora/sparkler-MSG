@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import {
   Box,
   Typography,
@@ -15,8 +15,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark"; // ไอคอนสำหรับเปิดคอลเล็กชัน
-import CloseIcon from "@mui/icons-material/Close"; // ไอคอนปิด
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -399,7 +399,6 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [showFireworks, setShowFireworks] = useState(false);
 
-  // เพิ่ม State สำหรับจัดการ Collection และ Dialog
   const [openCollection, setOpenCollection] = useState(false);
   const [collectedIds, setCollectedIds] = useState(() => {
     const saved = localStorage.getItem("yohana_gacha_collection");
@@ -412,7 +411,53 @@ export default function App() {
   const canHover = useMediaQuery("(hover: hover)");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // เมื่อมีการอัปเดต collectedIds ให้บันทึกลง LocalStorage
+  // 🌟 [ส่วนที่แก้บัคที่ 1] สร้าง Particle พื้นหลังให้สุ่มแค่ครั้งเดียว ไม่กระตุกตอน Render ใหม่
+  const bgParticles = useMemo(() => {
+    return [...Array(35)].map((_, i) => ({
+      id: i,
+      isPink: i % 2 === 0,
+      size: Math.random() * 3 + 2,
+      duration: Math.random() * 4 + 4,
+      delay: Math.random() * 8,
+      top: `${Math.random() * 100}vh`,
+      left: `${Math.random() * 100}vw`,
+    }));
+  }, []);
+
+  // 🌟 [ส่วนที่แก้บัคที่ 2] จำค่า Effect พลุตอนสุ่ม SSR
+  const fireworkGeometry = useMemo(() => {
+    return [...Array(80)].map(() => ({
+      size: Math.random() * 8 + 3,
+      angle: Math.random() * Math.PI * 2,
+      distance: Math.random() * 70 + 30,
+      duration: Math.random() * 1.5 + 0.5,
+    }));
+  }, []);
+
+  // 🌟 [ส่วนที่แก้บัคที่ 3] จำค่า Effect ประกายไฟตอนหมุนกาชา
+  const rollingSparks = useMemo(() => {
+    return [...Array(40)].map((_, i) => ({
+      angle: (i * 9 * Math.PI) / 180,
+      distance: Math.random() * 70 + 40,
+      duration: Math.random() * 0.8 + 0.4,
+      delay: Math.random() * 1,
+      size: Math.random() * 4 + 2,
+      colorType: i % 3 === 0 ? "#FF69B4" : i % 2 === 0 ? "#FFB7C5" : "#FFF",
+    }));
+  }, []);
+
+  // 🌟 [ส่วนที่แก้บัคที่ 4] จำค่า Effect อนุภาคหลังการ์ด SSR
+  const ssrFloatParticles = useMemo(() => {
+    return [...Array(30)].map((_, i) => ({
+      size: Math.random() * 5 + 2,
+      startX: `${Math.random() * 100}%`,
+      driftX: (Math.random() - 0.5) * 60,
+      duration: Math.random() * 5 + 4,
+      delay: Math.random() * 5,
+      isEven: i % 2 === 0,
+    }));
+  }, []);
+
   useEffect(() => {
     localStorage.setItem(
       "yohana_gacha_collection",
@@ -422,22 +467,17 @@ export default function App() {
 
   useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
-
     const playAudioOnFirstInteraction = () => {
       if (audioRef.current && audioRef.current.paused) {
         audioRef.current.loop = true;
         audioRef.current
           .play()
-          .then(() => {
-            setIsPlaying(true);
-          })
+          .then(() => setIsPlaying(true))
           .catch((err) => console.log("Autoplay prevented:", err));
       }
       document.removeEventListener("click", playAudioOnFirstInteraction);
     };
-
     document.addEventListener("click", playAudioOnFirstInteraction);
-
     return () => {
       document.removeEventListener("click", playAudioOnFirstInteraction);
       if (audioRef.current) {
@@ -449,7 +489,6 @@ export default function App() {
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
-
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -473,9 +512,10 @@ export default function App() {
       let isDuplicate = true;
       let maxRetries = 5;
 
-      const totalWeight = sparklerItems.reduce((sum, item) => {
-        return sum + Math.round(item.rate * 100);
-      }, 0);
+      const totalWeight = sparklerItems.reduce(
+        (sum, item) => sum + Math.round(item.rate * 100),
+        0,
+      );
 
       while (isDuplicate && maxRetries > 0) {
         const rand = Math.floor(Math.random() * totalWeight) + 1;
@@ -485,38 +525,28 @@ export default function App() {
         for (let item of sparklerItems) {
           const itemWeight = Math.round(item.rate * 100);
           cumulativeWeight += itemWeight;
-
           if (rand <= cumulativeWeight) {
             foundItem = item;
             break;
           }
         }
-
         pulledItem = foundItem;
-        if (lastPulledIdRef.current !== pulledItem.id) {
-          isDuplicate = false;
-        }
+        if (lastPulledIdRef.current !== pulledItem.id) isDuplicate = false;
         maxRetries--;
       }
 
       lastPulledIdRef.current = pulledItem.id;
-
       setResult(pulledItem);
       setIsRolling(false);
 
-      // เพิ่มลง Collection หากไม่ซ้ำ
       setCollectedIds((prev) => {
-        if (!prev.includes(pulledItem.id)) {
-          return [...prev, pulledItem.id];
-        }
+        if (!prev.includes(pulledItem.id)) return [...prev, pulledItem.id];
         return prev;
       });
 
       if (pulledItem.type === "SSR") {
         setShowFireworks(true);
-        setTimeout(() => {
-          setShowFireworks(false);
-        }, 5000);
+        setTimeout(() => setShowFireworks(false), 5000);
       }
     }, 1500);
   };
@@ -536,7 +566,6 @@ export default function App() {
   const cardGlow = isSR
     ? "0 0 25px rgba(255, 255, 255, 0.35)"
     : "0 0 10px rgba(0, 0, 0, 0.3)";
-
   const tagBg = isSR ? "rgba(240, 240, 240, 0.2)" : "rgba(120, 120, 120, 0.15)";
   const tagBorder = isSR
     ? "rgba(220, 220, 220, 0.8)"
@@ -544,11 +573,9 @@ export default function App() {
   const tagGlow = isSR
     ? "0 0 8px rgba(255, 255, 255, 0.5)"
     : "0 0 0px transparent";
-
   const nameShadow = isSR
     ? "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px #FFFFFF"
     : "1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 5px #888888";
-
   const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   useEffect(() => {
@@ -579,7 +606,7 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
-        {/* Background Animation & Particles */}
+        {/* ใช้ตัวแปร bgParticles ที่เรา Memo ไว้ เพื่อลดอาการกระตุก */}
         <Box
           sx={{
             position: "fixed",
@@ -593,47 +620,33 @@ export default function App() {
             pointerEvents: "none",
           }}
         >
-          {[...Array(35)].map((_, i) => {
-            const isPink = i % 2 === 0;
-            const color = isPink ? "#FFB7C5" : "#E6E6FA";
-            const size = Math.random() * 3 + 2;
-            const duration = Math.random() * 4 + 4;
-            const delay = Math.random() * 8;
-            const top = `${Math.random() * 100}vh`;
-            const left = `${Math.random() * 100}vw`;
-
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: [0, 1, 0.4, 1, 0.2, 0],
-                  scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
-                }}
-                transition={{
-                  duration: duration,
-                  repeat: Infinity,
-                  delay: delay,
-                  ease: "easeInOut",
-                  times: [0, 0.1, 0.3, 0.6, 0.8, 1],
-                }}
-                style={{
-                  position: "absolute",
-                  top: top,
-                  left: left,
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  backgroundColor: "#FFF",
-                  borderRadius: "50%",
-                  boxShadow: `
-                0 0 ${size * 2}px ${color}, 
-                0 0 ${size * 4}px ${color}, 
-                0 0 ${size * 6}px ${color}
-              `,
-                }}
-              />
-            );
-          })}
+          {bgParticles.map((p) => (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 1, 0.4, 1, 0.2, 0],
+                scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
+              }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                delay: p.delay,
+                ease: "easeInOut",
+                times: [0, 0.1, 0.3, 0.6, 0.8, 1],
+              }}
+              style={{
+                position: "absolute",
+                top: p.top,
+                left: p.left,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                backgroundColor: "#FFF",
+                borderRadius: "50%",
+                boxShadow: `0 0 ${p.size * 2}px ${p.color}, 0 0 ${p.size * 4}px ${p.color}, 0 0 ${p.size * 6}px ${p.color}`,
+              }}
+            />
+          ))}
         </Box>
 
         <IconButton
@@ -1315,54 +1328,16 @@ export default function App() {
                       overflow: "hidden",
                     }}
                   >
-                    <motion.div
-                      initial={{ opacity: 0.8, scale: 0.5 }}
-                      animate={{ opacity: 0, scale: 2 }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                      style={{
-                        position: "absolute",
-                        width: "100%",
-                        height: "100%",
-                        background: `radial-gradient(circle at 50% 50%, #FFFFFF 0%, ${result?.themeColor || "#FF69B4"} 30%, transparent 70%)`,
-                        mixBlendMode: "screen",
-                      }}
-                    />
-                    {[...Array(2)].map((_, i) => (
-                      <motion.div
-                        key={`shockwave-${i}`}
-                        initial={{ scale: 0, opacity: 1, x: "-50%", y: "-50%" }}
-                        animate={{ scale: i === 0 ? 2.5 : 4, opacity: 0 }}
-                        transition={{
-                          duration: 0.7 + i * 0.2,
-                          ease: "easeOut",
-                        }}
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          width: "300px",
-                          height: "300px",
-                          borderRadius: "50%",
-                          border: `4px solid ${i === 0 ? "#FFF" : result?.themeColor || "#FF69B4"}`,
-                          boxShadow: `0 0 20px ${result?.themeColor || "#FF69B4"}, inset 0 0 20px ${result?.themeColor || "#FF69B4"}`,
-                        }}
-                      />
-                    ))}
-                    {[...Array(80)].map((_, i) => {
-                      const size = Math.random() * 8 + 3;
-                      const angle = Math.random() * Math.PI * 2;
-                      const distance = Math.random() * 70 + 30;
-                      const tx = Math.cos(angle) * distance;
-                      const ty = Math.sin(angle) * distance;
-
+                    {fireworkGeometry.map((geo, i) => {
+                      const tx = Math.cos(geo.angle) * geo.distance;
+                      const ty = Math.sin(geo.angle) * geo.distance;
                       const colors = [
                         result?.themeColor || "#FF69B4",
                         result?.themeGrad || "#FFB7C5",
                         "#FFFFFF",
                         "#FFE4E1",
                       ];
-                      const color =
-                        colors[Math.floor(Math.random() * colors.length)];
+                      const color = colors[i % colors.length];
 
                       return (
                         <motion.div
@@ -1382,16 +1357,16 @@ export default function App() {
                             y: `calc(-50% + ${ty}vh)`,
                           }}
                           transition={{
-                            duration: Math.random() * 1.5 + 0.5,
+                            duration: geo.duration,
                             ease: "easeOut",
                           }}
                           style={{
                             position: "absolute",
-                            width: size,
-                            height: size,
+                            width: geo.size,
+                            height: geo.size,
                             borderRadius: "50%",
                             backgroundColor: color,
-                            boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
+                            boxShadow: `0 0 ${geo.size * 2}px ${color}, 0 0 ${geo.size * 4}px ${color}`,
                           }}
                         />
                       );
@@ -1399,6 +1374,7 @@ export default function App() {
                   </motion.div>
                 )}
               </AnimatePresence>
+
               <div
                 style={{
                   position: "absolute",
@@ -1406,7 +1382,7 @@ export default function App() {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  overflowY: isMobile ? "hidden" : "auto", // 💡 เลื่อนตรงนี้มาไว้ที่กล่องในแทน
+                  overflowY: isMobile ? "hidden" : "auto",
                   overflowX: "hidden",
                   display: "flex",
                   padding: "20px",
@@ -1420,7 +1396,7 @@ export default function App() {
                     margin: "auto",
                     width: "100%",
                     maxWidth: result?.type === "SSR" ? "700px" : "450px",
-                    maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
+                    maxHeight: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -1451,86 +1427,32 @@ export default function App() {
                           alignItems: "center",
                         }}
                       >
-                        <motion.div
-                          animate={{
-                            scale: [0.8, 1.5, 0.8],
-                            rotate: [0, 90, 180],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                          style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
+                        {rollingSparks.map((spark, i) => (
+                          <motion.div
+                            key={`spark-${i}`}
+                            initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
+                            animate={{
+                              opacity: [1, 1, 0],
+                              scale: [0, 1.5, 0],
+                              x: Math.cos(spark.angle) * spark.distance,
+                              y: Math.sin(spark.angle) * spark.distance,
+                            }}
+                            transition={{
+                              duration: spark.duration,
+                              repeat: Infinity,
+                              ease: "easeOut",
+                              delay: spark.delay,
+                            }}
                             style={{
                               position: "absolute",
-                              width: "120%",
-                              height: "2px",
-                              background:
-                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                              width: spark.size,
+                              height: spark.size,
+                              borderRadius: "50%",
+                              backgroundColor: spark.colorType,
+                              boxShadow: `0 0 ${spark.size * 2.5}px ${spark.colorType}`,
                             }}
                           />
-                          <div
-                            style={{
-                              position: "absolute",
-                              width: "2px",
-                              height: "120%",
-                              background:
-                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
-                            }}
-                          />
-                        </motion.div>
-
-                        {[...Array(40)].map((_, i) => {
-                          const angle = (i * 9 * Math.PI) / 180;
-                          const distance = Math.random() * 70 + 40;
-                          const duration = Math.random() * 0.8 + 0.4;
-                          const delay = Math.random() * 1;
-                          const size = Math.random() * 4 + 2;
-                          const color =
-                            i % 3 === 0
-                              ? "#FF69B4"
-                              : i % 2 === 0
-                                ? "#FFB7C5"
-                                : "#FFF";
-
-                          return (
-                            <motion.div
-                              key={`spark-${i}`}
-                              initial={{ opacity: 1, x: 0, y: 0, scale: 0 }}
-                              animate={{
-                                opacity: [1, 1, 0],
-                                scale: [0, 1.5, 0],
-                                x: Math.cos(angle) * distance,
-                                y: Math.sin(angle) * distance,
-                              }}
-                              transition={{
-                                duration: duration,
-                                repeat: Infinity,
-                                ease: "easeOut",
-                                delay: delay,
-                              }}
-                              style={{
-                                position: "absolute",
-                                width: size,
-                                height: size,
-                                borderRadius: "50%",
-                                backgroundColor: color,
-                                boxShadow: `0 0 ${size * 2.5}px ${color}`,
-                              }}
-                            />
-                          );
-                        })}
-
+                        ))}
                         <motion.div
                           animate={{
                             scale: [1, 1.8, 1],
@@ -1563,7 +1485,7 @@ export default function App() {
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center", // เสริมความชัวร์ให้คอนเทนต์กลาง
+                        alignItems: "center",
                         perspective: 1000,
                       }}
                     >
@@ -1599,17 +1521,11 @@ export default function App() {
                               zIndex: 1,
                             }}
                           >
-                            {[...Array(30)].map((_, i) => {
-                              const size = Math.random() * 5 + 2;
-                              const startX = `${Math.random() * 100}%`;
-                              const driftX = (Math.random() - 0.5) * 60;
-                              const duration = Math.random() * 5 + 4;
-                              const delay = Math.random() * 5;
-                              const color =
-                                i % 2 === 0
-                                  ? result.themeColor || "#FF69B4"
-                                  : "#FFFFFF";
-
+                            {/* แทนที่อนุภาคพื้นหลัง SSR ด้วย ssrFloatParticles */}
+                            {ssrFloatParticles.map((p, i) => {
+                              const color = p.isEven
+                                ? result.themeColor || "#FF69B4"
+                                : "#FFFFFF";
                               return (
                                 <motion.div
                                   key={`ssr-float-particle-${i}`}
@@ -1617,23 +1533,23 @@ export default function App() {
                                   animate={{
                                     opacity: [0, 0.8, 0.8, 0],
                                     y: ["100%", "-20%"],
-                                    x: [0, driftX, driftX * 1.5],
+                                    x: [0, p.driftX, p.driftX * 1.5],
                                   }}
                                   transition={{
-                                    duration: duration,
+                                    duration: p.duration,
                                     repeat: Infinity,
-                                    delay: delay,
+                                    delay: p.delay,
                                     ease: "linear",
                                   }}
                                   style={{
                                     position: "absolute",
                                     bottom: 0,
-                                    left: startX,
-                                    width: size,
-                                    height: size,
+                                    left: p.startX,
+                                    width: p.size,
+                                    height: p.size,
                                     borderRadius: "50%",
                                     backgroundColor: color,
-                                    boxShadow: `0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color}`,
+                                    boxShadow: `0 0 ${p.size * 2}px ${color}`,
                                   }}
                                 />
                               );
