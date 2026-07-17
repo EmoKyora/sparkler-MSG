@@ -2342,73 +2342,137 @@ export default function App() {
             },
           }}
         >
-          {/* ส่วนหัวของ Dialog (ปรับสีให้ตัดกับพื้นหลัง อ่านง่ายขึ้น) */}
           <DialogTitle
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               position: "relative",
-              pt: { xs: 3, sm: 4 },
-              pb: 2,
-              bgcolor: "rgba(0, 0, 0, 0.4)", // แบ็คกราวด์โปร่งแสงเข้มๆ ดันตัวหนังสือให้ชัด
+              pt: { xs: 2.5, sm: 3 }, // ลดระยะห่างขอบบนลง
+              pb: 1.5, // ลดระยะห่างขอบล่างลง
+              // สร้างเอฟเฟกต์แสงออร่าแผ่จากตรงกลางด้านบน
+              background:
+                "radial-gradient(ellipse at top, rgba(255, 105, 180, 0.2) 0%, rgba(10, 2, 20, 0.95) 70%)",
               borderBottom: "1px solid rgba(255, 105, 180, 0.25)",
+              overflow: "hidden",
             }}
           >
+            {/* เอฟเฟกต์แสงสะท้อนเบาๆ ด้านบนสุด */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: "20%",
+                right: "20%",
+                height: "1px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(255, 183, 197, 0.8), transparent)",
+                boxShadow: "0 2px 15px rgba(255, 183, 197, 0.8)",
+              }}
+            />
+
+            {/* ปุ่มปิดแบบ Glassmorphism */}
             <IconButton
               onClick={() => setOpenCollection(false)}
               sx={{
                 position: "absolute",
-                right: { xs: 8, sm: 16 },
+                right: { xs: 8, sm: 16 }, // ขยับให้เข้ามุมพอดีกับความสูงใหม่
                 top: { xs: 8, sm: 16 },
-                color: "rgba(255, 255, 255, 0.6)",
-                "&:hover": { color: "#FFB7C5", transform: "rotate(90deg)" },
-                transition: "all 0.3s ease",
+                color: "#FFB7C5",
+                bgcolor: "rgba(255, 105, 180, 0.1)",
+                border: "1px solid rgba(255, 105, 180, 0.3)",
+                backdropFilter: "blur(4px)",
+                "&:hover": {
+                  bgcolor: "rgba(255, 105, 180, 0.25)",
+                  color: "#FFF",
+                  transform: "rotate(90deg) scale(1.1)",
+                  boxShadow: "0 0 15px rgba(255, 105, 180, 0.5)",
+                },
+                transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                zIndex: 2,
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
 
+            {/* ชื่อหัวข้อ */}
             <Typography
-              variant="h5"
+              variant="h4"
               sx={{
-                color: "#FFFFFF", // เปลี่ยนเป็นสีขาวสว่าง
+                color: "#FFFFFF",
                 fontWeight: 600,
-                letterSpacing: { xs: 1, sm: 2 },
-                fontSize: { xs: "1.1rem", sm: "1.5rem" },
-                textShadow: "0 0 10px #FFB7C5, 0 0 20px #FF69B4", // เพิ่มแสงเรืองรอง
+                letterSpacing: { xs: 1.5, sm: 3 },
+                fontSize: { xs: "1.1rem", sm: "1.5rem" }, // ลดขนาดฟอนต์ลงนิดหน่อยให้สมดุล
+                textShadow:
+                  "0 0 15px rgba(255, 183, 197, 0.8), 0 0 30px rgba(255, 105, 180, 0.5)",
                 display: "flex",
                 alignItems: "center",
-                gap: 1.5,
+                gap: { xs: 1, sm: 2 },
+                zIndex: 1,
               }}
             >
-              <CollectionsBookmarkIcon sx={{ opacity: 0.9 }} />
+              <Box
+                component="span"
+                sx={{ color: "#FFB7C5", fontSize: "0.8em", opacity: 0.8 }}
+              >
+                ✦
+              </Box>
               สมุดบันทึกไฟเย็น
+              <Box
+                component="span"
+                sx={{ color: "#FFB7C5", fontSize: "0.8em", opacity: 0.8 }}
+              >
+                ✦
+              </Box>
             </Typography>
 
-            <Typography
-              variant="body2"
-              sx={{
-                color: "#FFB7C5", // เปลี่ยนเป็นสีชมพูอ่อนให้อ่านง่าย
-                mt: 1,
-                letterSpacing: 1,
-                fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                fontWeight: 500,
-              }}
-            >
-              รวบรวมแล้ว {collectedIds.length} / {sparklerItems.length} แบบ
-            </Typography>
-
+            {/* ส่วนบอกจำนวนที่สะสมได้ */}
             <Box
               sx={{
-                width: "80px",
-                height: "2px",
-                background:
-                  "linear-gradient(90deg, transparent, #FFB7C5, transparent)",
-                mt: 2,
-                opacity: 0.8,
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                mt: 1, // ลดระยะห่างระหว่างชื่อหัวข้อกับจำนวนบรรทัดนี้
+                zIndex: 1,
               }}
-            />
+            >
+              <Box
+                sx={{
+                  width: { xs: "30px", sm: "50px" },
+                  height: "1px",
+                  background: "linear-gradient(90deg, transparent, #FFB7C5)",
+                  opacity: 0.6,
+                }}
+              />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#FFE4E1",
+                  letterSpacing: 2,
+                  fontSize: { xs: "0.75rem", sm: "0.9rem" },
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.8)",
+                }}
+              >
+                รวบรวมแล้ว{" "}
+                <Box
+                  component="span"
+                  sx={{ fontWeight: "bold", color: "#FFF" }}
+                >
+                  {collectedIds.length}
+                </Box>{" "}
+                / {sparklerItems.length} แบบ
+              </Typography>
+              <Box
+                sx={{
+                  width: { xs: "30px", sm: "50px" },
+                  height: "1px",
+                  background: "linear-gradient(270deg, transparent, #FFB7C5)",
+                  opacity: 0.6,
+                }}
+              />
+            </Box>
           </DialogTitle>
 
           {/* เนื้อหาด้านใน (Grid) */}
@@ -2560,16 +2624,19 @@ export default function App() {
                           {isCollected ? item.nameCha : "???"}
                         </Typography>
 
-                        {/* ชื่อไฟเย็น (แทนที่ป้าย SR/SSR เดิม) */}
+                        {/* ชื่อไฟเย็น */}
                         {isCollected && (
                           <Typography
                             sx={{
                               fontSize: { xs: "0.55rem", sm: "0.65rem" },
-                              color: isItemSR ? "#B0BEC5" : "#FFD700", // SR สีออกเงินๆฟ้าๆ, SSR สีทอง
+                              color: isItemSR ? "#B0BEC5" : "#FFF", // SR สีเดิม, SSR สีขาวแบบ nameCha
+                              fontWeight: "normal",
+                              textShadow: isItemSR
+                                ? "none"
+                                : `0 0 8px ${borderColor}`, // SSR เรืองแสงสีตามการ์ดเหมือน nameCha
                               lineHeight: 1.2,
                               textAlign: "center",
                               opacity: 0.9,
-                              // ตั้งค่าป้องกันชื่อที่ยาวเกินไปให้ตัดคำสวยๆ (แสดงได้สูงสุด 2 บรรทัด)
                               display: "-webkit-box",
                               WebkitLineClamp: 2,
                               WebkitBoxOrient: "vertical",
