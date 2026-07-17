@@ -401,6 +401,7 @@ export default function App() {
 
   const [openCollection, setOpenCollection] = useState(false);
   const [collectedIds, setCollectedIds] = useState(() => {
+    if (typeof window === "undefined") return [];
     try {
       const saved = localStorage.getItem("yohana_gacha_collection");
       if (saved) {
@@ -573,9 +574,17 @@ export default function App() {
   };
 
   useEffect(() => {
+    // โหลดรูปสุ่ม
     sparklerItems.forEach((item) => {
       const img = new Image();
       img.src = item.image;
+    });
+    // โหลดรูปโชว์หน้าแรก
+    sparklerList.forEach((item) => {
+      if (item.imageNo) {
+        const img = new Image();
+        img.src = item.imageNo;
+      }
     });
   }, []);
 
@@ -600,15 +609,15 @@ export default function App() {
   const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   useEffect(() => {
-    if (openModal) {
+    if (openModal || openCollection) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = ""; // ใช้ค่าว่างดีกว่า "auto" เพื่อคืนค่ากลับสู่ปกติ
     }
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     };
-  }, [openModal]);
+  }, [openModal, openCollection]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -641,33 +650,36 @@ export default function App() {
             pointerEvents: "none",
           }}
         >
-          {bgParticles.map((p) => (
-            <motion.div
-              key={p.id}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: [0, 1, 0.4, 1, 0.2, 0],
-                scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
-              }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: "easeInOut",
-                times: [0, 0.1, 0.3, 0.6, 0.8, 1],
-              }}
-              style={{
-                position: "absolute",
-                top: p.top,
-                left: p.left,
-                width: `${p.size}px`,
-                height: `${p.size}px`,
-                backgroundColor: "#FFF",
-                borderRadius: "50%",
-                boxShadow: `0 0 ${p.size * 2}px ${p.color}, 0 0 ${p.size * 4}px ${p.color}, 0 0 ${p.size * 6}px ${p.color}`,
-              }}
-            />
-          ))}
+          {bgParticles.map((p) => {
+            const particleColor = p.isPink ? "#FFB7C5" : "#FFFFFF"; // เพิ่มตัวแปรสีตรงนี้
+            return (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: [0, 1, 0.4, 1, 0.2, 0],
+                  scale: [0, 1.2, 0.8, 1.5, 0.5, 0],
+                }}
+                transition={{
+                  duration: p.duration,
+                  repeat: Infinity,
+                  delay: p.delay,
+                  ease: "easeInOut",
+                  times: [0, 0.1, 0.3, 0.6, 0.8, 1],
+                }}
+                style={{
+                  position: "absolute",
+                  top: p.top,
+                  left: p.left,
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  backgroundColor: "#FFF",
+                  borderRadius: "50%",
+                  boxShadow: `0 0 ${p.size * 2}px ${particleColor}, 0 0 ${p.size * 4}px ${particleColor}, 0 0 ${p.size * 6}px ${particleColor}`,
+                }}
+              />
+            );
+          })}
         </Box>
 
         <IconButton
@@ -1267,7 +1279,6 @@ export default function App() {
         <AnimatePresence>
           {openModal && (
             <motion.div
-              key="gacha-modal"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -1283,14 +1294,14 @@ export default function App() {
                 position: "fixed",
                 top: 0,
                 left: 0,
-                right: 0,
-                bottom: 0,
+                right: 0, // ยึดขอบขวา
+                bottom: 0, // ยึดขอบล่าง (ใช้แทน 100vh เพื่อแก้ปัญหามือถือ)
                 backgroundColor: "rgba(5, 2, 10, 0.85)",
                 backdropFilter: "blur(12px)",
                 zIndex: 9999,
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "center", // บังคับให้อยู่ตรงกลางแนวตั้ง
                 padding: "20px",
                 boxSizing: "border-box",
                 overflow: "hidden",
@@ -1350,15 +1361,52 @@ export default function App() {
                       overflow: "hidden",
                     }}
                   >
+                    {/* แสงวาบและคลื่นกระแทก (Shockwave) */}
+                    <motion.div
+                      initial={{ opacity: 0.8, scale: 0.5 }}
+                      animate={{ opacity: 0, scale: 2 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        background: `radial-gradient(circle at 50% 50%, #FFFFFF 0%, ${result?.themeColor || "#FF69B4"} 30%, transparent 70%)`,
+                        mixBlendMode: "screen",
+                      }}
+                    />
+                    {[...Array(2)].map((_, i) => (
+                      <motion.div
+                        key={`shockwave-${i}`}
+                        initial={{ scale: 0, opacity: 1, x: "-50%", y: "-50%" }}
+                        animate={{ scale: i === 0 ? 2.5 : 4, opacity: 0 }}
+                        transition={{
+                          duration: 0.7 + i * 0.2,
+                          ease: "easeOut",
+                        }}
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          width: "300px",
+                          height: "300px",
+                          borderRadius: "50%",
+                          border: `4px solid ${i === 0 ? "#FFF" : result?.themeColor || "#FF69B4"}`,
+                          boxShadow: `0 0 20px ${result?.themeColor || "#FF69B4"}, inset 0 0 20px ${result?.themeColor || "#FF69B4"}`,
+                        }}
+                      />
+                    ))}
+
                     {fireworkGeometry.map((geo, i) => {
                       const tx = Math.cos(geo.angle) * geo.distance;
                       const ty = Math.sin(geo.angle) * geo.distance;
+
                       const colors = [
                         result?.themeColor || "#FF69B4",
                         result?.themeGrad || "#FFB7C5",
                         "#FFFFFF",
                         "#FFE4E1",
                       ];
+                      // ดึงสีตาม index แทนการสุ่มเพื่อไม่ให้สีกระพริบ
                       const color = colors[i % colors.length];
 
                       return (
@@ -1396,7 +1444,6 @@ export default function App() {
                   </motion.div>
                 )}
               </AnimatePresence>
-
               <div
                 style={{
                   position: "absolute",
@@ -1404,7 +1451,7 @@ export default function App() {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  overflowY: isMobile ? "hidden" : "auto",
+                  overflowY: isMobile ? "hidden" : "auto", // 💡 เลื่อนตรงนี้มาไว้ที่กล่องในแทน
                   overflowX: "hidden",
                   display: "flex",
                   padding: "20px",
@@ -1418,7 +1465,7 @@ export default function App() {
                     margin: "auto",
                     width: "100%",
                     maxWidth: result?.type === "SSR" ? "700px" : "450px",
-                    maxHeight: "100%",
+                    maxHeight: "100%", // ป้องกันคอนเทนต์ดันขอบบนล่างจนหลุดกึ่งกลาง
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -1449,6 +1496,47 @@ export default function App() {
                           alignItems: "center",
                         }}
                       >
+                        {/* เอฟเฟกต์กากบาทหมุน */}
+                        <motion.div
+                          animate={{
+                            scale: [0.8, 1.5, 0.8],
+                            rotate: [0, 90, 180],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              width: "120%",
+                              height: "2px",
+                              background:
+                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                            }}
+                          />
+                          <div
+                            style={{
+                              position: "absolute",
+                              width: "2px",
+                              height: "120%",
+                              background:
+                                "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)",
+                            }}
+                          />
+                        </motion.div>
+
+                        {/* ประกายไฟวงนอก (ดึงจาก useMemo เดิมเพื่อความลื่น) */}
                         {rollingSparks.map((spark, i) => (
                           <motion.div
                             key={`spark-${i}`}
@@ -1475,6 +1563,8 @@ export default function App() {
                             }}
                           />
                         ))}
+
+                        {/* แกนกลางประกายไฟ */}
                         <motion.div
                           animate={{
                             scale: [1, 1.8, 1],
@@ -1507,7 +1597,7 @@ export default function App() {
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center",
+                        alignItems: "center", // เสริมความชัวร์ให้คอนเทนต์กลาง
                         perspective: 1000,
                       }}
                     >
@@ -2229,7 +2319,6 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
-
         {/* -------------------- เพิ่ม Dialog สำหรับเปิดดู Collection -------------------- */}
         <Dialog
           open={openCollection}
