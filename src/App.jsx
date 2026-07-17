@@ -401,9 +401,29 @@ export default function App() {
 
   const [openCollection, setOpenCollection] = useState(false);
   const [collectedIds, setCollectedIds] = useState(() => {
-    const saved = localStorage.getItem("yohana_gacha_collection");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("yohana_gacha_collection");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return Array.isArray(parsed) ? parsed : [];
+      }
+      return [];
+    } catch (error) {
+      console.warn("ไม่สามารถอ่าน LocalStorage ได้:", error);
+      return [];
+    }
   });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "yohana_gacha_collection",
+        JSON.stringify(collectedIds),
+      );
+    } catch (error) {
+      console.warn("ไม่สามารถบันทึก LocalStorage ได้:", error);
+    }
+  }, [collectedIds]);
 
   const audioRef = useRef(null);
   const lastPulledIdRef = useRef(null);
@@ -459,14 +479,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "yohana_gacha_collection",
-      JSON.stringify(collectedIds),
-    );
-  }, [collectedIds]);
-
-  useEffect(() => {
     audioRef.current = new Audio(`${import.meta.env.BASE_URL}song/music.mp3`);
+    audioRef.current.preload = "auto";
     const playAudioOnFirstInteraction = () => {
       if (audioRef.current && audioRef.current.paused) {
         audioRef.current.loop = true;
@@ -477,12 +491,15 @@ export default function App() {
       }
       document.removeEventListener("click", playAudioOnFirstInteraction);
     };
-    document.addEventListener("click", playAudioOnFirstInteraction);
+    document.addEventListener("click", playAudioOnFirstInteraction, {
+      once: true,
+    });
     return () => {
       document.removeEventListener("click", playAudioOnFirstInteraction);
       if (audioRef.current) {
         audioRef.current.pause();
-        audioRef.current.src = "";
+        audioRef.current.removeAttribute("src");
+        audioRef.current.load();
       }
     };
   }, []);
@@ -491,13 +508,17 @@ export default function App() {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
       audioRef.current.loop = true;
       audioRef.current
         .play()
-        .catch((err) => console.error("Audio error:", err));
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.error("Audio error:", err);
+          setIsPlaying(false);
+        });
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleRollGacha = () => {
@@ -579,7 +600,7 @@ export default function App() {
   const btnColor = isSR ? "#E0E0E0" : "#888888";
 
   useEffect(() => {
-    if (openModal || openCollection) {
+    if (openModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -587,7 +608,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [openModal, openCollection]);
+  }, [openModal]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -1246,6 +1267,7 @@ export default function App() {
         <AnimatePresence>
           {openModal && (
             <motion.div
+              key="gacha-modal"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -2301,13 +2323,17 @@ export default function App() {
                     <Box
                       component="img"
                       src={item.image}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          "https://via.placeholder.com/150x200/1a1025/FF69B4?text=?";
+                      }}
                       sx={{
                         width: "100%",
                         height: "100%",
                         objectFit: "contain",
                         p: 1.5,
                         pb: 3,
-                        // ถ้าเจอแล้วให้โชว์ภาพปกติ ถ้ายังไม่เจอให้ใช้ brightness(0) ทำให้ภาพเป็นสีดำทึบ (ภาพถมดำเงา)
                         filter: isCollected
                           ? `drop-shadow(0 0 5px ${borderColor}66)`
                           : "brightness(0) contrast(100%) opacity(0.4)",
