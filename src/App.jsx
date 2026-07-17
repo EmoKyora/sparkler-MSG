@@ -412,7 +412,7 @@ export default function App() {
             setIsPlaying(true);
           })
           .catch((err) => console.log("Autoplay prevented:", err));
-      } 
+      }
       document.removeEventListener("click", playAudioOnFirstInteraction);
     };
 
@@ -891,9 +891,7 @@ export default function App() {
                 letterSpacing: "2px",
                 textShadow: "0 0 5px rgba(255, 183, 197, 0.5)",
               }}
-            >
-               
-            </Typography>
+            ></Typography>
             <KeyboardArrowDownIcon sx={{ fontSize: 30, color: "#FFB7C5" }} />
           </motion.div>
         </Box>
@@ -1838,7 +1836,11 @@ export default function App() {
                                         fontWeight: "bold",
                                         fontSize: { xs: "1rem", sm: "1.5rem" },
                                         color: "#FFFFFF",
-                                        textShadow: `1px 1px 3px rgba(0, 0, 0, 0.8), 0 0 8px ${result.themeColor || "#FF69B4"}`,
+                                        textShadow: `1px 1px 3px ${
+                                          result.id === 10 || result.id === 18
+                                            ? "rgba(128, 128, 128, 0.8)"
+                                            : "rgba(0, 0, 0, 0.8)"
+                                        }, 0 0 8px ${result.themeColor || "#FF69B4"}`,
                                       }}
                                     >
                                       {result.name}
