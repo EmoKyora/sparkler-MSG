@@ -312,10 +312,14 @@ const sparklerItems = [
         .ขยิบตา .เสยผม
       </>
     ),
-    image: `${baseUrl}images/NM/Shoji.webp`,
+    image: `${baseUrl}images/NM/Tengen.webp`,
     rate: 3.64,
     themeColor: "#DDFFFF",
     themeGrad: "#e7fefe",
+
+    bgPositionDesktop: "right 10%",
+    xInitial: "30%",
+    xAnimate: "40%",
   },
 ];
 const sparklerList = [
