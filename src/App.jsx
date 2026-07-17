@@ -842,15 +842,20 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8 }}
-            style={{ zIndex: 1 }}
+            style={{
+              zIndex: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
             <Box
               sx={{
-                display: "flex",
-                gap: { xs: 1.5, sm: 2 },
-                alignItems: "center",
+                position: "relative",
+                display: "inline-flex",
               }}
             >
+              {/* กล่องหลักที่ล็อคตำแหน่งปุ่มสุ่มให้อยู่กึ่งกลาง */}
               <Box sx={{ position: "relative", borderRadius: "50px" }}>
                 <motion.div
                   animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0, 0.3] }}
@@ -870,6 +875,8 @@ export default function App() {
                     zIndex: 0,
                   }}
                 />
+
+                {/* ปุ่มหลัก: สุ่มหยิบไฟเย็น */}
                 <Button
                   variant="contained"
                   disabled={isRolling || openModal}
@@ -923,31 +930,41 @@ export default function App() {
                   />
                   ✨ ลองสุ่มหยิบไฟเย็นดูสิ ✨
                 </Button>
-              </Box>
 
-              {/* ปุ่มเปิดคอลเล็กชัน */}
-              <IconButton
-                onClick={() => setOpenCollection(true)}
-                sx={{
-                  bgcolor: "rgba(26, 11, 46, 0.6)",
-                  border: "1px solid rgba(255, 105, 180, 0.4)",
-                  color: "#FFB7C5",
-                  width: { xs: 45, sm: 55 },
-                  height: { xs: 45, sm: 55 },
-                  boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
-                  backdropFilter: "blur(12px)",
-                  zIndex: 1,
-                  "&:hover": {
-                    bgcolor: "rgba(255, 105, 180, 0.15)",
-                    border: "1px solid rgba(255, 105, 180, 0.8)",
-                    boxShadow: "0 0 20px rgba(255, 105, 180, 0.5)",
-                  },
-                }}
-              >
-                <CollectionsBookmarkIcon
-                  sx={{ fontSize: { xs: 20, sm: 28 } }}
-                />
-              </IconButton>
+                {/* ปุ่มเปิดคอลเล็กชัน (ใช้ Absolute วางไว้ข้างขวา โดยไม่กระทบความสมดุล) */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    left: "100%",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    ml: { xs: 1.5, sm: 2 }, // สร้างระยะห่างจากปุ่มหลัก
+                  }}
+                >
+                  <IconButton
+                    onClick={() => setOpenCollection(true)}
+                    sx={{
+                      bgcolor: "rgba(26, 11, 46, 0.6)",
+                      border: "1px solid rgba(255, 105, 180, 0.4)",
+                      color: "#FFB7C5",
+                      width: { xs: 45, sm: 55 },
+                      height: { xs: 45, sm: 55 },
+                      boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
+                      backdropFilter: "blur(12px)",
+                      zIndex: 1,
+                      "&:hover": {
+                        bgcolor: "rgba(255, 105, 180, 0.15)",
+                        border: "1px solid rgba(255, 105, 180, 0.8)",
+                        boxShadow: "0 0 20px rgba(255, 105, 180, 0.5)",
+                      },
+                    }}
+                  >
+                    <CollectionsBookmarkIcon
+                      sx={{ fontSize: { xs: 20, sm: 28 } }}
+                    />
+                  </IconButton>
+                </Box>
+              </Box>
             </Box>
           </motion.div>
 
