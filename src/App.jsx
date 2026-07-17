@@ -1838,12 +1838,12 @@ export default function App() {
                                         color: "#FFFFFF",
                                         textShadow: `1px 1px 3px ${
                                           result.id === 10 || result.id === 18
-                                            ? "rgba(177, 177, 177, 0.8)"
+                                            ? "rgba(135, 135, 135, 0.8)"
                                             : "rgba(0, 0, 0, 0.8)"
                                         }, 0 0 8px ${result.themeColor || "#FF69B4"}`,
                                       }}
                                     >
-                                      {result.name} ddd
+                                      {result.name}
                                     </Typography>
 
                                     <Typography
